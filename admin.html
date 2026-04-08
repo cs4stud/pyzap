@@ -812,27 +812,26 @@ function handleAdminUser(user) {
   });
 }
 
+// Handle redirect result on page load
+auth.getRedirectResult().then(function(result) {
+  if (result && result.user) {
+    handleAdminUser(result.user);
+  }
+}).catch(function(e) {
+  console.error("Redirect error:", e);
+  document.getElementById("login-screen").classList.remove("hidden");
+  document.getElementById("shell").style.display = "none";
+  document.getElementById("login-err").style.display = "block";
+  document.getElementById("login-err").textContent = "Login failed: " + e.message;
+});
+
+// Auth state listener
 auth.onAuthStateChanged(function(user) {
   if (user) {
     handleAdminUser(user);
   } else {
-    // Handle redirect result on page load
-    auth.getRedirectResult().then(function(result) {
-      if (result && result.user) {
-        handleAdminUser(result.user);
-      } else {
-        document.getElementById("login-screen").classList.remove("hidden");
-        document.getElementById("shell").style.display = "none";
-      }
-    }).catch(function(e) {
-      console.error("Redirect error:", e);
-      document.getElementById("login-screen").classList.remove("hidden");
-      document.getElementById("shell").style.display = "none";
-      if (e.code !== "auth/popup-closed-by-user") {
-        document.getElementById("login-err").style.display = "block";
-        document.getElementById("login-err").textContent = "Login failed: " + e.message;
-      }
-    });
+    document.getElementById("login-screen").classList.remove("hidden");
+    document.getElementById("shell").style.display = "none";
   }
 });
 

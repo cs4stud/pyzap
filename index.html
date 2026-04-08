@@ -851,21 +851,22 @@ function handleUser(user) {
   }).catch(function(e) { console.error("Auth error:", e); showScreen("login"); });
 }
 
+// Handle redirect result on page load (runs once after Google redirect)
+auth.getRedirectResult().then(function(result) {
+  if (result && result.user) {
+    handleUser(result.user);
+  }
+}).catch(function(e) {
+  console.error("Redirect error:", e);
+  showScreen("login");
+});
+
+// Auth state listener — fires on every page load if already logged in
 auth.onAuthStateChanged(function(user) {
   if (user) {
     handleUser(user);
   } else {
-    // Handle redirect result first (mobile/cross-origin redirect flow)
-    auth.getRedirectResult().then(function(result) {
-      if (result && result.user) {
-        handleUser(result.user);
-      } else {
-        S.uid = null; S.idToken = null; showScreen("login");
-      }
-    }).catch(function(e) {
-      console.error("Redirect result error:", e);
-      S.uid = null; S.idToken = null; showScreen("login");
-    });
+    S.uid = null; S.idToken = null; showScreen("login");
   }
 });
 
