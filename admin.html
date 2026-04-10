@@ -19,16 +19,14 @@
 }
 html{height:100%;scrollbar-width:thin;scrollbar-color:var(--bdr2) var(--bg);}
 body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 60% 40% at 0% 0%,rgba(0,229,160,.04) 0%,transparent 60%),
-             radial-gradient(ellipse 50% 40% at 100% 100%,rgba(77,159,255,.03) 0%,transparent 60%);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 40% at 0% 0%,rgba(0,229,160,.04) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 100% 100%,rgba(77,159,255,.03) 0%,transparent 60%);}
 
-/* ═══ LAYOUT ═══ */
+/* LAYOUT */
 .shell{display:flex;min-height:100vh;position:relative;z-index:1;}
 .sidebar{width:220px;flex-shrink:0;background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;}
 
-/* ═══ SIDEBAR ═══ */
+/* SIDEBAR */
 .sb-logo{padding:24px 20px 20px;border-bottom:1px solid var(--bdr);}
 .sb-brand{font-family:var(--head);font-size:22px;font-weight:800;color:var(--acc);letter-spacing:-1px;}
 .sb-role{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
@@ -39,215 +37,122 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .nav-item.active{background:var(--accdim);color:var(--acc);border-color:rgba(0,229,160,.15);}
 .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
 .sb-footer{padding:16px;border-top:1px solid var(--bdr);}
-.sb-admin{font-size:11px;color:var(--muted);font-weight:500;}
+.sb-admin{font-size:11px;color:var(--muted);font-weight:500;word-break:break-all;}
 .sb-logout{margin-top:8px;width:100%;padding:8px;background:var(--rddim);border:1px solid rgba(255,77,109,.2);border-radius:7px;color:var(--red);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;}
 .sb-logout:hover{background:var(--red);color:#fff;}
 
-/* ═══ TOPBAR ═══ */
-.topbar{padding:16px 28px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;background:var(--s1);}
+/* TOPBAR */
+.topbar{padding:16px 28px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;background:var(--s1);flex-shrink:0;}
 .page-title{font-family:var(--head);font-size:20px;font-weight:700;color:var(--text);}
 .page-sub{font-size:12px;color:var(--text2);margin-top:1px;}
-.topbar-right{display:flex;align-items:center;gap:10px;}
-.refresh-btn{padding:7px 14px;background:var(--s2);border:1px solid var(--bdr2);border-radius:7px;color:var(--text2);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;}
-.refresh-btn:hover{border-color:var(--acc);color:var(--acc);}
 
-/* ═══ CONTENT ═══ */
-.content{padding:24px 28px;flex:1;}
+/* CONTENT */
+.content{flex:1;padding:24px 28px;overflow-y:auto;}
 .page{display:none;}
 .page.active{display:block;}
 
-/* ═══ STATS GRID ═══ */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:24px;}
-.stat-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;}
-.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.stat-card.green::after{background:linear-gradient(90deg,var(--acc),var(--acc2));}
-.stat-card.amber::after{background:linear-gradient(90deg,var(--amber),#E8960F);}
-.stat-card.blue::after{background:linear-gradient(90deg,var(--blue),#2D7FE8);}
-.stat-card.red::after{background:linear-gradient(90deg,var(--red),#E83050);}
-.stat-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);}
-.stat-val{font-family:var(--mono);font-size:32px;font-weight:500;color:var(--text);margin-top:6px;line-height:1;}
-.stat-sub{font-size:11px;color:var(--muted);margin-top:4px;}
-
-/* ═══ SECTION HEADER ═══ */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.sec-title{font-family:var(--head);font-size:15px;font-weight:700;color:var(--text);}
-.sec-action{padding:6px 14px;background:var(--accdim);border:1px solid rgba(0,229,160,.2);border-radius:7px;color:var(--acc);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;}
-.sec-action:hover{background:var(--acc);color:#000;}
-
-/* ═══ TABLE ═══ */
-.tbl-wrap{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;}
-.tbl-toolbar{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.tbl-search{flex:1;min-width:160px;padding:7px 12px;background:var(--s3);border:1px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;}
-.tbl-search:focus{border-color:var(--acc);}
-.tbl-search::placeholder{color:var(--muted);}
-.tbl-filter{padding:7px 12px;background:var(--s3);border:1px solid var(--bdr2);border-radius:7px;color:var(--text2);font-family:var(--font);font-size:12px;cursor:pointer;outline:none;}
-.tbl-filter option{background:var(--s2);}
-table{width:100%;border-collapse:collapse;}
-th{padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);white-space:nowrap;}
-td{padding:11px 16px;font-size:13px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.015);}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
-.badge.free{background:var(--s3);color:var(--text2);border:1px solid var(--bdr2);}
-.badge.paid{background:var(--accdim);color:var(--acc);border:1px solid rgba(0,229,160,.2);}
-.badge.banned{background:var(--rddim);color:var(--red);border:1px solid rgba(255,77,109,.2);}
-.tbl-btn{padding:4px 10px;border-radius:5px;font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all .12s;}
-.tbl-btn.upgrade{background:var(--accdim);border-color:rgba(0,229,160,.2);color:var(--acc);}
-.tbl-btn.upgrade:hover{background:var(--acc);color:#000;border-color:var(--acc);}
-.tbl-btn.downgrade{background:var(--ambdim);border-color:rgba(255,184,48,.2);color:var(--amber);}
-.tbl-btn.downgrade:hover{background:var(--amber);color:#000;}
-.tbl-btn.ban{background:var(--rddim);border-color:rgba(255,77,109,.2);color:var(--red);}
-.tbl-btn.ban:hover{background:var(--red);color:#fff;}
-.tbl-btn.unban{background:var(--accdim);border-color:rgba(0,229,160,.2);color:var(--acc);}
-.tbl-btn.unban:hover{background:var(--acc);color:#000;}
-.tbl-empty{padding:40px;text-align:center;color:var(--muted);font-size:13px;}
-.mono{font-family:var(--mono);font-size:12px;}
-.login-count{font-family:var(--mono);font-size:13px;color:var(--amber);}
-
-/* ═══ SETTINGS ═══ */
-.settings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
-.setting-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;}
-.setting-title{font-family:var(--head);font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+/* CARDS & SECTIONS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:16px;}
+.stat-val{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--acc);line-height:1;}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;letter-spacing:.5px;}
+.setting-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:14px;}
+.setting-title{font-family:var(--head);font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
 .setting-desc{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;}
-.setting-row{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
-.setting-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);}
-.setting-inp{padding:8px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .12s;}
-.setting-inp:focus{border-color:var(--acc);}
-.setting-inp::placeholder{color:var(--muted);}
-.tag-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
-.tag{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--accdim);border:1px solid rgba(0,229,160,.2);border-radius:5px;font-size:12px;font-weight:600;color:var(--acc);}
-.tag-x{cursor:pointer;opacity:.6;font-size:14px;line-height:1;}
-.tag-x:hover{opacity:1;}
-.tag-add{display:flex;gap:6px;}
-.tag-new{flex:1;padding:6px 10px;background:var(--s3);border:1px solid var(--bdr2);border-radius:6px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;}
-.tag-new:focus{border-color:var(--acc);}
-.tag-new::placeholder{color:var(--muted);}
-.tag-addbtn{padding:6px 12px;background:var(--accdim);border:1px solid rgba(0,229,160,.2);border-radius:6px;color:var(--acc);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;}
-.tag-addbtn:hover{background:var(--acc);color:#000;}
-.weight-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.weight-lbl{font-size:12px;color:var(--text2);min-width:100px;}
-.weight-inp{width:70px;padding:5px 8px;background:var(--s3);border:1px solid var(--bdr2);border-radius:5px;color:var(--text);font-family:var(--mono);font-size:13px;text-align:center;outline:none;}
-.weight-inp:focus{border-color:var(--acc);}
-.weight-bar{flex:1;height:4px;background:var(--bdr2);border-radius:999px;overflow:hidden;}
-.weight-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:999px;transition:width .2s;}
-.btn-save-settings{margin-top:14px;width:100%;padding:10px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;border:none;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .12s;}
+.setting-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:6px;}
+.divider{height:1px;background:var(--bdr);margin:16px 0;}
+.form-row{margin-bottom:12px;}
+.form-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:5px;}
+.form-inp,.form-sel,.form-ta{width:100%;padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .12s;}
+.form-inp:focus,.form-sel:focus,.form-ta:focus{border-color:var(--acc);}
+.form-sel{cursor:pointer;appearance:none;}
+.form-sel option{background:var(--s2);}
+.form-ta{resize:vertical;min-height:80px;font-family:var(--font);}
+.btn-save-settings{padding:10px 20px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;border:none;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .12s;}
 .btn-save-settings:hover{opacity:.85;}
 .btn-save-settings:disabled{opacity:.4;cursor:default;}
 
-/* ═══ EMAIL ═══ */
-.email-grid{display:grid;grid-template-columns:300px 1fr;gap:16px;}
-.email-sidebar{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:18px;}
-.email-main{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;}
-.filter-group{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.filter-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);}
-.filter-sel{padding:8px 10px;background:var(--s3);border:1px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;cursor:pointer;}
+/* TABLE */
+.tbl-wrap{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;margin-top:14px;}
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);background:var(--s3);}
+td{padding:11px 16px;border-bottom:1px solid var(--bdr);font-size:13px;color:var(--text2);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.tbl-empty{text-align:center;color:var(--muted);padding:32px;font-size:13px;}
+.loading-row{text-align:center;padding:24px;}
+.badge{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.badge.free{background:var(--accdim);color:var(--acc);border:1px solid rgba(0,229,160,.2);}
+.badge.paid{background:var(--ambdim);color:var(--amber);border:1px solid rgba(255,184,48,.2);}
+.tbl-btn{padding:4px 10px;border-radius:5px;font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .12s;}
+.tbl-btn.ban{border-color:var(--red);color:var(--red);background:transparent;}
+.tbl-btn.ban:hover{background:var(--red);color:#fff;}
+.tbl-btn.upgrade{border-color:var(--acc);color:var(--acc);background:transparent;}
+.tbl-btn.upgrade:hover{background:var(--acc);color:#000;}
+
+/* SPINNER */
+.spinner{width:24px;height:24px;border:2px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FILTERS */
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.filter-sel{padding:7px 11px;background:var(--s2);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text2);font-family:var(--font);font-size:12px;outline:none;cursor:pointer;}
+.filter-sel:focus{border-color:var(--acc);}
 .filter-sel option{background:var(--s2);}
-.recipient-count{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--acc);margin:8px 0 2px;}
-.recipient-lbl{font-size:11px;color:var(--text2);}
-.email-inp{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .12s;}
-.email-inp:focus{border-color:var(--acc);}
-.email-inp::placeholder{color:var(--muted);}
-.email-body{flex:1;min-height:160px;resize:vertical;padding:10px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .12s;line-height:1.6;}
-.email-body:focus{border-color:var(--acc);}
-.email-body::placeholder{color:var(--muted);}
-.template-btns{display:flex;flex-wrap:wrap;gap:6px;}
-.tpl-btn{padding:5px 10px;background:var(--s3);border:1px solid var(--bdr2);border-radius:5px;color:var(--text2);font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;}
-.tpl-btn:hover{border-color:var(--acc);color:var(--acc);}
-.btn-send{padding:11px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;border:none;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .12s;}
-.btn-send:hover{opacity:.85;}
-.btn-send:disabled{opacity:.4;cursor:default;}
+.filter-inp{padding:7px 11px;background:var(--s2);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;flex:1;min-width:150px;}
+.filter-inp:focus{border-color:var(--acc);}
+.filter-inp::placeholder{color:var(--muted);}
 
-/* ═══ PROMO CODES ═══ */
-.promo-grid{display:grid;grid-template-columns:360px 1fr;gap:16px;}
-.promo-form{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;}
-.promo-list{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;}
+/* PROMO CHIPS */
+.promo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:14px;}
+.promo-card{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;padding:14px;}
+.promo-code{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--acc);margin-bottom:6px;}
+.promo-meta{font-size:11px;color:var(--text2);line-height:1.6;}
 
-/* ═══ ANNOUNCEMENT ═══ */
-.ann-form{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;max-width:560px;display:flex;flex-direction:column;gap:12px;}
-.ann-preview{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;flex:1;}
-.ann-banner{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;margin-top:10px;}
-.ann-banner.info{background:var(--bldim);border:1px solid rgba(77,159,255,.2);color:var(--blue);}
-.ann-banner.warning{background:var(--ambdim);border:1px solid rgba(255,184,48,.2);color:var(--amber);}
-.ann-banner.success{background:var(--accdim);border:1px solid rgba(0,229,160,.2);color:var(--acc);}
+/* ANNOUNCEMENTS */
+.ann-banner{padding:12px 16px;border-radius:9px;font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.ann-banner.info{background:var(--bldim);border:1px solid rgba(77,159,255,.25);color:var(--blue);}
+.ann-banner.warning{background:var(--ambdim);border:1px solid rgba(255,184,48,.25);color:var(--amber);}
+.ann-banner.success{background:var(--accdim);border:1px solid rgba(0,229,160,.25);color:var(--acc);}
+.ann-form{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:18px;margin-bottom:14px;}
 
-/* ═══ MODAL ═══ */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.hidden{display:none;}
-.modal{background:var(--s1);border:1px solid var(--bdr2);border-radius:16px;padding:28px;width:100%;max-width:420px;position:relative;}
-.modal-title{font-family:var(--head);font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
-.modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5;}
-.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;}
-.modal-close:hover{color:var(--text);}
-.modal-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
-.modal-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);}
-.modal-inp{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;}
-.modal-inp:focus{border-color:var(--acc);}
-.modal-inp::placeholder{color:var(--muted);}
-.modal-sel{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;cursor:pointer;appearance:none;}
-.modal-sel option{background:var(--s2);}
-.modal-btns{display:flex;gap:8px;margin-top:6px;}
-.modal-btn{flex:1;padding:10px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid;transition:all .12s;}
-.modal-btn.confirm{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;border-color:transparent;}
-.modal-btn.confirm:hover{opacity:.85;}
-.modal-btn.confirm.danger{background:linear-gradient(135deg,var(--red),#E83050);}
-.modal-btn.cancel{background:transparent;border-color:var(--bdr2);color:var(--text2);}
-.modal-btn.cancel:hover{border-color:var(--text);color:var(--text);}
-
-/* ═══ TOAST ═══ */
-.toast{position:fixed;bottom:24px;right:24px;padding:10px 20px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.success{background:var(--acc);color:#000;}
+/* TOAST */
+.toast{position:fixed;top:16px;right:20px;padding:10px 20px;border-radius:9px;font-size:13px;font-weight:700;box-shadow:0 4px 24px rgba(0,0,0,.4);z-index:9999;pointer-events:none;opacity:0;transform:translateY(-10px);transition:all .25s;white-space:nowrap;}
+.toast.show{opacity:1;transform:none;}
+.toast.success{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;}
 .toast.error{background:var(--red);color:#fff;}
 .toast.info{background:var(--blue);color:#fff;}
 
-/* ═══ LOGIN ═══ */
-#login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:8000;display:flex;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.hidden{display:none;}
+.modal{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;padding:24px;width:100%;max-width:400px;position:relative;}
+.modal-close{position:absolute;top:12px;right:14px;background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 6px;}
+.modal-close:hover{color:var(--text);}
+.modal-title{font-family:var(--head);font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.modal-sub{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;}
+.modal-btns{display:flex;gap:8px;margin-top:16px;}
+.modal-btn{flex:1;padding:10px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid;transition:all .12s;}
+.modal-btn.cancel{border-color:var(--bdr2);color:var(--text2);background:transparent;}
+.modal-btn.cancel:hover{border-color:var(--text);color:var(--text);}
+.modal-btn.confirm{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#000;border-color:transparent;}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;}
 #login-screen.hidden{display:none;}
 .login-box{background:var(--s1);border:1px solid var(--bdr2);border-radius:16px;padding:40px;width:100%;max-width:360px;text-align:center;}
 .login-logo{font-family:var(--head);font-size:32px;font-weight:800;color:var(--acc);letter-spacing:-1px;margin-bottom:6px;}
 .login-role{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;}
-.login-google{width:100%;padding:12px;background:var(--s2);border:1.5px solid var(--bdr2);border-radius:10px;color:var(--text);font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .12s;}
+.login-google{width:100%;padding:12px;background:var(--s2);border:1.5px solid var(--bdr2);border-radius:9px;color:var(--text);font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .12s;}
 .login-google:hover{border-color:var(--acc);color:var(--acc);}
+.login-google:disabled{opacity:.5;cursor:default;}
 .login-google svg{width:18px;height:18px;flex-shrink:0;}
-.login-note{font-size:11px;color:var(--muted);margin-top:14px;}
-.login-err{font-size:12px;color:var(--red);margin-top:10px;display:none;}
+.login-note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.5;}
+.login-err{display:none;font-size:12px;color:var(--red);font-weight:600;margin-top:10px;padding:8px;background:var(--rddim);border-radius:6px;}
 
-/* ═══ SPINNER ═══ */
-.spinner{width:20px;height:20px;border:2px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-row{display:flex;align-items:center;justify-content:center;gap:10px;padding:32px;color:var(--muted);font-size:13px;}
-
-/* ═══ MISC ═══ */
-.form-row{display:flex;flex-direction:column;gap:5px;}
-.form-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);}
-.form-inp{padding:8px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;}
-.form-inp:focus{border-color:var(--acc);}
-.form-inp::placeholder{color:var(--muted);}
-.form-sel{padding:8px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;cursor:pointer;appearance:none;}
-.form-sel option{background:var(--s2);}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2344445A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-.divider{height:1px;background:var(--bdr);margin:4px 0;}
-.text-acc{color:var(--acc);}
-.text-red{color:var(--red);}
-.text-amber{color:var(--amber);}
-.flex-gap{display:flex;gap:8px;}
-.pagination{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--bdr);}
-.page-btn{padding:5px 10px;background:var(--s3);border:1px solid var(--bdr2);border-radius:5px;color:var(--text2);font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .12s;}
-.page-btn:hover,.page-btn.active{border-color:var(--acc);color:var(--acc);}
-.page-btn:disabled{opacity:.3;cursor:default;}
-.page-info{font-size:12px;color:var(--muted);font-family:var(--mono);margin-left:auto;}
-
-@media(max-width:768px){
-  .sidebar{display:none;}
-  .content{padding:16px;}
-  .email-grid,.promo-grid{grid-template-columns:1fr;}
-  .settings-grid{grid-template-columns:1fr;}
-  .stats-grid{grid-template-columns:repeat(2,1fr);}
-}
-
-/* ═══ TEST BUILDER ═══ */
+/* TEST BUILDER */
 .tb-steps{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.tb-step{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;border:1.5px solid var(--bdr2);background:var(--s2);font-size:12px;font-weight:700;color:var(--muted);cursor:default;}
+.tb-step{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;border:1.5px solid var(--bdr2);background:var(--s2);font-size:12px;font-weight:700;color:var(--muted);}
 .tb-step.done{border-color:var(--acc2);color:var(--acc);}
 .tb-step.active{border-color:var(--acc);background:var(--accdim);color:var(--acc);}
 .tb-step-num{width:20px;height:20px;border-radius:50%;background:var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;}
@@ -255,7 +160,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .tb-step.done .tb-step-num{background:var(--acc2);color:#000;}
 .tb-panel{display:none;}
 .tb-panel.active{display:block;}
-/* Step 1 - generate */
 .tb-gen-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;max-width:520px;}
 .tb-opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
 .tb-opt{padding:6px 13px;border-radius:6px;border:1.5px solid var(--bdr2);background:var(--s3);color:var(--text2);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;}
@@ -267,7 +171,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .btn-tb.primary:disabled{opacity:.4;cursor:default;}
 .btn-tb.outline{background:transparent;border:1.5px solid var(--bdr2);color:var(--text2);}
 .btn-tb.outline:hover{border-color:var(--acc);color:var(--acc);}
-/* Step 2 - review */
 .review-progress{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
 .rev-stat{background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;}
 .rev-stat span{font-family:var(--mono);color:var(--acc);}
@@ -289,19 +192,23 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .q-action-btn.approve:hover{background:var(--acc);color:#000;}
 .q-action-btn.reject{border-color:var(--red);color:var(--red);background:var(--rddim);}
 .q-action-btn.reject:hover{background:var(--red);color:#fff;}
-.q-action-btn.edit{border-color:var(--amber);color:var(--amber);background:var(--ambdim);}
-.q-action-btn.edit:hover{background:var(--amber);color:#000;}
-.q-action-btn:disabled{opacity:.3;cursor:default;pointer-events:none;}
-/* Step 3 - publish */
+.q-action-btn.skip{border-color:var(--amber);color:var(--amber);background:var(--ambdim);}
+.q-action-btn.skip:hover{background:var(--amber);color:#000;}
 .tb-publish-card{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:20px;max-width:520px;}
 .pub-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
 .pub-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);}
-.pub-inp{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .12s;}
+.pub-inp{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .12s;width:100%;}
 .pub-inp:focus{border-color:var(--acc);}
-.pub-sel{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;cursor:pointer;appearance:none;}
+.pub-sel{padding:9px 12px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;cursor:pointer;appearance:none;width:100%;}
 .pub-sel option{background:var(--s2);}
-/* Published tests table */
 .pub-tests-wrap{background:var(--s2);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;margin-top:20px;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .content{padding:16px;}
+  .topbar{padding:12px 16px;}
+}
 </style>
 </head>
 <body>
@@ -309,7 +216,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">PyZap ⚡</div>
+    <div class="login-logo">PyZap &#x26A1;</div>
     <div class="login-role">Admin Panel</div>
     <button class="login-google" id="btn-admin-login">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
@@ -343,40 +250,24 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sb-logo">
-      <div class="sb-brand">PyZap ⚡</div>
+      <div class="sb-brand">PyZap &#x26A1;</div>
       <div class="sb-role">Admin Console</div>
     </div>
     <div class="sb-nav">
       <div class="sb-section">Overview</div>
-      <div class="nav-item active" data-page="dashboard">
-        <span class="nav-icon">&#x25A6;</span> Dashboard
-      </div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">&#x25A6;</span> Dashboard</div>
       <div class="sb-section">Students</div>
-      <div class="nav-item" data-page="students">
-        <span class="nav-icon">&#x1F465;</span> All Students
-      </div>
-      <div class="nav-item" data-page="frequent">
-        <span class="nav-icon">&#x26A1;</span> Frequent Users
-      </div>
+      <div class="nav-item" data-page="students"><span class="nav-icon">&#x1F465;</span> All Students</div>
+      <div class="nav-item" data-page="frequent"><span class="nav-icon">&#x26A1;</span> Frequent Users</div>
       <div class="sb-section">Tools</div>
-      <div class="nav-item" data-page="settings">
-        <span class="nav-icon">&#x2699;</span> Settings
-      </div>
-      <div class="nav-item" data-page="email">
-        <span class="nav-icon">&#x2709;</span> Email Marketing
-      </div>
-      <div class="nav-item" data-page="promos">
-        <span class="nav-icon">&#x1F3F7;</span> Promo Codes
-      </div>
-      <div class="nav-item" data-page="announce">
-        <span class="nav-icon">&#x1F4E3;</span> Announcements
-      </div>
-      <div class="nav-item" data-page="testbuilder">
-        <span class="nav-icon">&#x1F4CB;</span> Test Builder
-      </div>
+      <div class="nav-item" data-page="settings"><span class="nav-icon">&#x2699;</span> Settings</div>
+      <div class="nav-item" data-page="email"><span class="nav-icon">&#x2709;</span> Email Marketing</div>
+      <div class="nav-item" data-page="promos"><span class="nav-icon">&#x1F3F7;</span> Promo Codes</div>
+      <div class="nav-item" data-page="announce"><span class="nav-icon">&#x1F4E3;</span> Announcements</div>
+      <div class="nav-item" data-page="testbuilder"><span class="nav-icon">&#x1F4CB;</span> Test Builder</div>
     </div>
     <div class="sb-footer">
-      <div class="sb-admin" id="sb-admin-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e1f1a1317103e0e07041f0e501710">[email&#160;protected]</a></div>
+      <div class="sb-admin" id="sb-admin-email">admin@example.com</div>
       <button class="sb-logout" id="btn-logout">Sign Out</button>
     </div>
   </nav>
@@ -388,259 +279,172 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         <div class="page-title" id="page-title">Dashboard</div>
         <div class="page-sub" id="page-sub">Overview of PyZap platform</div>
       </div>
-      <div class="topbar-right">
-        <button class="refresh-btn" id="btn-refresh">&#x21BA; Refresh</button>
-      </div>
     </div>
-
     <div class="content">
 
-      <!-- ═══ DASHBOARD ═══ -->
+      <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
-        <div class="stats-grid" id="stats-grid">
-          <div class="loading-row"><div class="spinner"></div> Loading stats...</div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val" id="st-total">—</div><div class="stat-lbl">Total Students</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-paid">—</div><div class="stat-lbl">Pro Students</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-free">—</div><div class="stat-lbl">Free Students</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-today">—</div><div class="stat-lbl">Logged In Today</div></div>
         </div>
-        <div class="sec-hdr"><div class="sec-title">Recent Signups</div></div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Name</th><th>Board</th><th>Plan</th><th>Joined</th><th>Logins</th>
-            </tr></thead>
-            <tbody id="recent-tbody"><tr><td colspan="5" class="loading-row"><div class="spinner"></div></td></tr></tbody>
-          </table>
+        <div class="setting-card">
+          <div class="setting-title">Recent Signups</div>
+          <div id="recent-signups"><div class="loading-row"><div class="spinner"></div></div></div>
         </div>
       </div>
 
-      <!-- ═══ STUDENTS ═══ -->
+      <!-- STUDENTS -->
       <div class="page" id="page-students">
+        <div class="filter-bar">
+          <input class="filter-inp" id="student-search" placeholder="Search by name or email...">
+          <select class="filter-sel" id="student-plan-filter">
+            <option value="all">All Plans</option>
+            <option value="free">Free</option>
+            <option value="paid">Pro</option>
+          </select>
+          <select class="filter-sel" id="student-sort">
+            <option value="newest">Newest First</option>
+            <option value="logins">Most Logins</option>
+          </select>
+        </div>
         <div class="tbl-wrap">
-          <div class="tbl-toolbar">
-            <input class="tbl-search" id="students-search" placeholder="Search name, email, phone...">
-            <select class="tbl-filter" id="students-filter-plan">
-              <option value="">All Plans</option>
-              <option value="free">Free</option>
-              <option value="paid">Paid</option>
-              <option value="banned">Banned</option>
-            </select>
-            <select class="tbl-filter" id="students-filter-board">
-              <option value="">All Boards</option>
-              <option>CBSE</option>
-              <option>Tamil Nadu State Board</option>
-              <option>Karnataka PU Board</option>
-              <option>Other</option>
-            </select>
-          </div>
           <table>
             <thead><tr>
-              <th>Name</th><th>Phone</th><th>Board</th><th>Plan</th><th>Last Login</th><th>Logins</th><th>Actions</th>
+              <th>Name</th><th>Email</th><th>Plan</th><th>Board</th><th>Logins</th><th>Last Login</th><th></th>
             </tr></thead>
             <tbody id="students-tbody"><tr><td colspan="7" class="loading-row"><div class="spinner"></div></td></tr></tbody>
           </table>
-          <div class="pagination" id="students-pagination"></div>
         </div>
+        <div id="students-pagination" style="margin-top:12px;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)"></div>
       </div>
 
-      <!-- ═══ FREQUENT USERS ═══ -->
+      <!-- FREQUENT -->
       <div class="page" id="page-frequent">
-        <div style="margin-bottom:14px;font-size:13px;color:var(--text2);">
-          Students sorted by login count — highest engagement, most likely to convert to paid.
+        <div class="setting-card" style="margin-bottom:14px">
+          <div class="setting-title">Top 20 Most Active Students</div>
+          <div class="setting-desc">Students with highest login counts — best upgrade targets.</div>
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr>
-              <th>Rank</th><th>Name</th><th>Board</th><th>Plan</th><th>Logins</th><th>Last Login</th><th>Actions</th>
-            </tr></thead>
+            <thead><tr><th>Rank</th><th>Name</th><th>Email</th><th>Plan</th><th>Logins</th><th>Hit Limit</th><th></th></tr></thead>
             <tbody id="frequent-tbody"><tr><td colspan="7" class="loading-row"><div class="spinner"></div></td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- ═══ SETTINGS ═══ -->
+      <!-- SETTINGS -->
       <div class="page" id="page-settings">
-        <div class="settings-grid">
-
-          <!-- Free concepts -->
-          <div class="setting-card">
-            <div class="setting-title">Free Concepts</div>
-            <div class="setting-desc">Data types available on the free plan. Students can only practice these without upgrading.</div>
-            <div class="tag-group" id="free-concepts-tags"></div>
-            <div class="tag-add">
-              <input class="tag-new" id="new-concept-inp" placeholder="Add concept (e.g. Tuple)">
-              <button class="tag-addbtn" id="new-concept-btn">Add</button>
-            </div>
-            <button class="btn-save-settings" id="save-concepts-btn">Save Free Concepts</button>
+        <div class="setting-card">
+          <div class="setting-title">Free Plan Limits</div>
+          <div class="setting-desc">Control what free students can access daily.</div>
+          <div class="form-row">
+            <div class="form-lbl">Free Concepts (comma-separated)</div>
+            <input class="form-inp" id="s-free-concepts" placeholder="String,List">
           </div>
-
-          <!-- Questions per concept -->
-          <div class="setting-card">
-            <div class="setting-title">Free Questions Per Concept</div>
-            <div class="setting-desc">How many questions a free student gets per data type per day. Server distributes this across qtypes using the weights below.</div>
-            <div class="setting-row">
-              <div class="setting-lbl">Questions</div>
-              <input class="setting-inp" type="number" id="free-q-count" min="5" max="50" placeholder="10">
-            </div>
-            <button class="btn-save-settings" id="save-freeq-btn">Save</button>
+          <div class="form-row">
+            <div class="form-lbl">Questions per Concept per Day</div>
+            <input class="form-inp" id="s-free-q" type="number" min="5" max="50" placeholder="10">
           </div>
-
-          <!-- Qtype weights -->
-          <div class="setting-card" style="grid-column:1/-1">
-            <div class="setting-title">Question Type Weights</div>
-            <div class="setting-desc">Controls how questions are distributed across qtypes. Weights are relative — they don't need to sum to 100. Add new qtypes as you build them.</div>
-            <div id="weights-rows"></div>
-            <div class="tag-add" style="margin-top:8px;">
-              <input class="tag-new" id="new-weight-key" placeholder="New qtype name">
-              <input class="weight-inp" id="new-weight-val" placeholder="10" style="width:60px;">
-              <button class="tag-addbtn" id="new-weight-btn">Add</button>
-            </div>
-            <button class="btn-save-settings" id="save-weights-btn">Save Weights</button>
+          <button class="btn-save-settings" id="btn-save-limits">Save Limits</button>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">Pricing</div>
+          <div class="setting-desc">Set the Pro plan price shown to students.</div>
+          <div class="form-row">
+            <div class="form-lbl">Pro Plan Price (&#x20B9;)</div>
+            <input class="form-inp" id="s-price" type="number" min="1" placeholder="499">
           </div>
-
-          <!-- Paid batch size -->
-          <div class="setting-card">
-            <div class="setting-title">Paid Batch Size</div>
-            <div class="setting-desc">Number of questions generated per server call for paid students.</div>
-            <div class="setting-row">
-              <div class="setting-lbl">Batch Size</div>
-              <input class="setting-inp" type="number" id="paid-batch-size" min="10" max="200" placeholder="50">
-            </div>
-            <button class="btn-save-settings" id="save-batch-btn">Save</button>
+          <button class="btn-save-settings" id="btn-save-price">Save Price</button>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">Question Type Weights</div>
+          <div class="setting-desc">Distribution percentages when generating mixed questions.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="form-row"><div class="form-lbl">Indexing %</div><input class="form-inp" id="w-indexing" type="number" min="0" max="100" placeholder="30"></div>
+            <div class="form-row"><div class="form-lbl">Slicing %</div><input class="form-inp" id="w-slicing" type="number" min="0" max="100" placeholder="30"></div>
+            <div class="form-row"><div class="form-lbl">Functions %</div><input class="form-inp" id="w-functions" type="number" min="0" max="100" placeholder="20"></div>
+            <div class="form-row"><div class="form-lbl">Membership %</div><input class="form-inp" id="w-membership" type="number" min="0" max="100" placeholder="10"></div>
+            <div class="form-row"><div class="form-lbl">Comparison %</div><input class="form-inp" id="w-comparison" type="number" min="0" max="100" placeholder="10"></div>
           </div>
-
-          <!-- Paid price -->
-          <div class="setting-card">
-            <div class="setting-title">Paid Plan Price</div>
-            <div class="setting-desc">Price shown on the upgrade popup. Changing this updates the popup immediately for all users.</div>
-            <div class="setting-row">
-              <div class="setting-lbl">Price (₹)</div>
-              <input class="setting-inp" type="number" id="paid-price" min="1" placeholder="499">
-            </div>
-            <button class="btn-save-settings" id="save-price-btn">Save</button>
-          </div>
-
+          <button class="btn-save-settings" id="btn-save-weights">Save Weights</button>
         </div>
       </div>
 
-      <!-- ═══ EMAIL ═══ -->
+      <!-- EMAIL -->
       <div class="page" id="page-email">
-        <div class="email-grid">
-          <div class="email-sidebar">
-            <div class="setting-title" style="margin-bottom:14px;">Recipient Filter</div>
-            <div class="filter-group">
-              <div class="filter-lbl">Plan</div>
-              <select class="filter-sel" id="email-filter-plan">
-                <option value="all">All Students</option>
-                <option value="free">Free Only</option>
-                <option value="paid">Paid Only</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <div class="filter-lbl">Activity</div>
-              <select class="filter-sel" id="email-filter-activity">
-                <option value="all">All</option>
-                <option value="active">Active (last 7 days)</option>
-                <option value="inactive">Inactive (7+ days)</option>
-                <option value="frequent">Frequent (10+ logins)</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <div class="filter-lbl">Board</div>
-              <select class="filter-sel" id="email-filter-board">
-                <option value="all">All Boards</option>
-                <option value="CBSE">CBSE</option>
-                <option value="Tamil Nadu State Board">TN Board</option>
-              </select>
-            </div>
-            <div style="margin-top:14px;">
-              <div class="recipient-count" id="recipient-count">—</div>
-              <div class="recipient-lbl">recipients matched</div>
-            </div>
-            <button class="sec-action" style="margin-top:12px;width:100%" id="btn-count-recipients">Count Recipients</button>
+        <div class="setting-card">
+          <div class="setting-title">Send Email Campaign</div>
+          <div class="setting-desc">Reach out to your students directly.</div>
+          <div class="form-row">
+            <div class="form-lbl">Target Audience</div>
+            <select class="form-sel" id="email-plan-filter">
+              <option value="all">All Students</option>
+              <option value="free">Free Students Only</option>
+              <option value="paid">Pro Students Only</option>
+            </select>
           </div>
-          <div class="email-main">
-            <div class="setting-title">Compose Email</div>
-            <div class="form-row">
-              <div class="form-lbl">Templates</div>
-              <div class="template-btns">
-                <button class="tpl-btn" data-tpl="upgrade">Upgrade Push</button>
-                <button class="tpl-btn" data-tpl="welcome">Welcome Back</button>
-                <button class="tpl-btn" data-tpl="promo">Promo Code</button>
-                <button class="tpl-btn" data-tpl="exam">Exam Reminder</button>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-lbl">Subject</div>
-              <input class="email-inp" id="email-subject" placeholder="Email subject line...">
-            </div>
-            <div class="form-row" style="flex:1">
-              <div class="form-lbl">Body</div>
-              <textarea class="email-body" id="email-body" placeholder="Write your email here...&#10;&#10;Use {name} to personalise with student name."></textarea>
-            </div>
-            <button class="btn-send" id="btn-send-email">Send Email Campaign</button>
+          <div class="form-row">
+            <div class="form-lbl">Activity Filter</div>
+            <select class="form-sel" id="email-activity-filter">
+              <option value="all">All</option>
+              <option value="frequent">Frequent Users (10+ logins)</option>
+              <option value="active">Active Last 7 Days</option>
+            </select>
           </div>
+          <div class="form-row">
+            <div class="form-lbl">Subject</div>
+            <input class="form-inp" id="email-subject" placeholder="e.g. New topics added to PyZap!">
+          </div>
+          <div class="form-row">
+            <div class="form-lbl">Message</div>
+            <textarea class="form-ta" id="email-body" rows="5" placeholder="Write your message here..."></textarea>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <button class="btn-save-settings" id="btn-preview-email">Preview Recipients</button>
+            <button class="btn-save-settings" id="btn-send-email" style="background:var(--bldim);border:1.5px solid var(--blue);color:var(--blue)">Send Campaign</button>
+          </div>
+          <div id="email-preview-result" style="margin-top:12px;font-size:12px;color:var(--text2)"></div>
         </div>
       </div>
 
-      <!-- ═══ PROMO CODES ═══ -->
+      <!-- PROMOS -->
       <div class="page" id="page-promos">
-        <div class="promo-grid">
-          <div class="promo-form">
-            <div class="setting-title">Create Promo Code</div>
-            <div class="form-row">
-              <div class="form-lbl">Code</div>
-              <input class="form-inp" id="promo-code" placeholder="e.g. CBSE25" style="text-transform:uppercase">
-            </div>
-            <div class="form-row">
-              <div class="form-lbl">Type</div>
+        <div class="setting-card">
+          <div class="setting-title">Create Promo Code</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="form-row"><div class="form-lbl">Code</div><input class="form-inp" id="promo-code" placeholder="LAUNCH50" style="text-transform:uppercase"></div>
+            <div class="form-row"><div class="form-lbl">Type</div>
               <select class="form-sel" id="promo-type">
-                <option value="discount">Discount (%)</option>
-                <option value="free">Full Free Upgrade</option>
+                <option value="discount">Discount %</option>
+                <option value="free">Free Upgrade</option>
               </select>
             </div>
-            <div class="form-row" id="promo-discount-row">
-              <div class="form-lbl">Discount %</div>
-              <input class="form-inp" type="number" id="promo-discount" min="1" max="100" placeholder="25">
-            </div>
-            <div class="form-row">
-              <div class="form-lbl">Usage Limit</div>
-              <input class="form-inp" type="number" id="promo-limit" min="1" placeholder="100">
-            </div>
-            <div class="form-row">
-              <div class="form-lbl">Expiry Date</div>
-              <input class="form-inp" type="date" id="promo-expiry">
-            </div>
-            <button class="btn-save-settings" id="btn-create-promo">Create Code</button>
+            <div class="form-row"><div class="form-lbl">Discount %</div><input class="form-inp" id="promo-discount" type="number" min="1" max="100" placeholder="50"></div>
+            <div class="form-row"><div class="form-lbl">Usage Limit</div><input class="form-inp" id="promo-limit" type="number" min="1" placeholder="100"></div>
+            <div class="form-row"><div class="form-lbl">Expiry Date</div><input class="form-inp" id="promo-expiry" type="date"></div>
           </div>
-          <div class="promo-list">
-            <div style="padding:14px 16px;border-bottom:1px solid var(--bdr);font-family:var(--head);font-size:14px;font-weight:700;">Active Promo Codes</div>
-            <table>
-              <thead><tr>
-                <th>Code</th><th>Type</th><th>Discount</th><th>Used</th><th>Limit</th><th>Expiry</th><th>Action</th>
-              </tr></thead>
-              <tbody id="promos-tbody"><tr><td colspan="7" class="loading-row"><div class="spinner"></div></td></tr></tbody>
-            </table>
-          </div>
+          <button class="btn-save-settings" id="btn-create-promo">Create Promo Code</button>
         </div>
+        <div id="promos-list" style="margin-top:4px"><div class="loading-row"><div class="spinner"></div></div></div>
       </div>
 
-      <!-- ═══ ANNOUNCEMENTS ═══ -->
+      <!-- ANNOUNCEMENTS -->
       <div class="page" id="page-announce">
-        <div style="display:flex;gap:16px;flex-wrap:wrap;">
-          <div class="ann-form">
-            <div class="setting-title">Send Announcement</div>
-            <div class="form-row">
-              <div class="form-lbl">Type</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="ann-form" style="flex:1;min-width:260px">
+            <div class="setting-title" style="margin-bottom:12px">New Announcement</div>
+            <div class="form-row"><div class="form-lbl">Type</div>
               <select class="form-sel" id="ann-type">
                 <option value="info">Info (blue)</option>
                 <option value="warning">Warning (amber)</option>
                 <option value="success">Success (green)</option>
               </select>
             </div>
-            <div class="form-row">
-              <div class="form-lbl">Message</div>
-              <input class="form-inp" id="ann-msg" placeholder="e.g. New questions added for Tuple!">
-            </div>
-            <div class="form-row">
-              <div class="form-lbl">Expires After</div>
+            <div class="form-row"><div class="form-lbl">Message</div><input class="form-inp" id="ann-msg" placeholder="e.g. New questions added for Tuple!"></div>
+            <div class="form-row"><div class="form-lbl">Expires After</div>
               <select class="form-sel" id="ann-expiry">
                 <option value="1">1 day</option>
                 <option value="3">3 days</option>
@@ -651,30 +455,28 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
             </div>
             <button class="btn-save-settings" id="btn-send-ann">Publish Announcement</button>
             <div class="divider"></div>
-            <div class="setting-title" style="font-size:13px;">Preview</div>
+            <div class="setting-title" style="font-size:13px">Preview</div>
             <div class="ann-banner info" id="ann-preview">&#x2139;&#xFE0F; Your announcement will appear here.</div>
           </div>
-          <div class="ann-form" style="flex:1;min-width:260px;">
+          <div class="ann-form" style="flex:1;min-width:260px">
             <div class="setting-title">Active Announcements</div>
             <div id="active-anns"><div class="loading-row"><div class="spinner"></div></div></div>
           </div>
         </div>
+      </div>
 
-      <!-- ═══ TEST BUILDER ═══ -->
+      <!-- TEST BUILDER -->
       <div class="page" id="page-testbuilder">
-
-        <!-- Steps indicator -->
         <div class="tb-steps">
           <div class="tb-step active" id="tb-step-1"><div class="tb-step-num">1</div> Generate</div>
           <div class="tb-step" id="tb-step-2"><div class="tb-step-num">2</div> Review</div>
           <div class="tb-step" id="tb-step-3"><div class="tb-step-num">3</div> Publish</div>
         </div>
 
-        <!-- STEP 1: Generate -->
         <div class="tb-panel active" id="tb-panel-1">
           <div class="tb-gen-card">
             <div class="setting-title" style="margin-bottom:4px">Generate Questions</div>
-            <div class="setting-desc" style="margin-bottom:14px">Pick concepts and count. The engine generates questions — you review them one by one in Step 2.</div>
+            <div class="setting-desc" style="margin-bottom:14px">Pick concept and count. Engine generates questions — you review one by one in Step 2.</div>
             <div class="setting-lbl">Data Type</div>
             <div class="tb-opt-row" id="tb-dtype">
               <button class="tb-opt on" data-val="String">String</button>
@@ -693,7 +495,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
           </div>
         </div>
 
-        <!-- STEP 2: Review -->
         <div class="tb-panel" id="tb-panel-2">
           <div class="review-progress">
             <div class="rev-stat">Approved: <span id="rev-approved">0</span></div>
@@ -701,65 +502,41 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
             <div class="rev-stat">Remaining: <span id="rev-remaining">0</span></div>
           </div>
           <div id="review-queue"></div>
-          <div style="display:flex;gap:8px;margin-top:12px;">
+          <div style="display:flex;gap:8px;margin-top:12px">
             <button class="btn-tb outline" id="btn-tb-back-gen">&#x2190; Regenerate</button>
             <button class="btn-tb primary" id="btn-tb-to-publish">Proceed to Publish &#x2192;</button>
           </div>
         </div>
 
-        <!-- STEP 3: Publish -->
         <div class="tb-panel" id="tb-panel-3">
           <div class="tb-publish-card">
             <div class="setting-title" style="margin-bottom:4px">Publish Test</div>
-            <div class="setting-desc" style="margin-bottom:14px">Set the test details and publish it. Students will see it in their Tests tab.</div>
-            <div class="pub-row">
-              <div class="pub-lbl">Test Title</div>
-              <input class="pub-inp" id="pub-title" placeholder="e.g. Mock Test 1 — Strings & Lists">
-            </div>
-            <div class="pub-row">
-              <div class="pub-lbl">Access</div>
+            <div class="setting-desc" style="margin-bottom:14px">Set details and publish. Students see it in their Tests tab.</div>
+            <div class="pub-row"><div class="pub-lbl">Test Title</div><input class="pub-inp" id="pub-title" placeholder="e.g. Mock Test 1 — Strings & Lists"></div>
+            <div class="pub-row"><div class="pub-lbl">Access</div>
               <select class="pub-sel" id="pub-access">
-                <option value="free">Free — all students can attempt</option>
-                <option value="paid">Paid — Pro students only</option>
+                <option value="free">Free — all students</option>
+                <option value="paid">Paid — Pro only</option>
               </select>
             </div>
-            <div class="pub-row">
-              <div class="pub-lbl">Duration (minutes)</div>
-              <input class="pub-inp" type="number" id="pub-duration" min="5" max="180" placeholder="30">
-            </div>
-            <div class="pub-row">
-              <div class="pub-lbl">Scheduled Date &amp; Time</div>
-              <input class="pub-inp" type="datetime-local" id="pub-schedule">
-            </div>
-            <div class="pub-row">
-              <div class="pub-lbl">Description (optional)</div>
-              <input class="pub-inp" id="pub-desc" placeholder="Brief description for students...">
-            </div>
-            <div style="display:flex;gap:8px;margin-top:4px;">
+            <div class="pub-row"><div class="pub-lbl">Duration (minutes)</div><input class="pub-inp" type="number" id="pub-duration" min="5" max="180" placeholder="30"></div>
+            <div class="pub-row"><div class="pub-lbl">Scheduled Date &amp; Time</div><input class="pub-inp" type="datetime-local" id="pub-schedule"></div>
+            <div class="pub-row"><div class="pub-lbl">Description (optional)</div><input class="pub-inp" id="pub-desc" placeholder="Brief description..."></div>
+            <div style="display:flex;gap:8px;margin-top:4px">
               <button class="btn-tb outline" id="btn-tb-back-review">&#x2190; Back to Review</button>
               <button class="btn-tb primary" id="btn-tb-publish">Publish Test &#x1F680;</button>
             </div>
           </div>
-
-          <!-- Published tests list -->
           <div class="pub-tests-wrap">
-            <div style="padding:14px 16px;border-bottom:1px solid var(--bdr);font-family:var(--head);font-size:14px;font-weight:700;">Published Tests</div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--bdr);font-family:var(--head);font-size:14px;font-weight:700">Published Tests</div>
+            <table>
               <thead><tr>
-                <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);">Title</th>
-                <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);">Access</th>
-                <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);">Questions</th>
-                <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);">Status</th>
-                <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);">Scheduled</th>
-                <th style="padding:10px 16px;border-bottom:1px solid var(--bdr);"></th>
+                <th>Title</th><th>Access</th><th>Questions</th><th>Status</th><th>Scheduled</th><th></th>
               </tr></thead>
               <tbody id="pub-tests-tbody"><tr><td colspan="6" class="loading-row"><div class="spinner"></div></td></tr></tbody>
             </table>
           </div>
         </div>
-
-      </div>
-
       </div>
 
     </div>
@@ -772,7 +549,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <script>
 'use strict';
 
-// ═══ CONFIG ═══
+// CONFIG
 firebase.initializeApp({
   apiKey:            "AIzaSyAYth1IHw3iIIs4-LWxJe4bbMdmkvyBKjE",
   authDomain:        "pyzap-297ad.firebaseapp.com",
@@ -784,14 +561,11 @@ firebase.initializeApp({
 var auth = firebase.auth();
 var db   = firebase.firestore();
 
-// ═══ STATE ═══
-var allStudents   = [];
-var filteredStudents = [];
-var currentPage   = 1;
-var PAGE_SIZE     = 20;
+// STATE
+var allStudents = [], filteredStudents = [], currentPage = 1, PAGE_SIZE = 20;
 var currentSettings = {};
 
-// ═══ AUTH ═══
+// AUTH
 var _adminHandled = false;
 var isMobileAdmin = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -804,25 +578,29 @@ function handleAdminUser(user) {
   if (_adminHandled) return;
   _adminHandled = true;
   console.log("[Admin] Checking admin access for:", user.email);
-
   db.collection("admins").doc(user.uid).get().then(function(snap) {
     if (snap.exists) {
-      console.log("[Admin] Admin verified — loading panel");
+      console.log("[Admin] Access granted");
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("shell").style.display = "flex";
       document.getElementById("sb-admin-email").textContent = user.email;
       initAdmin();
     } else {
       console.warn("[Admin] Not an admin:", user.email);
-      document.getElementById("login-err").style.display = "block";
-      document.getElementById("login-err").textContent = "Access denied. Not an admin account.";
+      var err = document.getElementById("login-err");
+      err.style.display = "block";
+      err.textContent = "Access denied. This Google account is not an admin.";
+      var btn = document.getElementById("btn-admin-login");
+      btn.disabled = false;
+      btn.textContent = "Sign in with Google";
       _adminHandled = false;
       auth.signOut();
     }
   }).catch(function(e) {
-    console.error("[Admin] Firestore check error:", e);
-    document.getElementById("login-err").style.display = "block";
-    document.getElementById("login-err").textContent = "Error: " + e.message + ". Check Firestore rules.";
+    console.error("[Admin] Firestore error:", e);
+    var err = document.getElementById("login-err");
+    err.style.display = "block";
+    err.textContent = "Error: " + e.message + ". Check Firestore rules.";
     _adminHandled = false;
     auth.signOut();
   });
@@ -838,30 +616,29 @@ auth.getRedirectResult().then(function(result) {
   console.warn("[Admin] getRedirectResult error:", e.code);
 });
 
-// Auth state — fires for already logged-in users
+// Auth state listener
 auth.onAuthStateChanged(function(user) {
   if (user) {
     console.log("[Admin] onAuthStateChanged: user=" + user.email);
     handleAdminUser(user);
   } else {
     if (!_adminHandled) {
-      console.log("[Admin] No user — showing login");
       showLoginScreen();
     }
   }
 });
 
-// Login button — popup on desktop, redirect on mobile
+// Login button
 document.getElementById("btn-admin-login").addEventListener("click", function() {
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
-  var btn = document.getElementById("btn-admin-login");
+  var btn = this;
   btn.disabled = true;
   document.getElementById("login-err").style.display = "none";
 
   if (isMobileAdmin) {
     console.log("[Admin] Mobile: signInWithRedirect");
-    btn.textContent = "Redirecting to Google...";
+    btn.textContent = "Redirecting...";
     auth.signInWithRedirect(provider).catch(function(e) {
       btn.disabled = false;
       btn.textContent = "Sign in with Google";
@@ -879,7 +656,6 @@ document.getElementById("btn-admin-login").addEventListener("click", function() 
       if (e.code !== "auth/popup-closed-by-user") {
         document.getElementById("login-err").style.display = "block";
         document.getElementById("login-err").textContent = "Login failed: " + e.message;
-        console.error("[Admin] Popup error:", e.code, e.message);
       }
     });
   }
@@ -887,13 +663,10 @@ document.getElementById("btn-admin-login").addEventListener("click", function() 
 
 document.getElementById("btn-logout").addEventListener("click", function() {
   _adminHandled = false;
-  auth.signOut().then(function() {
-    console.log("[Admin] Logged out");
-    showLoginScreen();
-  });
+  auth.signOut().then(function() { showLoginScreen(); });
 });
 
-// ═══ INIT ═══
+// INIT
 function initAdmin() {
   loadDashboard();
   loadStudents();
@@ -903,18 +676,17 @@ function initAdmin() {
   loadTestBuilder();
 }
 
-// ═══ NAVIGATION ═══
+// NAVIGATION
 var pageMeta = {
-  dashboard: { title: "Dashboard",       sub: "Overview of PyZap platform" },
-  students:  { title: "All Students",    sub: "Manage student accounts" },
-  frequent:  { title: "Frequent Users",  sub: "Most engaged students — best upgrade targets" },
-  settings:  { title: "Settings",        sub: "Control free plan limits, weights, pricing" },
-  email:     { title: "Email Marketing", sub: "Send targeted email campaigns" },
-  promos:    { title: "Promo Codes",     sub: "Create and manage discount codes" },
-  announce:  { title: "Announcements",   sub: "Broadcast in-app banners to all students" },
-  testbuilder:{ title: "Test Builder",    sub: "Generate, review and publish mock tests" },
+  dashboard:   { title: "Dashboard",        sub: "Overview of PyZap platform" },
+  students:    { title: "All Students",     sub: "Manage student accounts" },
+  frequent:    { title: "Frequent Users",   sub: "Most engaged students — best upgrade targets" },
+  settings:    { title: "Settings",         sub: "Control free plan limits, weights, pricing" },
+  email:       { title: "Email Marketing",  sub: "Send campaigns to your students" },
+  promos:      { title: "Promo Codes",      sub: "Create and manage discount codes" },
+  announce:    { title: "Announcements",    sub: "Broadcast in-app banners to all students" },
+  testbuilder: { title: "Test Builder",     sub: "Generate, review and publish mock tests" },
 };
-
 document.querySelectorAll(".nav-item").forEach(function(item) {
   item.addEventListener("click", function() {
     var page = item.dataset.page;
@@ -922,638 +694,507 @@ document.querySelectorAll(".nav-item").forEach(function(item) {
     document.querySelectorAll(".page").forEach(function(p) { p.classList.remove("active"); });
     item.classList.add("active");
     document.getElementById("page-" + page).classList.add("active");
-    var meta = pageMeta[page] || {};
-    document.getElementById("page-title").textContent = meta.title || page;
-    document.getElementById("page-sub").textContent   = meta.sub || "";
+    var meta = pageMeta[page] || { title: page, sub: "" };
+    document.getElementById("page-title").textContent = meta.title;
+    document.getElementById("page-sub").textContent   = meta.sub;
+    if (page === "frequent") loadFrequent();
+    if (page === "testbuilder") loadPublishedTests();
   });
 });
 
-document.getElementById("btn-refresh").addEventListener("click", function() {
-  initAdmin();
-  showToast("Refreshed", "success");
-});
-
-// ═══ TOAST ═══
-var _toastTimer = null;
+// TOAST
+var _tt = null;
 function showToast(msg, type) {
   var t = document.getElementById("toast");
   t.textContent = msg;
   t.className = "toast " + (type || "success") + " show";
-  if (_toastTimer) clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(function() { t.classList.remove("show"); }, 2800);
+  if (_tt) clearTimeout(_tt);
+  _tt = setTimeout(function() { t.classList.remove("show"); }, 2500);
 }
 
-// ═══ MODAL ═══
-var _modalConfirmFn = null;
-function showModal(title, sub, bodyHTML, confirmTxt, confirmClass, onConfirm) {
-  document.getElementById("modal-title").textContent   = title;
-  document.getElementById("modal-sub").textContent     = sub;
-  document.getElementById("modal-body").innerHTML      = bodyHTML || "";
-  var confirmBtn = document.getElementById("modal-confirm");
-  confirmBtn.textContent  = confirmTxt || "Confirm";
-  confirmBtn.className    = "modal-btn confirm " + (confirmClass || "");
-  _modalConfirmFn = onConfirm;
+// MODAL
+var _modalFn = null;
+function showModal(title, body, confirmTxt, fn) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-sub").textContent   = body;
+  document.getElementById("modal-confirm").textContent = confirmTxt || "Confirm";
+  _modalFn = fn;
   document.getElementById("modal").classList.remove("hidden");
 }
-function hideModal() { document.getElementById("modal").classList.add("hidden"); _modalConfirmFn = null; }
-document.getElementById("modal-close").addEventListener("click", hideModal);
-document.getElementById("modal-cancel").addEventListener("click", hideModal);
+document.getElementById("modal-close").addEventListener("click",  function() { document.getElementById("modal").classList.add("hidden"); });
+document.getElementById("modal-cancel").addEventListener("click", function() { document.getElementById("modal").classList.add("hidden"); });
 document.getElementById("modal-confirm").addEventListener("click", function() {
-  if (_modalConfirmFn) _modalConfirmFn();
-  hideModal();
+  document.getElementById("modal").classList.add("hidden");
+  if (_modalFn) _modalFn();
 });
 
-// ═══ HELPERS ═══
+// HELPERS
+function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function fmtDate(ts) {
   if (!ts) return "—";
-  var d = ts.toDate ? ts.toDate() : new Date(ts);
-  return d.toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" });
+  try { var d = ts.toDate ? ts.toDate() : new Date(ts); return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}); } catch(e) { return "—"; }
 }
-function fmtDateShort(ts) {
-  if (!ts) return "—";
-  var d = ts.toDate ? ts.toDate() : new Date(ts);
-  var diff = Math.floor((Date.now() - d.getTime()) / 86400000);
-  if (diff === 0) return "Today";
-  if (diff === 1) return "Yesterday";
-  if (diff < 7)  return diff + "d ago";
-  return d.toLocaleDateString("en-IN", { day:"2-digit", month:"short" });
-}
-function planBadge(plan, banned) {
-  if (banned) return '<span class="badge banned">Banned</span>';
-  if (plan === "paid") return '<span class="badge paid">Paid</span>';
-  return '<span class="badge free">Free</span>';
-}
-function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
-// ═══ DASHBOARD ═══
+// DASHBOARD
 function loadDashboard() {
   db.collection("users").get().then(function(snap) {
-    var students = [], total = 0, paid = 0, free = 0, banned = 0;
-    var today = new Date(); today.setHours(0,0,0,0);
-    var activeToday = 0;
+    var total=snap.size, paid=0, free=0, today=0;
+    var now = new Date(), todayStr = now.toDateString();
+    var recent = [];
     snap.forEach(function(doc) {
       var d = doc.data();
-      total++;
-      if (d.banned) banned++;
-      else if (d.plan === "paid") paid++;
-      else free++;
-      if (d.lastLogin) {
-        var ll = d.lastLogin.toDate ? d.lastLogin.toDate() : new Date(d.lastLogin);
-        if (ll >= today) activeToday++;
-      }
-      students.push({ id: doc.id, ...d });
+      if (d.plan === "paid") paid++; else free++;
+      if (d.lastLogin && new Date(d.lastLogin.toDate ? d.lastLogin.toDate() : d.lastLogin).toDateString() === todayStr) today++;
+      recent.push({ name: d.name||"—", email: doc.id, plan: d.plan||"free", createdAt: d.createdAt });
     });
-
-    // Stats
-    document.getElementById("stats-grid").innerHTML =
-      statCard("Total Students", total, "green", "All registered accounts") +
-      statCard("Paid", paid, "amber", "Active paid subscribers") +
-      statCard("Free", free, "blue", "On free plan") +
-      statCard("Active Today", activeToday, "green", "Logged in today") +
-      statCard("Banned", banned, "red", "Blocked accounts");
-
-    // Recent signups (last 10)
-    var recent = students
-      .filter(function(s) { return s.createdAt; })
-      .sort(function(a,b) { return (b.createdAt.seconds||0) - (a.createdAt.seconds||0); })
-      .slice(0, 10);
-
-    var tbody = document.getElementById("recent-tbody");
-    if (!recent.length) { tbody.innerHTML = '<tr><td colspan="5" class="tbl-empty">No students yet</td></tr>'; return; }
-    tbody.innerHTML = recent.map(function(s) {
-      return '<tr>' +
-        '<td>' + esc(s.name||"—") + '</td>' +
-        '<td><span style="color:var(--text2);font-size:12px">' + esc(s.board||"—") + '</span></td>' +
-        '<td>' + planBadge(s.plan, s.banned) + '</td>' +
-        '<td><span class="mono">' + fmtDate(s.createdAt) + '</span></td>' +
-        '<td><span class="login-count">' + (s.loginCount||0) + '</span></td>' +
-      '</tr>';
-    }).join("");
-  }).catch(function(e) { showToast("Error loading dashboard: " + e.message, "error"); });
+    document.getElementById("st-total").textContent = total;
+    document.getElementById("st-paid").textContent  = paid;
+    document.getElementById("st-free").textContent  = free;
+    document.getElementById("st-today").textContent = today;
+    recent.sort(function(a,b){ return (b.createdAt||0) - (a.createdAt||0); });
+    recent = recent.slice(0,5);
+    var html = recent.length ? recent.map(function(s){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bdr)">'+
+        '<div><div style="font-size:13px;font-weight:600">'+esc(s.name)+'</div><div style="font-size:11px;color:var(--muted)">'+esc(s.email)+'</div></div>'+
+        '<span class="badge '+(s.plan==="paid"?"paid":"free")+'">'+(s.plan||"free")+'</span></div>';
+    }).join("") : '<div style="color:var(--muted);font-size:13px">No students yet.</div>';
+    document.getElementById("recent-signups").innerHTML = html;
+  }).catch(function(e) { console.error(e); });
 }
 
-function statCard(label, val, color, sub) {
-  return '<div class="stat-card ' + color + '">' +
-    '<div class="stat-lbl">' + label + '</div>' +
-    '<div class="stat-val">' + val + '</div>' +
-    '<div class="stat-sub">' + sub + '</div>' +
-  '</div>';
-}
-
-// ═══ STUDENTS ═══
+// STUDENTS
 function loadStudents() {
-  db.collection("users").get().then(function(snap) {
+  db.collection("users").orderBy("createdAt","desc").limit(200).get().then(function(snap) {
     allStudents = [];
-    snap.forEach(function(doc) { allStudents.push({ id: doc.id, ...doc.data() }); });
-    allStudents.sort(function(a,b) { return (b.createdAt && b.createdAt.seconds||0) - (a.createdAt && a.createdAt.seconds||0); });
-    filterAndRenderStudents();
-    renderFrequent();
-  }).catch(function(e) { showToast("Error loading students: " + e.message, "error"); });
+    snap.forEach(function(doc) { allStudents.push(Object.assign({ uid: doc.id }, doc.data())); });
+    filterStudents();
+  }).catch(function(e){ console.error(e); });
 }
-
-document.getElementById("students-search").addEventListener("input", filterAndRenderStudents);
-document.getElementById("students-filter-plan").addEventListener("change", filterAndRenderStudents);
-document.getElementById("students-filter-board").addEventListener("change", filterAndRenderStudents);
-
-function filterAndRenderStudents() {
-  var q    = document.getElementById("students-search").value.trim().toLowerCase();
-  var plan = document.getElementById("students-filter-plan").value;
-  var board = document.getElementById("students-filter-board").value;
-
+function filterStudents() {
+  var search = (document.getElementById("student-search").value||"").toLowerCase();
+  var plan   = document.getElementById("student-plan-filter").value;
+  var sort   = document.getElementById("student-sort").value;
   filteredStudents = allStudents.filter(function(s) {
-    var matchQ = !q || (s.name||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.email||"").toLowerCase().includes(q);
-    var matchPlan = !plan || (plan === "banned" ? s.banned : (plan === "paid" ? s.plan === "paid" && !s.banned : s.plan !== "paid" && !s.banned));
-    var matchBoard = !board || s.board === board;
-    return matchQ && matchPlan && matchBoard;
+    if (plan !== "all" && s.plan !== plan) return false;
+    if (search && !(s.name||"").toLowerCase().includes(search) && !(s.uid||"").toLowerCase().includes(search)) return false;
+    return true;
   });
-
+  if (sort === "logins") filteredStudents.sort(function(a,b){ return (b.loginCount||0)-(a.loginCount||0); });
   currentPage = 1;
   renderStudentsPage();
 }
-
 function renderStudentsPage() {
-  var start = (currentPage - 1) * PAGE_SIZE;
-  var page  = filteredStudents.slice(start, start + PAGE_SIZE);
+  var start = (currentPage-1)*PAGE_SIZE, end = start+PAGE_SIZE;
+  var page = filteredStudents.slice(start, end);
   var tbody = document.getElementById("students-tbody");
-
-  if (!page.length) { tbody.innerHTML = '<tr><td colspan="7" class="tbl-empty">No students found</td></tr>'; renderPagination(); return; }
-
+  if (!page.length) { tbody.innerHTML = '<tr><td colspan="7" class="tbl-empty">No students found.</td></tr>'; return; }
   tbody.innerHTML = page.map(function(s) {
-    var isBanned = !!s.banned;
-    return '<tr>' +
-      '<td><strong>' + esc(s.name||"—") + '</strong><div style="font-size:11px;color:var(--muted)">' + esc(s.country||"") + '</div></td>' +
-      '<td><span class="mono">' + esc(s.phone||"—") + '</span></td>' +
-      '<td><span style="font-size:12px;color:var(--text2)">' + esc(s.board||"—") + '</span></td>' +
-      '<td>' + planBadge(s.plan, isBanned) + '</td>' +
-      '<td><span class="mono">' + fmtDateShort(s.lastLogin) + '</span></td>' +
-      '<td><span class="login-count">' + (s.loginCount||0) + '</span></td>' +
-      '<td><div class="flex-gap">' +
-        (isBanned
-          ? '<button class="tbl-btn unban" onclick="actionUnban(\'' + s.id + '\')">Unban</button>'
-          : (s.plan === "paid"
-            ? '<button class="tbl-btn downgrade" onclick="actionDowngrade(\'' + s.id + '\',\'' + esc(s.name) + '\')">→ Free</button>'
-            : '<button class="tbl-btn upgrade" onclick="actionUpgrade(\'' + s.id + '\',\'' + esc(s.name) + '\')">→ Paid</button>') +
-            '<button class="tbl-btn ban" onclick="actionBan(\'' + s.id + '\',\'' + esc(s.name) + '\')">Ban</button>'
-        ) +
-      '</div></td>' +
-    '</tr>';
+    return '<tr>'+
+      '<td style="font-weight:600">'+esc(s.name||"—")+'</td>'+
+      '<td style="font-size:11px;color:var(--muted)">'+esc(s.uid)+'</td>'+
+      '<td><span class="badge '+(s.plan==="paid"?"paid":"free")+'">'+(s.plan||"free")+'</span></td>'+
+      '<td>'+esc(s.board||"—")+'</td>'+
+      '<td style="font-family:var(--mono)">'+(s.loginCount||0)+'</td>'+
+      '<td style="font-size:11px">'+fmtDate(s.lastLogin)+'</td>'+
+      '<td>'+
+        (s.plan!=="paid"?'<button class="tbl-btn upgrade" onclick="upgradeStudent(\''+s.uid+'\')">Upgrade</button>':
+         '<button class="tbl-btn ban" onclick="downgradeStudent(\''+s.uid+'\')">Downgrade</button>')+
+      '</td></tr>';
   }).join("");
-  renderPagination();
+  var total = filteredStudents.length;
+  var pages = Math.ceil(total/PAGE_SIZE);
+  var pg = document.getElementById("students-pagination");
+  pg.innerHTML = 'Showing '+(start+1)+'-'+Math.min(end,total)+' of '+total+' &nbsp;'+
+    (currentPage>1?'<button onclick="goPage('+(currentPage-1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Prev</button>':'')+
+    ' Page '+currentPage+' of '+pages+' '+
+    (currentPage<pages?'<button onclick="goPage('+(currentPage+1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Next</button>':'');
 }
-
-function renderPagination() {
-  var totalPages = Math.ceil(filteredStudents.length / PAGE_SIZE);
-  var el = document.getElementById("students-pagination");
-  if (totalPages <= 1) { el.innerHTML = ""; return; }
-  var html = '<button class="page-btn" onclick="gotoPage(' + (currentPage-1) + ')" ' + (currentPage===1?"disabled":"") + '>&#x2190;</button>';
-  for (var i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 1) {
-      html += '<button class="page-btn' + (i===currentPage?" active":"") + '" onclick="gotoPage(' + i + ')">' + i + '</button>';
-    } else if (Math.abs(i - currentPage) === 2) {
-      html += '<span style="color:var(--muted);padding:0 4px">…</span>';
-    }
-  }
-  html += '<button class="page-btn" onclick="gotoPage(' + (currentPage+1) + ')" ' + (currentPage===totalPages?"disabled":"") + '>&#x2192;</button>';
-  html += '<span class="page-info">' + filteredStudents.length + ' students</span>';
-  el.innerHTML = html;
-}
-
-function gotoPage(p) {
-  var totalPages = Math.ceil(filteredStudents.length / PAGE_SIZE);
-  if (p < 1 || p > totalPages) return;
-  currentPage = p;
-  renderStudentsPage();
-}
-
-// ═══ FREQUENT USERS ═══
-function renderFrequent() {
-  var sorted = allStudents
-    .filter(function(s) { return !s.banned; })
-    .sort(function(a,b) { return (b.loginCount||0) - (a.loginCount||0); })
-    .slice(0, 50);
-
-  var tbody = document.getElementById("frequent-tbody");
-  if (!sorted.length) { tbody.innerHTML = '<tr><td colspan="7" class="tbl-empty">No students yet</td></tr>'; return; }
-
-  tbody.innerHTML = sorted.map(function(s, i) {
-    return '<tr>' +
-      '<td><span class="mono" style="color:var(--muted)">#' + (i+1) + '</span></td>' +
-      '<td><strong>' + esc(s.name||"—") + '</strong></td>' +
-      '<td><span style="font-size:12px;color:var(--text2)">' + esc(s.board||"—") + '</span></td>' +
-      '<td>' + planBadge(s.plan, s.banned) + '</td>' +
-      '<td><span class="login-count" style="font-size:16px">' + (s.loginCount||0) + '</span></td>' +
-      '<td><span class="mono">' + fmtDateShort(s.lastLogin) + '</span></td>' +
-      '<td>' +
-        (s.plan !== "paid"
-          ? '<button class="tbl-btn upgrade" onclick="actionUpgrade(\'' + s.id + '\',\'' + esc(s.name) + '\')">→ Paid</button>'
-          : '<span style="color:var(--acc);font-size:12px">&#x2713; Paid</span>') +
-      '</td>' +
-    '</tr>';
-  }).join("");
-}
-
-// ═══ STUDENT ACTIONS ═══
-function actionUpgrade(uid, name) {
-  showModal("Upgrade to Paid", "Upgrade " + name + " to paid plan?", "", "Upgrade", "", function() {
-    db.collection("users").doc(uid).update({ plan: "paid" }).then(function() {
-      showToast(name + " upgraded to paid ✓", "success");
-      var s = allStudents.find(function(x) { return x.id === uid; });
-      if (s) s.plan = "paid";
-      filterAndRenderStudents();
-      renderFrequent();
-    }).catch(function(e) { showToast("Error: " + e.message, "error"); });
+function goPage(n) { currentPage = n; renderStudentsPage(); }
+function upgradeStudent(uid) {
+  showModal("Upgrade Student", "Manually upgrade this student to Pro plan?", "Upgrade", function() {
+    var expiry = new Date(); expiry.setFullYear(expiry.getFullYear()+1);
+    db.collection("users").doc(uid).update({ plan:"paid", planExpiry: firebase.firestore.Timestamp.fromDate(expiry) })
+    .then(function(){ showToast("Student upgraded to Pro","success"); loadStudents(); })
+    .catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
-
-function actionDowngrade(uid, name) {
-  showModal("Downgrade to Free", "Move " + name + " back to free plan?", "", "Downgrade", "", function() {
-    db.collection("users").doc(uid).update({ plan: "free" }).then(function() {
-      showToast(name + " moved to free plan", "info");
-      var s = allStudents.find(function(x) { return x.id === uid; });
-      if (s) s.plan = "free";
-      filterAndRenderStudents();
-      renderFrequent();
-    }).catch(function(e) { showToast("Error: " + e.message, "error"); });
+function downgradeStudent(uid) {
+  showModal("Downgrade Student", "Downgrade this student to Free plan?", "Downgrade", function() {
+    db.collection("users").doc(uid).update({ plan:"free", planExpiry:null })
+    .then(function(){ showToast("Student downgraded","info"); loadStudents(); })
+    .catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+document.getElementById("student-search").addEventListener("input", filterStudents);
+document.getElementById("student-plan-filter").addEventListener("change", filterStudents);
+document.getElementById("student-sort").addEventListener("change", filterStudents);
 
-function actionBan(uid, name) {
-  showModal("Ban Student", "Ban " + name + "? They will not be able to login.", "", "Ban", "danger", function() {
-    db.collection("users").doc(uid).update({ banned: true }).then(function() {
-      showToast(name + " banned", "error");
-      var s = allStudents.find(function(x) { return x.id === uid; });
-      if (s) s.banned = true;
-      filterAndRenderStudents();
-    }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-  });
+// FREQUENT
+function loadFrequent() {
+  db.collection("users").orderBy("loginCount","desc").limit(20).get().then(function(snap) {
+    var tbody = document.getElementById("frequent-tbody");
+    if (snap.empty) { tbody.innerHTML='<tr><td colspan="7" class="tbl-empty">No data.</td></tr>'; return; }
+    var rows=[], rank=1;
+    snap.forEach(function(doc) {
+      var s=doc.data();
+      rows.push('<tr>'+
+        '<td style="font-family:var(--mono);color:var(--acc)">'+rank+'</td>'+
+        '<td style="font-weight:600">'+esc(s.name||"—")+'</td>'+
+        '<td style="font-size:11px;color:var(--muted)">'+esc(doc.id)+'</td>'+
+        '<td><span class="badge '+(s.plan==="paid"?"paid":"free")+'">'+(s.plan||"free")+'</span></td>'+
+        '<td style="font-family:var(--mono)">'+(s.loginCount||0)+'</td>'+
+        '<td style="font-family:var(--mono)">'+(s.hitLimitCount||0)+'</td>'+
+        '<td>'+(s.plan!=="paid"?'<button class="tbl-btn upgrade" onclick="upgradeStudent(\''+doc.id+'\')">Upgrade</button>':'Pro')+'</td>'+
+      '</tr>');
+      rank++;
+    });
+    tbody.innerHTML = rows.join("");
+  }).catch(function(e){ console.error(e); });
 }
 
-function actionUnban(uid) {
-  db.collection("users").doc(uid).update({ banned: false }).then(function() {
-    showToast("Student unbanned", "success");
-    var s = allStudents.find(function(x) { return x.id === uid; });
-    if (s) s.banned = false;
-    filterAndRenderStudents();
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-}
-
-// ═══ SETTINGS ═══
+// SETTINGS
 function loadSettings() {
   db.collection("settings").doc("config").get().then(function(snap) {
     if (!snap.exists) return;
-    var s = snap.data();
-    currentSettings = s;
-
-    // Free concepts
-    var concepts = s.freeConceptsAllowed || ["String","List"];
-    renderConceptTags(concepts);
-
-    // Free Q count
-    document.getElementById("free-q-count").value = s.freeQuestionsPerConcept || 10;
-
-    // Weights
-    renderWeightRows(s.qtypeWeights || {});
-
-    // Paid batch
-    document.getElementById("paid-batch-size").value = s.paidBatchSize || 50;
-
-    // Price
-    document.getElementById("paid-price").value = s.paidPrice || 499;
-  }).catch(function(e) { showToast("Error loading settings: " + e.message, "error"); });
-}
-
-// Concept tags
-function renderConceptTags(concepts) {
-  document.getElementById("free-concepts-tags").innerHTML = concepts.map(function(c) {
-    return '<div class="tag">' + esc(c) + ' <span class="tag-x" onclick="removeConcept(\'' + c + '\')">&#x2715;</span></div>';
-  }).join("");
-  currentSettings.freeConceptsAllowed = concepts;
-}
-
-function removeConcept(c) {
-  var list = (currentSettings.freeConceptsAllowed || []).filter(function(x) { return x !== c; });
-  renderConceptTags(list);
-}
-
-document.getElementById("new-concept-btn").addEventListener("click", function() {
-  var val = document.getElementById("new-concept-inp").value.trim();
-  if (!val) return;
-  var list = currentSettings.freeConceptsAllowed || [];
-  if (!list.includes(val)) { list = list.concat([val]); renderConceptTags(list); }
-  document.getElementById("new-concept-inp").value = "";
-});
-
-document.getElementById("save-concepts-btn").addEventListener("click", function() {
-  var list = currentSettings.freeConceptsAllowed || [];
-  db.collection("settings").doc("config").update({ freeConceptsAllowed: list }).then(function() {
-    showToast("Free concepts saved ✓", "success");
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
-// Weight rows
-function renderWeightRows(weights) {
-  currentSettings.qtypeWeights = weights;
-  var total = Object.values(weights).reduce(function(a,b) { return a+b; }, 0) || 1;
-  document.getElementById("weights-rows").innerHTML = Object.entries(weights).map(function(entry) {
-    var key = entry[0], val = entry[1];
-    var pct = Math.round((val/total)*100);
-    return '<div class="weight-row">' +
-      '<div class="weight-lbl">' + esc(key) + '</div>' +
-      '<input class="weight-inp" type="number" min="0" value="' + val + '" data-key="' + esc(key) + '" onchange="updateWeight(\'' + esc(key) + '\',this.value)" oninput="updateWeight(\'' + esc(key) + '\',this.value)">' +
-      '<div class="weight-bar"><div class="weight-fill" id="wfill-' + esc(key) + '" style="width:' + pct + '%"></div></div>' +
-      '<span class="mono" style="font-size:11px;color:var(--muted);min-width:32px;text-align:right">' + pct + '%</span>' +
-      '<span class="tag-x" style="color:var(--red)" onclick="removeWeight(\'' + esc(key) + '\')">&#x2715;</span>' +
-    '</div>';
-  }).join("");
-}
-
-function updateWeight(key, val) {
-  currentSettings.qtypeWeights[key] = parseInt(val) || 0;
-  var weights = currentSettings.qtypeWeights;
-  var total = Object.values(weights).reduce(function(a,b) { return a+b; }, 0) || 1;
-  Object.entries(weights).forEach(function(e) {
-    var fill = document.getElementById("wfill-" + e[0]);
-    if (fill) fill.style.width = Math.round((e[1]/total)*100) + "%";
-  });
-}
-
-function removeWeight(key) {
-  delete currentSettings.qtypeWeights[key];
-  renderWeightRows(currentSettings.qtypeWeights);
-}
-
-document.getElementById("new-weight-btn").addEventListener("click", function() {
-  var key = document.getElementById("new-weight-key").value.trim();
-  var val = parseInt(document.getElementById("new-weight-val").value) || 10;
-  if (!key) return;
-  currentSettings.qtypeWeights = currentSettings.qtypeWeights || {};
-  currentSettings.qtypeWeights[key] = val;
-  renderWeightRows(currentSettings.qtypeWeights);
-  document.getElementById("new-weight-key").value = "";
-  document.getElementById("new-weight-val").value = "";
-});
-
-document.getElementById("save-weights-btn").addEventListener("click", function() {
-  db.collection("settings").doc("config").update({ qtypeWeights: currentSettings.qtypeWeights }).then(function() {
-    showToast("Weights saved ✓", "success");
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
-document.getElementById("save-freeq-btn").addEventListener("click", function() {
-  var val = parseInt(document.getElementById("free-q-count").value);
-  if (!val || val < 1) { showToast("Enter a valid number", "error"); return; }
-  db.collection("settings").doc("config").update({ freeQuestionsPerConcept: val }).then(function() {
-    showToast("Free question count saved ✓", "success");
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
-document.getElementById("save-batch-btn").addEventListener("click", function() {
-  var val = parseInt(document.getElementById("paid-batch-size").value);
-  if (!val || val < 1) { showToast("Enter a valid number", "error"); return; }
-  db.collection("settings").doc("config").update({ paidBatchSize: val }).then(function() {
-    showToast("Batch size saved ✓", "success");
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
-document.getElementById("save-price-btn").addEventListener("click", function() {
-  var val = parseInt(document.getElementById("paid-price").value);
-  if (!val || val < 1) { showToast("Enter a valid price", "error"); return; }
-  db.collection("settings").doc("config").update({ paidPrice: val }).then(function() {
-    showToast("Price saved ✓", "success");
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
-// ═══ EMAIL MARKETING ═══
-var EMAIL_TEMPLATES = {
-  upgrade: {
-    subject: "Unlock unlimited Python practice — PyZap Pro",
-    body: "Hi {name},\n\nYou've been practising hard on PyZap — we noticed!\n\nUpgrade to PyZap Pro for just ₹499 and get:\n• Unlimited questions across all data types\n• Tuple, Dictionary, Mixed mode unlocked\n• No daily limits\n\nYour board exam is coming. Make every question count.\n\nUpgrade now: https://py4cs.github.io/pyzap\n\nBest,\nTeam PyZap"
-  },
-  welcome: {
-    subject: "Welcome back to PyZap! ⚡",
-    body: "Hi {name},\n\nWelcome back! We've added new questions to help you prepare better.\n\nKeep practising daily — consistency is what separates toppers from the rest.\n\nPractise now: https://py4cs.github.io/pyzap\n\nBest,\nTeam PyZap"
-  },
-  promo: {
-    subject: "Special offer just for you — PyZap Pro",
-    body: "Hi {name},\n\nWe have a special discount code for you:\n\nCode: PYZAP25\nDiscount: 25% off PyZap Pro\n\nUse it at checkout before it expires.\n\nUpgrade now: https://py4cs.github.io/pyzap\n\nBest,\nTeam PyZap"
-  },
-  exam: {
-    subject: "Your board exam is coming — are you ready?",
-    body: "Hi {name},\n\nBoard exams are around the corner. Python questions are scoring — don't leave marks on the table.\n\n10 questions a day on PyZap is all it takes.\n\nStart now: https://py4cs.github.io/pyzap\n\nBest,\nTeam PyZap"
-  }
-};
-
-document.querySelectorAll(".tpl-btn").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    var tpl = EMAIL_TEMPLATES[btn.dataset.tpl];
-    if (tpl) {
-      document.getElementById("email-subject").value = tpl.subject;
-      document.getElementById("email-body").value    = tpl.body;
+    var d = snap.data();
+    currentSettings = d;
+    if (d.freeConceptsAllowed) document.getElementById("s-free-concepts").value = d.freeConceptsAllowed.join(",");
+    if (d.freeQuestionsPerConcept) document.getElementById("s-free-q").value = d.freeQuestionsPerConcept;
+    if (d.paidPrice) document.getElementById("s-price").value = d.paidPrice;
+    if (d.qtypeWeights) {
+      var w = d.qtypeWeights;
+      if (w.Indexing)   document.getElementById("w-indexing").value   = w.Indexing;
+      if (w.Slicing)    document.getElementById("w-slicing").value    = w.Slicing;
+      if (w.Functions)  document.getElementById("w-functions").value  = w.Functions;
+      if (w.Membership) document.getElementById("w-membership").value = w.Membership;
+      if (w.Comparison) document.getElementById("w-comparison").value = w.Comparison;
     }
-  });
+  }).catch(function(e){ console.error(e); });
+}
+document.getElementById("btn-save-limits").addEventListener("click", function() {
+  var concepts = document.getElementById("s-free-concepts").value.split(",").map(function(s){ return s.trim(); }).filter(Boolean);
+  var qcount   = parseInt(document.getElementById("s-free-q").value);
+  if (!concepts.length) { showToast("Enter at least one concept","error"); return; }
+  if (!qcount || qcount < 1) { showToast("Enter a valid question count","error"); return; }
+  db.collection("settings").doc("config").set({ freeConceptsAllowed: concepts, freeQuestionsPerConcept: qcount }, { merge: true })
+  .then(function(){ showToast("Limits saved","success"); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
+});
+document.getElementById("btn-save-price").addEventListener("click", function() {
+  var price = parseInt(document.getElementById("s-price").value);
+  if (!price || price < 1) { showToast("Enter a valid price","error"); return; }
+  db.collection("settings").doc("config").set({ paidPrice: price }, { merge: true })
+  .then(function(){ showToast("Price saved","success"); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
+});
+document.getElementById("btn-save-weights").addEventListener("click", function() {
+  var w = {
+    Indexing:   parseInt(document.getElementById("w-indexing").value)  ||0,
+    Slicing:    parseInt(document.getElementById("w-slicing").value)   ||0,
+    Functions:  parseInt(document.getElementById("w-functions").value) ||0,
+    Membership: parseInt(document.getElementById("w-membership").value)||0,
+    Comparison: parseInt(document.getElementById("w-comparison").value)||0,
+  };
+  db.collection("settings").doc("config").set({ qtypeWeights: w }, { merge: true })
+  .then(function(){ showToast("Weights saved","success"); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
 });
 
-document.getElementById("btn-count-recipients").addEventListener("click", function() {
-  var plan     = document.getElementById("email-filter-plan").value;
-  var activity = document.getElementById("email-filter-activity").value;
-  var board    = document.getElementById("email-filter-board").value;
-  var now      = Date.now();
-  var count    = allStudents.filter(function(s) {
-    if (s.banned) return false;
-    if (plan === "free" && s.plan === "paid") return false;
-    if (plan === "paid" && s.plan !== "paid") return false;
-    if (board !== "all" && s.board !== board) return false;
-    if (activity === "active") {
-      var ll = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate().getTime() : new Date(s.lastLogin).getTime()) : 0;
-      if (now - ll > 7 * 86400000) return false;
+// EMAIL
+document.getElementById("btn-preview-email").addEventListener("click", function() {
+  var plan     = document.getElementById("email-plan-filter").value;
+  var activity = document.getElementById("email-activity-filter").value;
+  var now = Date.now();
+  var filtered = allStudents.filter(function(s) {
+    if (plan==="free" && s.plan!=="free") return false;
+    if (plan==="paid" && s.plan!=="paid") return false;
+    if (activity==="frequent" && (s.loginCount||0)<10) return false;
+    if (activity==="active") {
+      var ll = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate() : new Date(s.lastLogin)) : null;
+      if (!ll || (now - ll.getTime()) > 7*86400000) return false;
     }
-    if (activity === "inactive") {
-      var ll2 = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate().getTime() : new Date(s.lastLogin).getTime()) : 0;
-      if (now - ll2 <= 7 * 86400000) return false;
-    }
-    if (activity === "frequent" && (s.loginCount||0) < 10) return false;
     return true;
-  }).length;
-  document.getElementById("recipient-count").textContent = count;
+  });
+  document.getElementById("email-preview-result").textContent = filtered.length + " students would receive this email.";
 });
-
 document.getElementById("btn-send-email").addEventListener("click", function() {
-  var subject = document.getElementById("email-subject").value.trim();
-  var body    = document.getElementById("email-body").value.trim();
-  if (!subject || !body) { showToast("Subject and body required", "error"); return; }
-
-  var plan     = document.getElementById("email-filter-plan").value;
-  var activity = document.getElementById("email-filter-activity").value;
-  var board    = document.getElementById("email-filter-board").value;
-  var now      = Date.now();
-
-  var recipients = allStudents.filter(function(s) {
-    if (s.banned || !s.phone) return false;
-    if (plan === "free" && s.plan === "paid") return false;
-    if (plan === "paid" && s.plan !== "paid") return false;
-    if (board !== "all" && s.board !== board) return false;
-    if (activity === "active") {
-      var ll = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate().getTime() : new Date(s.lastLogin).getTime()) : 0;
-      if (now - ll > 7 * 86400000) return false;
-    }
-    if (activity === "inactive") {
-      var ll2 = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate().getTime() : new Date(s.lastLogin).getTime()) : 0;
-      if (now - ll2 <= 7 * 86400000) return false;
-    }
-    if (activity === "frequent" && (s.loginCount||0) < 10) return false;
-    return true;
-  });
-
-  showModal(
-    "Send Email Campaign",
-    "Send to " + recipients.length + " recipients?",
-    '<div style="background:var(--s3);padding:10px 14px;border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--text2);margin-top:4px"><strong style="color:var(--text)">' + esc(subject) + '</strong><br><br>' + esc(body.slice(0, 100)) + (body.length > 100 ? "…" : "") + '</div>',
-    "Send",
-    "",
-    function() {
-      // Store campaign in Firestore for Cloud Function to process
-      db.collection("emailCampaigns").add({
-        subject:    subject,
-        body:       body,
-        recipients: recipients.map(function(s) { return { uid: s.id, name: s.name||"Student", phone: s.phone||"" }; }),
-        count:      recipients.length,
-        createdAt:  firebase.firestore.FieldValue.serverTimestamp(),
-        status:     "pending",
-        sentBy:     auth.currentUser ? auth.currentUser.email : "admin",
-      }).then(function() {
-        showToast("Campaign queued for " + recipients.length + " recipients ✓", "success");
-        document.getElementById("email-subject").value = "";
-        document.getElementById("email-body").value = "";
-      }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-    }
-  );
+  showToast("Email campaigns require Brevo API key to be configured in Cloud Functions","info");
 });
 
-// ═══ PROMO CODES ═══
-document.getElementById("promo-type").addEventListener("change", function() {
-  document.getElementById("promo-discount-row").style.display = this.value === "discount" ? "" : "none";
-});
-
+// PROMOS
 function loadPromos() {
   db.collection("promoCodes").get().then(function(snap) {
-    var tbody = document.getElementById("promos-tbody");
-    if (snap.empty) { tbody.innerHTML = '<tr><td colspan="7" class="tbl-empty">No promo codes yet</td></tr>'; return; }
-    var rows = [];
+    var list = document.getElementById("promos-list");
+    if (snap.empty) { list.innerHTML='<div style="color:var(--muted);font-size:13px;padding:8px 0">No promo codes yet.</div>'; return; }
+    var html = '<div class="promo-grid">';
     snap.forEach(function(doc) {
-      var p = doc.data();
-      var expired = p.expiry && new Date(p.expiry) < new Date();
-      rows.push('<tr style="' + (expired ? "opacity:.5" : "") + '">' +
-        '<td><span class="mono" style="color:var(--acc);font-size:14px">' + esc(p.code) + '</span></td>' +
-        '<td>' + (p.type === "free" ? '<span class="badge paid">Free</span>' : '<span class="badge free">Discount</span>') + '</td>' +
-        '<td>' + (p.type === "discount" ? p.discount + "%" : "—") + '</td>' +
-        '<td><span class="mono">' + (p.usedCount||0) + '</span></td>' +
-        '<td><span class="mono">' + (p.limit||"∞") + '</span></td>' +
-        '<td><span class="mono">' + (p.expiry||"—") + '</span></td>' +
-        '<td><button class="tbl-btn ban" onclick="deletePromo(\'' + doc.id + '\',\'' + esc(p.code) + '\')">Delete</button></td>' +
-      '</tr>');
+      var p=doc.data(), id=doc.id;
+      html+='<div class="promo-card">'+
+        '<div class="promo-code">'+esc(id)+'</div>'+
+        '<div class="promo-meta">'+
+          'Type: '+(p.type||"discount")+' &nbsp;|&nbsp; '+
+          (p.discount?'Discount: '+p.discount+'% &nbsp;|&nbsp;':'')+
+          'Used: '+(p.usedCount||0)+(p.limit?'/'+p.limit:'')+' &nbsp;|&nbsp; '+
+          'Expires: '+(p.expiry||"Never")+
+        '</div>'+
+        '<div style="margin-top:8px">'+
+          '<button class="tbl-btn ban" onclick="deletePromo(\''+id+'\')" style="font-size:10px;padding:3px 8px">Delete</button>'+
+        '</div>'+
+      '</div>';
     });
-    tbody.innerHTML = rows.join("");
-  }).catch(function(e) { showToast("Error loading promos: " + e.message, "error"); });
+    html+='</div>';
+    list.innerHTML = html;
+  }).catch(function(e){ console.error(e); });
 }
-
 document.getElementById("btn-create-promo").addEventListener("click", function() {
-  var code     = document.getElementById("promo-code").value.trim().toUpperCase();
-  var type     = document.getElementById("promo-type").value;
-  var discount = parseInt(document.getElementById("promo-discount").value) || 0;
-  var limit    = parseInt(document.getElementById("promo-limit").value) || 0;
-  var expiry   = document.getElementById("promo-expiry").value;
-
-  if (!code)  { showToast("Enter a promo code", "error"); return; }
-  if (type === "discount" && (!discount || discount < 1 || discount > 100)) { showToast("Enter a valid discount %", "error"); return; }
-
-  var data = {
-    code:      code,
-    type:      type,
-    discount:  type === "discount" ? discount : 100,
-    limit:     limit || null,
-    expiry:    expiry || null,
-    usedCount: 0,
-    active:    true,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  };
-
-  db.collection("promoCodes").doc(code).set(data).then(function() {
-    showToast("Promo code " + code + " created ✓", "success");
-    document.getElementById("promo-code").value = "";
-    document.getElementById("promo-discount").value = "";
-    document.getElementById("promo-limit").value = "";
-    document.getElementById("promo-expiry").value = "";
-    loadPromos();
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
+  var code = document.getElementById("promo-code").value.trim().toUpperCase();
+  var type = document.getElementById("promo-type").value;
+  var disc = parseInt(document.getElementById("promo-discount").value)||0;
+  var limit= parseInt(document.getElementById("promo-limit").value)||0;
+  var exp  = document.getElementById("promo-expiry").value;
+  if (!code) { showToast("Enter a code","error"); return; }
+  var data = { type:type, active:true, usedCount:0, usedBy:[], createdAt:firebase.firestore.FieldValue.serverTimestamp() };
+  if (type==="discount") { if (!disc) { showToast("Enter discount %","error"); return; } data.discount=disc; }
+  if (limit) data.limit = limit;
+  if (exp)   data.expiry = exp;
+  db.collection("promoCodes").doc(code).set(data)
+  .then(function(){ showToast("Promo code created","success"); loadPromos();
+    document.getElementById("promo-code").value="";
+    document.getElementById("promo-discount").value="";
+    document.getElementById("promo-limit").value="";
+    document.getElementById("promo-expiry").value="";
+  }).catch(function(e){ showToast("Error: "+e.message,"error"); });
 });
-
-function deletePromo(id, code) {
-  showModal("Delete Promo Code", "Delete code " + code + "? This cannot be undone.", "", "Delete", "danger", function() {
-    db.collection("promoCodes").doc(id).delete().then(function() {
-      showToast("Promo code deleted", "info");
-      loadPromos();
-    }).catch(function(e) { showToast("Error: " + e.message, "error"); });
+function deletePromo(id) {
+  showModal("Delete Promo","Delete promo code "+id+"?","Delete",function(){
+    db.collection("promoCodes").doc(id).delete()
+    .then(function(){ showToast("Promo deleted","info"); loadPromos(); })
+    .catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
 
-// ═══ ANNOUNCEMENTS ═══
-document.getElementById("ann-msg").addEventListener("input", function() {
-  var type = document.getElementById("ann-type").value;
-  var msg  = this.value || "Your announcement will appear here.";
-  var icons = { info:"ℹ️", warning:"⚠️", success:"✅" };
-  var el = document.getElementById("ann-preview");
-  el.className = "ann-banner " + type;
-  el.textContent = (icons[type]||"") + " " + msg;
-});
-
-document.getElementById("ann-type").addEventListener("change", function() {
-  document.getElementById("ann-msg").dispatchEvent(new Event("input"));
-});
-
-document.getElementById("btn-send-ann").addEventListener("click", function() {
-  var msg    = document.getElementById("ann-msg").value.trim();
-  var type   = document.getElementById("ann-type").value;
-  var expiry = parseInt(document.getElementById("ann-expiry").value);
-  if (!msg) { showToast("Enter an announcement message", "error"); return; }
-
-  var expiresAt = null;
-  if (expiry > 0) {
-    expiresAt = new Date(Date.now() + expiry * 86400000).toISOString();
-  }
-
-  db.collection("announcements").add({
-    message:   msg,
-    type:      type,
-    expiresAt: expiresAt,
-    active:    true,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }).then(function() {
-    showToast("Announcement published ✓", "success");
-    document.getElementById("ann-msg").value = "";
-    loadAnnouncements();
-  }).catch(function(e) { showToast("Error: " + e.message, "error"); });
-});
-
+// ANNOUNCEMENTS
 function loadAnnouncements() {
-  db.collection("announcements").orderBy("createdAt", "desc").limit(10).get().then(function(snap) {
+  db.collection("announcements").where("active","==",true).orderBy("createdAt","desc").get()
+  .then(function(snap) {
     var el = document.getElementById("active-anns");
-    if (snap.empty) { el.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px 0">No announcements yet.</div>'; return; }
-    var icons = { info:"ℹ️", warning:"⚠️", success:"✅" };
-    var html = "";
+    if (snap.empty) { el.innerHTML='<div style="color:var(--muted);font-size:13px">No active announcements.</div>'; return; }
+    var html="";
     snap.forEach(function(doc) {
-      var a = doc.data();
-      var expired = a.expiresAt && new Date(a.expiresAt) < new Date();
-      html += '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bdr)">' +
-        '<div class="ann-banner ' + a.type + '" style="flex:1;font-size:12px">' + (icons[a.type]||"") + " " + esc(a.message) + '</div>' +
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
-          (expired ? '<span style="color:var(--red);font-size:10px">Expired</span>' : '<span style="color:var(--acc);font-size:10px">Active</span>') +
-          '<button class="tbl-btn ban" style="font-size:10px;padding:3px 8px" onclick="deleteAnn(\'' + doc.id + '\')">Delete</button>' +
-        '</div>' +
+      var a=doc.data();
+      var expired = a.expiresAt && (a.expiresAt.toDate ? a.expiresAt.toDate() : new Date(a.expiresAt)) < new Date();
+      html+='<div class="ann-banner '+(a.type||"info")+'">'+
+        '<span style="flex:1">'+esc(a.message||"")+'</span>'+
+        (expired?'<span style="font-size:10px;color:var(--red)">Expired</span>':'')+
+        '<button class="tbl-btn ban" onclick="deleteAnn(\''+doc.id+'\')" style="font-size:10px;padding:3px 8px;margin-left:8px">Delete</button>'+
       '</div>';
     });
     el.innerHTML = html;
-  }).catch(function(e) { showToast("Error loading announcements: " + e.message, "error"); });
+  }).catch(function(e){ showToast("Error loading announcements: "+e.message,"error"); });
+}
+// Preview
+document.getElementById("ann-type").addEventListener("change", function() {
+  document.getElementById("ann-preview").className = "ann-banner " + this.value;
+});
+document.getElementById("ann-msg").addEventListener("input", function() {
+  document.getElementById("ann-preview").textContent = this.value || "Your announcement will appear here.";
+});
+document.getElementById("btn-send-ann").addEventListener("click", function() {
+  var type   = document.getElementById("ann-type").value;
+  var msg    = document.getElementById("ann-msg").value.trim();
+  var expiry = parseInt(document.getElementById("ann-expiry").value);
+  if (!msg) { showToast("Enter a message","error"); return; }
+  var data = { type:type, message:msg, active:true, createdAt:firebase.firestore.FieldValue.serverTimestamp() };
+  if (expiry > 0) { var exp=new Date(); exp.setDate(exp.getDate()+expiry); data.expiresAt=firebase.firestore.Timestamp.fromDate(exp); }
+  db.collection("announcements").add(data)
+  .then(function(){ showToast("Announcement published","success"); document.getElementById("ann-msg").value=""; loadAnnouncements(); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
+});
+function deleteAnn(id) {
+  db.collection("announcements").doc(id).delete()
+  .then(function(){ showToast("Announcement deleted","info"); loadAnnouncements(); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
 }
 
-function deleteAnn(id) {
-  db.collection
+// TEST BUILDER
+var CF_BASE_TB = "https://asia-south1-pyzap-297ad.cloudfunctions.net";
+var CF_GENERATE_TB = CF_BASE_TB + "/generateQuestions";
+var TB = { step:1, dtype:"String", count:20, generated:[], approved:[], rejected:0 };
+
+function loadTestBuilder() { loadPublishedTests(); }
+
+function tbGoStep(n) {
+  TB.step = n;
+  [1,2,3].forEach(function(i) {
+    var step  = document.getElementById("tb-step-"  + i);
+    var panel = document.getElementById("tb-panel-" + i);
+    if (!step || !panel) return;
+    step.className  = "tb-step"  + (i < n ? " done" : i === n ? " active" : "");
+    panel.className = "tb-panel" + (i === n ? " active" : "");
+  });
+  if (n === 3) loadPublishedTests();
+}
+
+document.querySelectorAll("#tb-dtype .tb-opt, #tb-count .tb-opt").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    var grp = btn.closest(".tb-opt-row");
+    grp.querySelectorAll(".tb-opt").forEach(function(b) { b.classList.remove("on"); });
+    btn.classList.add("on");
+    if (grp.id === "tb-dtype") TB.dtype = btn.dataset.val;
+    else TB.count = parseInt(btn.dataset.val);
+  });
+});
+
+document.getElementById("btn-tb-generate").addEventListener("click", function() {
+  var btn = this;
+  btn.disabled = true; btn.textContent = "Generating...";
+  auth.currentUser.getIdToken().then(function(token) {
+    return fetch(CF_GENERATE_TB, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify({ dtype: TB.dtype, plan: "paid" }),
+    });
+  }).then(function(res) { return res.json().then(function(d) { return { ok:res.ok, data:d }; }); })
+  .then(function(r) {
+    btn.disabled = false; btn.textContent = "Generate Questions";
+    if (!r.ok) { showToast("Error: " + (r.data.message||"Server error"), "error"); return; }
+    TB.generated = (r.data.questions||[]).slice(0, TB.count);
+    TB.approved = []; TB.rejected = 0;
+    renderReviewQueue();
+    tbGoStep(2);
+  }).catch(function(e) {
+    btn.disabled = false; btn.textContent = "Generate Questions";
+    showToast("Error generating questions", "error");
+  });
+});
+
+function renderReviewQueue() {
+  document.getElementById("rev-approved").textContent  = TB.approved.length;
+  document.getElementById("rev-rejected").textContent  = TB.rejected;
+  document.getElementById("rev-remaining").textContent = TB.generated.length;
+  var container = document.getElementById("review-queue");
+  if (TB.generated.length === 0) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:20px 0">All reviewed. Proceed to publish.</div>';
+    document.getElementById("btn-tb-to-publish").textContent = "Proceed to Publish (" + TB.approved.length + " approved)";
+    return;
+  }
+  var q = TB.generated[0];
+  var idx = TB.approved.length + TB.rejected + 1;
+  var total = TB.approved.length + TB.rejected + TB.generated.length;
+  var optsHtml = (q.options||[]).map(function(opt) {
+    return '<span class="q-opt-pill' + (opt===q.answer?" correct":"") + '">' + esc(opt) + '</span>';
+  }).join("");
+  container.innerHTML =
+    '<div class="q-review-card">' +
+      '<div class="q-review-hdr"><div class="q-review-num">Question ' + idx + ' of ' + total + '</div><div class="q-review-qtype">' + esc(q.qtype||"Mixed") + '</div></div>' +
+      '<div class="q-code-block">' + (q.lines||[]).join("\n").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + '</div>' +
+      '<div class="q-opts-row">' + optsHtml + '</div>' +
+      '<div class="q-ans-row"><span class="q-ans-lbl">Answer:</span><span class="q-ans-val">' + esc(q.answer) + '</span></div>' +
+      (q.explanation?'<div class="q-expl-txt"><strong style="color:var(--blue)">Why?</strong> ' + esc(q.explanation) + '</div>':'') +
+      '<div class="q-action-row">' +
+        '<button class="q-action-btn approve" id="btn-rev-approve">Approve</button>' +
+        '<button class="q-action-btn reject" id="btn-rev-reject">Reject</button>' +
+        '<button class="q-action-btn skip" id="btn-rev-skip">Skip</button>' +
+      '</div>' +
+    '</div>';
+  document.getElementById("btn-rev-approve").addEventListener("click", function() { TB.approved.push(TB.generated.shift()); renderReviewQueue(); });
+  document.getElementById("btn-rev-reject").addEventListener("click",  function() { TB.generated.shift(); TB.rejected++; renderReviewQueue(); });
+  document.getElementById("btn-rev-skip").addEventListener("click",    function() { TB.generated.push(TB.generated.shift()); renderReviewQueue(); });
+  document.getElementById("btn-tb-to-publish").textContent = "Proceed to Publish (" + TB.approved.length + " approved)";
+}
+
+document.getElementById("btn-tb-back-gen").addEventListener("click", function() {
+  TB.approved=[]; TB.rejected=0; TB.generated=[]; tbGoStep(1);
+});
+document.getElementById("btn-tb-to-publish").addEventListener("click", function() {
+  if (TB.approved.length === 0) { showToast("Approve at least one question first","error"); return; }
+  tbGoStep(3); loadPublishedTests();
+});
+document.getElementById("btn-tb-back-review").addEventListener("click", function() { tbGoStep(2); });
+
+document.getElementById("btn-tb-publish").addEventListener("click", function() {
+  var title    = document.getElementById("pub-title").value.trim();
+  var access   = document.getElementById("pub-access").value;
+  var duration = parseInt(document.getElementById("pub-duration").value);
+  var schedule = document.getElementById("pub-schedule").value;
+  var desc     = document.getElementById("pub-desc").value.trim();
+  if (!title)               { showToast("Enter a test title","error"); return; }
+  if (!duration||duration<5){ showToast("Enter a valid duration (min 5 mins)","error"); return; }
+  if (!schedule)            { showToast("Select a scheduled date and time","error"); return; }
+  if (TB.approved.length===0){ showToast("No approved questions","error"); return; }
+  var btn=this; btn.disabled=true; btn.textContent="Publishing...";
+  var scheduledAt=new Date(schedule), status=scheduledAt<=new Date()?"active":"upcoming";
+  db.collection("adminTests").add({
+    title:title, accessType:access, duration:duration, description:desc||"",
+    dtype:TB.dtype, totalQuestions:TB.approved.length, status:status,
+    scheduledAt:firebase.firestore.Timestamp.fromDate(scheduledAt),
+    createdAt:firebase.firestore.FieldValue.serverTimestamp(), leaderboard:true,
+  }).then(function(testRef) {
+    var batch=db.batch();
+    TB.approved.forEach(function(q,i) {
+      var qKey="q"+(i+1);
+      batch.set(db.collection("adminTests").doc(testRef.id).collection("questions").doc(qKey),
+        { questionNumber:i+1, lines:q.lines||[], options:q.options||[], qtype:q.qtype||"Mixed" });
+      batch.set(db.collection("adminTests").doc(testRef.id).collection("answers").doc(qKey),
+        { answer:q.answer||"", explanation:q.explanation||"", qtype:q.qtype||"Mixed" });
+    });
+    return batch.commit();
+  }).then(function() {
+    btn.disabled=false; btn.textContent="Publish Test";
+    showToast("Test published successfully!","success");
+    TB.approved=[]; TB.rejected=0; TB.generated=[];
+    document.getElementById("pub-title").value="";
+    document.getElementById("pub-duration").value="";
+    document.getElementById("pub-schedule").value="";
+    document.getElementById("pub-desc").value="";
+    tbGoStep(1); loadPublishedTests();
+  }).catch(function(e){
+    btn.disabled=false; btn.textContent="Publish Test";
+    showToast("Error: "+e.message,"error");
+  });
+});
+
+function loadPublishedTests() {
+  var tbody=document.getElementById("pub-tests-tbody");
+  if (!tbody) return;
+  tbody.innerHTML='<tr><td colspan="6" class="loading-row"><div class="spinner"></div></td></tr>';
+  db.collection("adminTests").orderBy("createdAt","desc").limit(20).get()
+  .then(function(snap) {
+    if (snap.empty) { tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">No tests published yet.</td></tr>'; return; }
+    var rows=[];
+    snap.forEach(function(doc) {
+      var t=doc.data(), id=doc.id;
+      var sc=t.status==="active"?"var(--acc)":t.status==="upcoming"?"var(--amber)":"var(--muted)";
+      var dateStr="";
+      if(t.scheduledAt){try{var d=t.scheduledAt.toDate?t.scheduledAt.toDate():new Date(t.scheduledAt);dateStr=d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(e){}}
+      rows.push('<tr>'+
+        '<td style="font-weight:600">'+esc(t.title||"")+'</td>'+
+        '<td><span class="badge '+(t.accessType==="paid"?"paid":"free")+'">'+(t.accessType||"free")+'</span></td>'+
+        '<td style="font-family:var(--mono)">'+(t.totalQuestions||"—")+'</td>'+
+        '<td style="font-weight:700;color:'+sc+'">'+(t.status||"—")+'</td>'+
+        '<td style="font-size:11px;color:var(--muted)">'+dateStr+'</td>'+
+        '<td style="display:flex;gap:6px;padding:11px 16px">'+
+          (t.status!=="completed"?'<button class="tbl-btn ban" onclick="deleteTest(\''+id+'\',\''+esc(t.title||"Test")+'\')" style="font-size:10px;padding:3px 8px">Delete</button>':'')+
+          (t.status==="upcoming"?'<button class="tbl-btn upgrade" onclick="activateTest(\''+id+'\')" style="font-size:10px;padding:3px 8px;margin-left:4px">Activate</button>':'')+
+        '</td>'+
+      '</tr>');
+    });
+    tbody.innerHTML=rows.join("");
+  }).catch(function(e){tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">Error loading.</td></tr>';});
+}
+
+function deleteTest(id, title) {
+  showModal("Delete Test", 'Delete "'+title+'"? Cannot be undone.', "Delete", function() {
+    db.collection("adminTests").doc(id).update({status:"deleted"})
+    .then(function(){ showToast("Test deleted","info"); loadPublishedTests(); })
+    .catch(function(e){ showToast("Error: "+e.message,"error"); });
+  });
+}
+function activateTest(id) {
+  db.collection("adminTests").doc(id).update({status:"active"})
+  .then(function(){ showToast("Test activated!","success"); loadPublishedTests(); })
+  .catch(function(e){ showToast("Error: "+e.message,"error"); });
+}
+</script>
+</body>
+</html>
