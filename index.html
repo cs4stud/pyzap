@@ -460,6 +460,29 @@ body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Outfit'
   .ta-mcq{grid-template-columns:1fr;}
 }
 
+
+/* ─── 3-COLUMN CONTROL BOX ─── */
+.ctrl-box{background:var(--surf);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;margin-bottom:10px;flex-shrink:0;display:flex;}
+.ctrl-col{flex:1;padding:12px 14px;border-right:1px solid var(--bdr);}
+.ctrl-col:last-child{border-right:none;}
+.ctrl-col-title{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);margin-bottom:10px;}
+/* Progress col */
+.prog-stat-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.prog-stat-icon{font-size:12px;width:16px;text-align:center;flex-shrink:0;}
+.prog-stat-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--text2);min-width:22px;}
+.prog-stat-lbl{font-size:11px;color:var(--muted);}
+.prog-stat-row.sc .prog-stat-val{color:var(--green);}
+.prog-stat-row.sw .prog-stat-val{color:var(--red);}
+.prog-stat-row.ss .prog-stat-val{color:var(--gold);}
+/* Free limit col */
+.limit-concept-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.limit-concept-name{font-size:11px;font-weight:700;color:var(--text2);min-width:38px;}
+.limit-concept-bar{flex:1;height:4px;background:var(--bdr2);border-radius:999px;overflow:hidden;}
+.limit-concept-fill{height:100%;border-radius:999px;transition:width .3s;}
+.limit-concept-count{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);min-width:32px;text-align:right;}
+.limit-concept-done .limit-concept-name,.limit-concept-done .limit-concept-count{color:var(--muted);}
+.limit-footer{font-size:9px;color:var(--muted);margin-top:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;}
+.limit-upgrade-btn{background:none;border:none;color:var(--gold);font-size:9px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;padding:0;}
 </style>
 </head>
 <body>
@@ -674,35 +697,36 @@ body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Outfit'
   <!-- ═══ PRACTICE PANEL ═══ -->
   <div class="main-panel active" id="panel-practice">
 
-    <!-- Combined control box: Free limit + Mode + Stats -->
-    <div class="sbar" style="margin-bottom:8px;">
-      <!-- Free banner row: hidden for paid -->
-      <div id="free-banner" style="display:none">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <div class="sg-lbl">Today's Limit</div>
-          <button class="free-banner-upgrade" onclick="showUpgrade('Upgrade to Pro for unlimited practice!')">Upgrade &#x2192;</button>
+    <!-- 3-column control box -->
+    <div class="ctrl-box">
+      <!-- Col 1: Today's Limit (free only) / hidden col for paid -->
+      <div class="ctrl-col" id="ctrl-limit-col">
+        <div class="ctrl-col-title">Today's Limit</div>
+        <div id="free-banner-concepts"></div>
+        <div class="limit-footer">
+          <span>Resets midnight</span>
+          <button class="limit-upgrade-btn" onclick="showUpgrade('Upgrade to Pro for unlimited practice!')">Upgrade &#x2192;</button>
         </div>
-        <div class="free-banner-row" id="free-banner-concepts" style="margin-bottom:4px;"></div>
-        <div style="font-size:9px;color:var(--muted);">Resets daily at midnight</div>
-        <div style="height:1px;background:var(--bdr);margin:8px -2px 0;"></div>
       </div>
-      <!-- Mode + Stats row -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-        <div>
-          <div class="sg-lbl" style="margin-bottom:5px;">Mode</div>
-          <div class="mode-toggle">
-            <button class="mode-btn active" data-mode="mcq">&#x229E; MCQ</button>
-            <button class="mode-btn"        data-mode="type">&#x270E; Type</button>
-          </div>
+      <!-- Col 2: Mode -->
+      <div class="ctrl-col">
+        <div class="ctrl-col-title">Mode</div>
+        <div class="mode-toggle" style="flex-direction:column;gap:6px;">
+          <button class="mode-btn active" data-mode="mcq">&#x229E; MCQ</button>
+          <button class="mode-btn"        data-mode="type">&#x270E; Type</button>
         </div>
-        <div style="display:flex;gap:5px;">
-          <div class="app-sb-stat"><div class="app-sb-stat-val" id="hs-done">0</div><div class="app-sb-stat-lbl">Done</div></div>
-          <div class="app-sb-stat sc"><div class="app-sb-stat-val" id="hs-correct">0</div><div class="app-sb-stat-lbl">Correct</div></div>
-          <div class="app-sb-stat sw"><div class="app-sb-stat-val" id="hs-wrong">0</div><div class="app-sb-stat-lbl">Wrong</div></div>
-          <div class="app-sb-stat ss"><div class="app-sb-stat-val" id="hs-streak">0</div><div class="app-sb-stat-lbl">Streak</div></div>
-        </div>
+      </div>
+      <!-- Col 3: My Progress -->
+      <div class="ctrl-col">
+        <div class="ctrl-col-title">My Progress</div>
+        <div class="prog-stat-row"><span class="prog-stat-icon">&#x1F4DD;</span><span class="prog-stat-val" id="hs-done">0</span><span class="prog-stat-lbl">Done</span></div>
+        <div class="prog-stat-row sc"><span class="prog-stat-icon">&#x2713;</span><span class="prog-stat-val" id="hs-correct">0</span><span class="prog-stat-lbl">Correct</span></div>
+        <div class="prog-stat-row sw"><span class="prog-stat-icon">&#x2717;</span><span class="prog-stat-val" id="hs-wrong">0</span><span class="prog-stat-lbl">Wrong</span></div>
+        <div class="prog-stat-row ss"><span class="prog-stat-icon">&#x1F525;</span><span class="prog-stat-val" id="hs-streak">0</span><span class="prog-stat-lbl">Streak</span></div>
       </div>
     </div>
+    <!-- hidden free-banner div for JS compatibility -->
+    <div id="free-banner" style="display:none"></div>
 
     <!-- Topic -->
     <div class="sbar" style="margin-bottom:8px;">
@@ -1221,25 +1245,28 @@ function allConceptsDone(){
 }
 
 function updateFreeBanner(){
-  var banner=document.getElementById("free-banner");
-  if(!banner)return;
-  if(S.plan==="paid"){banner.style.display="none";return;}
-  var container=document.getElementById("free-banner-concepts");
-  if(!container)return;
+  var limitCol = document.getElementById("ctrl-limit-col");
+  var container = document.getElementById("free-banner-concepts");
+  if(!container) return;
+  if(S.plan==="paid"){
+    // Hide limit col for paid students
+    if(limitCol) limitCol.style.display="none";
+    return;
+  }
+  if(limitCol) limitCol.style.display="";
   var parts="";
   S.freeConceptsAllowed.forEach(function(concept){
     var used=getConceptUsed(concept),total=S.freeQuestionsPerConcept;
     var pct=Math.min(100,Math.round((used/total)*100));
     var done=used>=total;
     var color=done?"var(--muted)":pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--gold)";
-    parts+='<div class="free-concept-item'+(done?" free-concept-done":"")+'">'+
-      '<span class="free-concept-name">'+concept+'</span>'+
-      '<div class="free-concept-bar"><div class="free-concept-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
-      '<span class="free-concept-count">'+used+'/'+total+'</span>'+
+    parts+='<div class="limit-concept-row'+(done?" limit-concept-done":"")+'">'+
+      '<span class="limit-concept-name">'+concept+'</span>'+
+      '<div class="limit-concept-bar"><div class="limit-concept-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
+      '<span class="limit-concept-count">'+used+'/'+total+'</span>'+
     '</div>';
   });
   container.innerHTML=parts;
-  banner.style.display="";
 }
 
 // ═══ PROFILE ═══
