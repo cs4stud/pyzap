@@ -1194,14 +1194,17 @@ function applyDtypeLocks(){
     var dt = btn.dataset.dtype;
     // Python sub-topics: paid only
     if(PYTHON_DTYPES.indexOf(dt) >= 0){
-      if(S.plan==="paid") btn.classList.remove("locked");
-      else btn.classList.add("locked");
+      btn.classList.toggle("locked", S.plan!=="paid");
       return;
     }
     if(S.plan==="paid"){btn.classList.remove("locked");return;}
-    if(!S.freeConceptsAllowed.includes(dt)){btn.classList.add("locked");return;}
-    if(isConceptCompleted(dt))btn.classList.add("locked");
-    else btn.classList.remove("locked");
+    // Free: only todaysConcepts unlocked
+    if(S.todaysConcepts.indexOf(dt) < 0){
+      btn.classList.add("locked");
+      return;
+    }
+    // Lock if all 9 qtypes done for this concept
+    btn.classList.toggle("locked", isConceptDone(dt));
   });
   applyQtypeLocks();
 }
@@ -1229,15 +1232,13 @@ function applyQtypeLocks(){
     }
   }
   if(pyDtype) return;
-  // Regular dtype qtype locking
+  // Lock/unlock qtype buttons
   document.querySelectorAll("#qtype-group .tog").forEach(function(btn){
     var qt = btn.dataset.qtype;
     btn.style.display = "";
     if(S.plan==="paid"){btn.classList.remove("locked");return;}
-    var conceptQs = S.allQuestions[S.dtype]||[];
-    var qtypeQs = conceptQs.filter(function(q){return q.qtype===qt;});
-    if(qtypeQs.length===0) btn.classList.add("locked");
-    else btn.classList.remove("locked");
+    // Free: lock if this qtype is fully done
+    btn.classList.toggle("locked", isQtypeDone(S.dtype, qt));
   });
 }
 
@@ -1270,28 +1271,28 @@ document.querySelectorAll(".sub-tab").forEach(function(tab){
 
 
 function updateFreeBanner(){
-  var limitCol = document.getElementById("ctrl-limit-col");
+  var limitCol  = document.getElementById("ctrl-limit-col");
   var container = document.getElementById("free-banner-concepts");
   if(!container) return;
   if(S.plan==="paid"){
-    // Hide limit col for paid students
     if(limitCol) limitCol.style.display="none";
     return;
   }
   if(limitCol) limitCol.style.display="";
-  var parts="";
-  S.freeConceptsAllowed.forEach(function(concept){
-    var used=getConceptUsed(concept),total=S.freeQuestionsPerConcept;
-    var pct=Math.min(100,Math.round((used/total)*100));
-    var done=used>=total;
-    var color=done?"var(--muted)":pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--gold)";
-    parts+='<div class="limit-concept-row'+(done?" limit-concept-done":"")+'">'+
-      '<span class="limit-concept-name">'+concept+'</span>'+
+  var total = getTotalPossible(); // 9 qtypes × freeQuestionsPerQtype
+  var parts = "";
+  S.todaysConcepts.forEach(function(dtype){
+    var answered = getTotalAnswered(dtype);
+    var pct  = total > 0 ? Math.min(100, Math.round((answered/total)*100)) : 0;
+    var done = isConceptDone(dtype);
+    var color= done?"var(--muted)":pct>=80?"var(--green)":pct>=50?"var(--amber)":"var(--gold)";
+    parts += '<div class="limit-concept-row'+(done?" limit-concept-done":"")+'">'+
+      '<span class="limit-concept-name">'+(done?"🔒 ":"")+dtype+'</span>'+
       '<div class="limit-concept-bar"><div class="limit-concept-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
-      '<span class="limit-concept-count">'+used+'/'+total+'</span>'+
+      '<span class="limit-concept-count">'+answered+'/'+total+'</span>'+
     '</div>';
   });
-  container.innerHTML=parts;
+  container.innerHTML = parts;
 }
 
 // ═══ PROFILE ═══
@@ -1463,38 +1464,49 @@ function fetchAllQuestions(){
     return;
   }
 
-  // FREE: check Firestore for today's concepts first
+  // FREE: check Firestore for today's date+concepts only
   var today = getTodayStr();
   db.collection("users").doc(S.uid).collection("dailyProgress").doc("progress").get()
   .then(function(snap){
     if(snap.exists && snap.data().date === today && snap.data().concepts){
+      // Today's record exists
       S.todaysConcepts = snap.data().concepts;
-      // Load progress from Firestore
-      var fp = snap.data().qtypeProgress || {};
       S.progress = {};
+      var allCached = true;
       S.todaysConcepts.forEach(function(dtype){
-        S.progress[dtype] = fp[dtype] || {};
-        // Try localStorage for questions
+        // Load questions + progress from localStorage ONLY
         var cached = loadFreeConcept(dtype);
         if(cached && cached.questions && Object.keys(cached.questions).length > 0){
           S.allQuestions[dtype] = cached.questions;
-          // Merge cached progress with firestore progress
-          if(cached.progress){
-            FREE_QTYPES_TRACKED.forEach(function(qt){
-              if(!S.progress[dtype][qt] && cached.progress[qt]){
-                S.progress[dtype][qt] = cached.progress[qt];
-              }
-            });
-          }
+          // Init progress from localStorage
+          S.progress[dtype] = {};
+          FREE_QTYPES_TRACKED.forEach(function(qt){
+            S.progress[dtype][qt] = (cached.progress && cached.progress[qt])
+              ? cached.progress[qt]
+              : {seen:0, done:false};
+          });
+        } else {
+          // Bug 6: Today exists in Firestore but localStorage cleared
+          // Student switched devices or cleared browser
+          // Mark all qtypes as done → show upgrade
+          S.progress[dtype] = {};
+          FREE_QTYPES_TRACKED.forEach(function(qt){
+            S.progress[dtype][qt] = {seen:S.freeQuestionsPerQtype, done:true};
+          });
+          allCached = false; // will trigger upgrade display not server fetch
         }
       });
-      // If all concepts have questions cached, skip server call
-      var allCached = S.todaysConcepts.every(function(d){
-        return S.allQuestions[d] && Object.keys(S.allQuestions[d]).length > 0;
-      });
-      if(allCached){ applyPlanUI(); startPractice(); return; }
+      applyPlanUI();
+      if(!allCached){
+        // All questions exhausted (device switch) — show upgrade
+        setCardLoaded();
+        startPractice();
+        return;
+      }
+      startPractice();
+      return;
     }
-    // Need to fetch from server
+    // No record for today — new day, fetch fresh
     fetchFreeFromServer();
   }).catch(function(){ fetchFreeFromServer(); });
 }
@@ -1527,14 +1539,12 @@ function fetchFreeFromServer(){
 // ─── Save progress to Firestore (batch, not per question) ───
 var _progressSaveTimer = null;
 function scheduleProgressSave(){
-  if(_progressSaveTimer) clearTimeout(_progressSaveTimer);
-  _progressSaveTimer = setTimeout(function(){
-    if(!S.uid || S.plan==="paid") return;
-    var today = getTodayStr();
-    db.collection("users").doc(S.uid).collection("dailyProgress").doc("progress")
-    .set({ date:today, concepts:S.todaysConcepts, qtypeProgress:S.progress }, {merge:true})
-    .catch(function(e){console.warn("Progress save error:",e.message);});
-  }, 3000); // batch writes every 3 seconds
+  // Option C: progress stored in localStorage only — no Firestore writes
+  // Just save to localStorage immediately (it's sync, no batching needed)
+  if(S.plan==="paid") return;
+  S.todaysConcepts.forEach(function(dtype){
+    saveFreeConcept(dtype);
+  });
 }
 
 function startPractice(){
@@ -1594,9 +1604,19 @@ function loadQtypeQuestions(dtype, qtype){
   }
 
   S.currentQuestions = pool;
-  // Resume from last seen position
-  var seen = S.plan==="paid" ? (S.conceptIdx[dtype]||0) : getQtypeSeen(dtype, qtype);
-  S.currentIdx = Math.min(seen, pool.length > 0 ? pool.length - 1 : 0);
+  if(S.plan==="paid"){
+    // Paid: resume from conceptIdx
+    S.currentIdx = Math.min(S.conceptIdx[dtype]||0, pool.length > 0 ? pool.length-1 : 0);
+  } else {
+    // Free: seen=N means N questions answered → next question is index N
+    var seen = getQtypeSeen(dtype, qtype);
+    if(seen >= pool.length){
+      // All questions in this qtype answered — show complete msg
+      S.currentIdx = pool.length > 0 ? pool.length-1 : 0;
+    } else {
+      S.currentIdx = seen; // resume at next unanswered question
+    }
+  }
 
   if(pool.length === 0){
     setCardLoading("No '" + qtype + "' questions available. Try another type.");
