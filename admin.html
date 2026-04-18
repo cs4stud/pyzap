@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PyZap Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -214,88 +214,75 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <body>
 
 <!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">PyZap &#x26A1;</div>
-    <div class="login-role">Admin Panel</div>
-    <button class="login-google" id="btn-admin-login">
-      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+<div class="overlay hidden" id="login-screen">
+  <div class="lcard">
+    <div class="lb-logo">PyZap ⚡</div>
+    <div class="lb-sub">Admin Console</div>
+    <button id="btn-admin-google" class="btn-google" style="margin-top:24px;">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Sign in with Google
     </button>
-    <div class="login-note">Only authorised admin accounts can access this panel.</div>
-    <div class="login-err" id="login-err">Access denied. This account is not an admin.</div>
+    <div id="lb-err" style="color:var(--red);font-size:12px;margin-top:10px;text-align:center;min-height:16px;"></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Confirm</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" id="modal-cancel">Cancel</button>
+      <button class="modal-confirm" id="modal-confirm">Confirm</button>
+    </div>
   </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- MODAL -->
-<div class="modal-overlay hidden" id="modal">
-  <div class="modal">
-    <button class="modal-close" id="modal-close">&#x2715;</button>
-    <div class="modal-title" id="modal-title">Confirm Action</div>
-    <div class="modal-sub" id="modal-sub"></div>
-    <div id="modal-body"></div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" id="modal-cancel">Cancel</button>
-      <button class="modal-btn confirm" id="modal-confirm">Confirm</button>
-    </div>
-  </div>
-</div>
-
 <!-- SHELL -->
 <div class="shell" id="shell" style="display:none">
-
-  <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sb-logo">
-      <div class="sb-brand">PyZap &#x26A1;</div>
+      <div class="sb-brand">PyZap ⚡</div>
       <div class="sb-role">Admin Console</div>
     </div>
     <div class="sb-nav">
       <div class="sb-section">Overview</div>
-      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">&#x25A6;</span> Dashboard</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span> Dashboard</div>
       <div class="sb-section">Students</div>
-      <div class="nav-item" data-page="students"><span class="nav-icon">&#x1F465;</span> Students</div>
+      <div class="nav-item" data-page="students"><span class="nav-icon">👥</span> Students</div>
       <div class="sb-section">Tools</div>
-      <div class="nav-item" data-page="settings"><span class="nav-icon">&#x2699;</span> Settings</div>
-      <div class="nav-item" data-page="email"><span class="nav-icon">&#x2709;</span> Email Marketing</div>
-      <div class="nav-item" data-page="email"><span class="nav-icon">&#x2709;</span> Email</div>
-      <div class="nav-item" data-page="promos"><span class="nav-icon">&#x1F3F7;</span> Promo Codes</div>
-      <div class="nav-item" data-page="announce"><span class="nav-icon">&#x1F4E3;</span> Announcements</div>
-      <div class="nav-item" data-page="testbuilder"><span class="nav-icon">&#x1F4CB;</span> Test Builder</div>
+      <div class="nav-item" data-page="email"><span class="nav-icon">✉</span> Email</div>
+      <div class="nav-item" data-page="settings"><span class="nav-icon">⚙</span> Settings</div>
+      <div class="nav-item" data-page="promos"><span class="nav-icon">🏷</span> Promo Codes</div>
+      <div class="nav-item" data-page="boardqs"><span class="nav-icon">📚</span> Board Questions</div>
+      <div class="nav-item" data-page="testbuilder"><span class="nav-icon">📋</span> Test Builder</div>
     </div>
     <div class="sb-footer">
-      <div class="sb-admin" id="sb-admin-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3756535a5e5977524f565a475b521954585a">[email&#160;protected]</a></div>
+      <div class="sb-admin" id="sb-admin-email"></div>
       <button class="sb-logout" id="btn-logout">Sign Out</button>
     </div>
   </nav>
-
-  <!-- MAIN -->
-  <div class="main">
-    <div class="topbar">
-      <div>
-        <div class="page-title" id="page-title">Dashboard</div>
-        <div class="page-sub" id="page-sub">Overview of PyZap platform</div>
-      </div>
+  <div class="main-content">
+    <div class="page-header">
+      <div class="page-title" id="page-title">Dashboard</div>
+      <div class="page-sub" id="page-sub">Platform overview and key metrics</div>
     </div>
-    <div class="content">
+    <div class="pages-wrap">
 
       <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:11px;color:var(--text2);font-weight:600;">New in last</span>
-            <input type="number" id="dash-new-days" value="7" min="1" max="365" style="width:48px;padding:4px 7px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;" oninput="recalcDashboard()">
-            <span style="font-size:11px;color:var(--text2);font-weight:600;">days &nbsp;|&nbsp; Inactive for</span>
-            <input type="number" id="dash-inactive-days" value="7" min="1" max="365" style="width:48px;padding:4px 7px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;" oninput="recalcDashboard()">
-            <span style="font-size:11px;color:var(--text2);font-weight:600;">+ days</span>
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);font-weight:600;">
+            New in last <input type="number" id="dash-new-days" value="7" min="1" max="365" style="width:48px;padding:4px 7px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;" oninput="recalcDashboard()"> days &nbsp;|&nbsp; Inactive for
+            <input type="number" id="dash-inactive-days" value="7" min="1" max="365" style="width:48px;padding:4px 7px;background:var(--s3);border:1.5px solid var(--bdr2);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;" oninput="recalcDashboard()"> + days
           </div>
         </div>
         <div class="stats-grid" style="margin-bottom:10px;">
           <div class="stat-card"><div class="stat-val" id="st-total">—</div><div class="stat-lbl">Total</div></div>
-          <div class="stat-card"><div class="stat-val" id="st-paid">—</div><div class="stat-lbl">Pro (Active)</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-paid">—</div><div class="stat-lbl">Pro Active</div></div>
           <div class="stat-card"><div class="stat-val" id="st-free">—</div><div class="stat-lbl">Free</div></div>
           <div class="stat-card"><div class="stat-val" id="st-expired">—</div><div class="stat-lbl">Pro Expired</div></div>
           <div class="stat-card"><div class="stat-val" id="st-banned">—</div><div class="stat-lbl">Banned</div></div>
@@ -314,17 +301,12 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div class="filter-bar" style="margin-bottom:10px;display:flex;flex-wrap:wrap;gap:8px;">
           <input class="filter-inp" id="student-search" placeholder="Search name or email..." style="flex:1;min-width:160px;">
           <select class="filter-sel" id="student-plan-filter">
-            <option value="all">All Plans</option>
-            <option value="paid">Pro Only</option>
-            <option value="free">Free Only</option>
-            <option value="expired">Expired Only</option>
-            <option value="banned">Banned Only</option>
+            <option value="all">All Plans</option><option value="paid">Pro Only</option>
+            <option value="free">Free Only</option><option value="expired">Expired Only</option><option value="banned">Banned Only</option>
           </select>
           <select class="filter-sel" id="student-sort">
-            <option value="name">Sort: Name</option>
-            <option value="logins">Sort: Most Logins</option>
-            <option value="recent">Sort: Last Active</option>
-            <option value="joined">Sort: Newest</option>
+            <option value="name">Sort: Name</option><option value="logins">Sort: Most Logins</option>
+            <option value="recent">Sort: Last Active</option><option value="joined">Sort: Newest</option>
           </select>
           <div style="display:flex;align-items:center;gap:5px;">
             <span style="font-size:11px;color:var(--text2);font-weight:600;">Logins ≥</span>
@@ -369,23 +351,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <div style="margin-top:8px;font-size:12px;color:var(--text2);">Matched: <strong id="email-matched-count" style="color:var(--acc)">—</strong> students</div>
         </div>
         <div class="setting-card" style="margin-bottom:14px;">
-          <div class="setting-title">Assign Targeted Promo (Optional)</div>
-          <div class="setting-desc">If selected, assigns this promo to filtered students. Only targeted promos appear here.</div>
-          <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;">
-            <select class="form-sel" id="email-promo-select" style="flex:1;">
-              <option value="">— No promo —</option>
-            </select>
-            <button class="btn-save-settings" onclick="assignPromoToFiltered()" style="padding:7px 14px;">Assign Promo to Filtered</button>
-          </div>
-          <div style="font-size:11px;color:var(--muted);margin-top:6px;" id="email-promo-status"></div>
-        </div>
-        <div class="setting-card" style="margin-bottom:14px;">
           <div class="setting-title">Assign Targeted Promo <span style="font-size:10px;color:var(--muted);font-weight:400;">(optional)</span></div>
-          <div class="setting-desc">Assigns a targeted promo code to filtered students. Only they can use it.</div>
+          <div class="setting-desc">Assigns a targeted promo to filtered students only. Only they can redeem it.</div>
           <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center;">
-            <select class="form-sel" id="email-promo-select" style="flex:1;min-width:180px;">
-              <option value="">— No promo —</option>
-            </select>
+            <select class="form-sel" id="email-promo-select" style="flex:1;min-width:180px;"><option value="">— No promo —</option></select>
             <button class="btn-save-settings" onclick="assignPromoToFiltered()" style="padding:7px 14px;white-space:nowrap;">Assign to Filtered</button>
           </div>
           <div style="font-size:11px;color:var(--green);margin-top:6px;min-height:16px;" id="email-promo-status"></div>
@@ -404,136 +373,126 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
       <!-- SETTINGS -->
       <div class="page" id="page-settings">
-        <div class="setting-card">
+        <div class="setting-card" style="margin-bottom:14px;">
           <div class="setting-title">Free Plan Limits</div>
-          <div class="setting-desc">Control what free students can access daily.</div>
-          <div class="form-row">
-            <div class="form-lbl">Free Concepts (comma-separated)</div>
-            <input class="form-inp" id="s-free-concepts" placeholder="String,List">
-          </div>
-          <div class="form-row">
-            <div class="form-lbl">Questions per Concept per Day</div>
-            <input class="form-inp" id="s-free-q" type="number" min="5" max="50" placeholder="10">
-          </div>
-          <button class="btn-save-settings" id="btn-save-limits">Save Limits</button>
+          <div class="setting-desc">Questions per qtype per day for free students.</div>
+          <div class="form-row" style="margin-top:10px;"><div class="form-lbl">Questions per QType per Day</div>
+            <input class="form-inp" id="s-free-q" type="number" min="5" max="50" placeholder="10" style="max-width:120px;"></div>
+          <button class="btn-save-settings" id="btn-save-limits" style="margin-top:10px;">Save</button>
         </div>
         <div class="setting-card">
           <div class="setting-title">Pricing</div>
-          <div class="setting-desc">Set the Pro plan price shown to students.</div>
-          <div class="form-row">
-            <div class="form-lbl">Pro Plan Price (&#x20B9;)</div>
-            <input class="form-inp" id="s-price" type="number" min="1" placeholder="499">
-          </div>
-          <button class="btn-save-settings" id="btn-save-price">Save Price</button>
-        </div>
-        <div class="setting-card">
-          <div class="setting-title">Question Type Weights</div>
-          <div class="setting-desc">Distribution percentages when generating mixed questions.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="form-row"><div class="form-lbl">Indexing %</div><input class="form-inp" id="w-indexing" type="number" min="0" max="100" placeholder="30"></div>
-            <div class="form-row"><div class="form-lbl">Slicing %</div><input class="form-inp" id="w-slicing" type="number" min="0" max="100" placeholder="30"></div>
-            <div class="form-row"><div class="form-lbl">Functions %</div><input class="form-inp" id="w-functions" type="number" min="0" max="100" placeholder="20"></div>
-            <div class="form-row"><div class="form-lbl">Membership %</div><input class="form-inp" id="w-membership" type="number" min="0" max="100" placeholder="10"></div>
-            <div class="form-row"><div class="form-lbl">Comparison %</div><input class="form-inp" id="w-comparison" type="number" min="0" max="100" placeholder="10"></div>
-          </div>
-          <button class="btn-save-settings" id="btn-save-weights">Save Weights</button>
-        </div>
-      </div>
-
-      <!-- EMAIL -->
-      <div class="page" id="page-email">
-        <div class="setting-card">
-          <div class="setting-title">Send Email Campaign</div>
-          <div class="setting-desc">Reach out to your students directly.</div>
-          <div class="form-row">
-            <div class="form-lbl">Target Audience</div>
-            <select class="form-sel" id="email-plan-filter">
-              <option value="all">All Students</option>
-              <option value="free">Free Students Only</option>
-              <option value="paid">Pro Students Only</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-lbl">Activity Filter</div>
-            <select class="form-sel" id="email-activity-filter">
-              <option value="all">All</option>
-              <option value="frequent">Frequent Users (10+ logins)</option>
-              <option value="active">Active Last 7 Days</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-lbl">Subject</div>
-            <input class="form-inp" id="email-subject" placeholder="e.g. New topics added to PyZap!">
-          </div>
-          <div class="form-row">
-            <div class="form-lbl">Message</div>
-            <textarea class="form-ta" id="email-body" rows="5" placeholder="Write your message here..."></textarea>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-            <button class="btn-save-settings" id="btn-preview-email">Preview Recipients</button>
-            <button class="btn-save-settings" id="btn-send-email" style="background:var(--bldim);border:1.5px solid var(--blue);color:var(--blue)">Send Campaign</button>
-          </div>
-          <div id="email-preview-result" style="margin-top:12px;font-size:12px;color:var(--text2)"></div>
+          <div class="setting-desc">Pro plan price shown to students.</div>
+          <div class="form-row" style="margin-top:10px;"><div class="form-lbl">Pro Plan Price (&#x20b9;)</div>
+            <input class="form-inp" id="s-price" type="number" min="1" placeholder="499" style="max-width:120px;"></div>
+          <button class="btn-save-settings" id="btn-save-price" style="margin-top:10px;">Save Price</button>
         </div>
       </div>
 
       <!-- PROMOS -->
       <div class="page" id="page-promos">
-        <div class="setting-card">
+        <div class="setting-card" style="margin-bottom:14px;">
           <div class="setting-title">Create Promo Code</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div class="form-row"><div class="form-lbl">Code</div><input class="form-inp" id="promo-code" placeholder="LAUNCH50" style="text-transform:uppercase"></div>
             <div class="form-row"><div class="form-lbl">Type</div>
-              <select class="form-sel" id="promo-type" onchange="document.getElementById('promo-discount-row').style.display=this.value==='free'?'none':'';">
-                <option value="discount">Discount %</option>
-                <option value="free">Free Upgrade</option>
-              </select>
-            </div>
+              <select class="form-sel" id="promo-type" onchange="document.getElementById('promo-discount-row').style.display=this.value==='free'?'none':''">
+                <option value="discount">Discount %</option><option value="free">Free Upgrade</option>
+              </select></div>
             <div class="form-row"><div class="form-lbl">Reach</div>
               <select class="form-sel" id="promo-category">
                 <option value="general">General — anyone can use</option>
                 <option value="targeted">Targeted — assigned students only</option>
-              </select>
-            </div>
-            <div class="form-row"><div class="form-lbl">Discount %</div><input class="form-inp" id="promo-discount" type="number" min="1" max="100" placeholder="50"></div>
-            <div class="form-row"><div class="form-lbl">Usage Limit</div><input class="form-inp" id="promo-limit" type="number" min="1" placeholder="100"></div>
-            <div class="form-row"><div class="form-lbl">Expiry Date</div><input class="form-inp" id="promo-expiry" type="date"></div>
+              </select></div>
+            <div class="form-row" id="promo-discount-row"><div class="form-lbl">Discount %</div>
+              <input class="form-inp" id="promo-discount" type="number" min="1" max="100" placeholder="50"></div>
+            <div class="form-row"><div class="form-lbl">Usage Limit</div>
+              <input class="form-inp" id="promo-limit" type="number" min="1" placeholder="100"></div>
+            <div class="form-row"><div class="form-lbl">Expiry Date</div>
+              <input class="form-inp" id="promo-expiry" type="date"></div>
           </div>
-          <button class="btn-save-settings" id="btn-create-promo">Create Promo Code</button>
+          <button class="btn-save-settings" id="btn-create-promo" style="margin-top:12px;">Create Promo Code</button>
         </div>
         <div id="promos-list" style="margin-top:4px"><div class="loading-row"><div class="spinner"></div></div></div>
       </div>
 
-      <!-- ANNOUNCEMENTS -->
-      <div class="page" id="page-announce">
-        <div style="display:flex;gap:16px;flex-wrap:wrap">
-          <div class="ann-form" style="flex:1;min-width:260px">
-            <div class="setting-title" style="margin-bottom:12px">New Announcement</div>
-            <div class="form-row"><div class="form-lbl">Type</div>
-              <select class="form-sel" id="ann-type">
-                <option value="info">Info (blue)</option>
-                <option value="warning">Warning (amber)</option>
-                <option value="success">Success (green)</option>
-              </select>
+      <!-- BOARD QUESTIONS -->
+      <div class="page" id="page-boardqs">
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+          <button class="btn-save-settings" onclick="showBoardForm()">+ Add Question</button>
+          <button class="btn-save-settings" onclick="downloadBoardTemplate()" style="background:var(--s3);color:var(--text2);border:1.5px solid var(--bdr2);">&#x2b07; Template</button>
+          <label class="btn-save-settings" style="background:var(--s3);color:var(--text2);border:1.5px solid var(--bdr2);cursor:pointer;">
+            &#x2b06; Upload Excel
+            <input type="file" id="bq-upload-file" accept=".xlsx,.xls" style="display:none" onchange="uploadBoardExcel(this)">
+          </label>
+          <select class="filter-sel" id="bq-filter-topic" onchange="filterBoardQuestions()">
+            <option value="">All Topics</option><option value="String">String</option><option value="List">List</option>
+            <option value="Tuple">Tuple</option><option value="Dictionary">Dictionary</option><option value="Functions">Functions</option>
+            <option value="Modules">Modules</option><option value="ExceptionHandling">Exception Handling</option>
+            <option value="FileHandling">File Handling</option><option value="SQL">SQL</option>
+          </select>
+          <select class="filter-sel" id="bq-filter-qtype" onchange="filterBoardQuestions()">
+            <option value="">All Types</option><option value="predict_output">Predict Output</option><option value="mcq">MCQ</option>
+            <option value="write_function">Write Function</option><option value="write_query">Write Query</option>
+            <option value="assertion_reason">Assertion &amp; Reason</option><option value="fill_blank">Fill in the Blank</option>
+          </select>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;" id="bq-count">Loading...</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Topic</th><th>Type</th><th>Year</th><th>Preview</th><th>Answer</th><th>Marks</th><th></th></tr></thead>
+          <tbody id="bq-tbody"><tr><td colspan="7" class="tbl-empty"><div class="spinner" style="margin:0 auto"></div></td></tr></tbody>
+        </table></div>
+        <div id="bq-pagination" style="font-size:12px;color:var(--text2);padding:10px 0;"></div>
+        <!-- Form Modal -->
+        <div class="modal hidden" id="bq-form-modal">
+          <div class="modal-box" style="max-width:600px;width:95%;max-height:90vh;overflow-y:auto;">
+            <div class="modal-title" id="bq-form-title">Add Board Question</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+              <div class="form-row"><div class="form-lbl">Topic</div>
+                <select class="form-sel" id="bq-topic">
+                  <option value="String">String</option><option value="List">List</option><option value="Tuple">Tuple</option>
+                  <option value="Dictionary">Dictionary</option><option value="Functions">Functions</option><option value="Modules">Modules</option>
+                  <option value="ExceptionHandling">Exception Handling</option><option value="FileHandling">File Handling</option><option value="SQL">SQL</option>
+                </select></div>
+              <div class="form-row"><div class="form-lbl">Question Type</div>
+                <select class="form-sel" id="bq-qtype" onchange="onBqQtypeChange()">
+                  <option value="predict_output">Predict Output</option><option value="mcq">MCQ</option>
+                  <option value="write_function">Write Function</option><option value="write_query">Write Query</option>
+                  <option value="assertion_reason">Assertion &amp; Reason</option><option value="fill_blank">Fill in the Blank</option>
+                </select></div>
+              <div class="form-row"><div class="form-lbl">Year / Exam</div><input class="form-inp" id="bq-year" placeholder="CBSE Board 2024-25"></div>
+              <div class="form-row"><div class="form-lbl">Marks</div>
+                <select class="form-sel" id="bq-marks"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+              <div class="form-row" style="grid-column:1/-1;">
+                <div class="form-lbl">Case ID <span style="color:var(--muted);font-size:10px;">(optional)</span></div>
+                <input class="form-inp" id="bq-caseid" placeholder="e.g. case_2024_1">
+              </div>
             </div>
-            <div class="form-row"><div class="form-lbl">Message</div><input class="form-inp" id="ann-msg" placeholder="e.g. New questions added for Tuple!"></div>
-            <div class="form-row"><div class="form-lbl">Expires After</div>
-              <select class="form-sel" id="ann-expiry">
-                <option value="1">1 day</option>
-                <option value="3">3 days</option>
-                <option value="7" selected>7 days</option>
-                <option value="30">30 days</option>
-                <option value="0">Never</option>
-              </select>
+            <div class="form-row" id="bq-casetext-row" style="display:none;">
+              <div class="form-lbl">Case Text <span style="color:var(--muted);font-size:10px;">(one line per row)</span></div>
+              <textarea class="form-ta" id="bq-casetext" rows="4" placeholder="Table: Students&#10;RollNo | Name | Marks"></textarea>
             </div>
-            <button class="btn-save-settings" id="btn-send-ann">Publish Announcement</button>
-            <div class="divider"></div>
-            <div class="setting-title" style="font-size:13px">Preview</div>
-            <div class="ann-banner info" id="ann-preview">&#x2139;&#xFE0F; Your announcement will appear here.</div>
-          </div>
-          <div class="ann-form" style="flex:1;min-width:260px">
-            <div class="setting-title">Active Announcements</div>
-            <div id="active-anns"><div class="loading-row"><div class="spinner"></div></div></div>
+            <div class="form-row">
+              <div class="form-lbl">Code / Question Lines <span style="color:var(--muted);font-size:10px;">(one line per row)</span></div>
+              <textarea class="form-ta" id="bq-lines" rows="6" placeholder="x = [1,2,3]&#10;print(x[0])"></textarea>
+            </div>
+            <div id="bq-ar-fields" style="display:none;">
+              <div class="form-row"><div class="form-lbl">Assertion (A)</div><input class="form-inp" id="bq-assertion" placeholder="Python list is mutable"></div>
+              <div class="form-row"><div class="form-lbl">Reason (R)</div><input class="form-inp" id="bq-reason" placeholder="List elements can be changed after creation"></div>
+            </div>
+            <div id="bq-options-fields" style="display:none;">
+              <div class="form-row"><div class="form-lbl">Options (A, B, C, D)</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                  <input class="form-inp" id="bq-opt-a" placeholder="Option A"><input class="form-inp" id="bq-opt-b" placeholder="Option B">
+                  <input class="form-inp" id="bq-opt-c" placeholder="Option C"><input class="form-inp" id="bq-opt-d" placeholder="Option D">
+                </div></div>
+            </div>
+            <div class="form-row"><div class="form-lbl" id="bq-answer-lbl">Answer / Expected Output</div>
+              <textarea class="form-ta" id="bq-answer" rows="3" placeholder="Expected output or model answer"></textarea></div>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <button class="btn-save-settings" id="bq-form-save" onclick="saveBoardQuestion()">Save Question</button>
+              <button class="btn-save-settings" onclick="document.getElementById('bq-form-modal').classList.add('hidden')" style="background:var(--s3);color:var(--text2);border:1.5px solid var(--bdr2);">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -545,64 +504,75 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <div class="tb-step" id="tb-step-2"><div class="tb-step-num">2</div> Review</div>
           <div class="tb-step" id="tb-step-3"><div class="tb-step-num">3</div> Publish</div>
         </div>
-
         <div class="tb-panel active" id="tb-panel-1">
           <div class="tb-gen-card">
             <div class="setting-title" style="margin-bottom:4px">Generate Questions</div>
-            <div class="setting-desc" style="margin-bottom:14px">Pick concept and count. Engine generates questions \u2014 you review one by one in Step 2.</div>
-            <div class="setting-lbl">Data Type</div>
-            <div class="tb-opt-row" id="tb-dtype">
-              <button class="tb-opt on" data-val="String">String</button>
-              <button class="tb-opt" data-val="List">List</button>
-              <button class="tb-opt" data-val="Tuple">Tuple</button>
-              <button class="tb-opt" data-val="Dictionary">Dictionary</button>
-              <button class="tb-opt" data-val="Mixed">Mixed</button>
+            <div class="setting-desc" style="margin-bottom:16px">Select topic, question type and count.</div>
+            <div class="setting-lbl" style="margin-bottom:8px;">Topic</div>
+            <div class="bgrp" id="tb-dtype" style="margin-bottom:16px;">
+              <button class="tog active" data-val="String">String</button>
+              <button class="tog" data-val="List">List</button>
+              <button class="tog" data-val="Tuple">Tuple</button>
+              <button class="tog" data-val="Dictionary">Dict</button>
+              <button class="tog" data-val="Mixed">Mixed</button>
+              <button class="tog" data-val="Functions">Functions</button>
+              <button class="tog" data-val="Modules">Modules</button>
+              <button class="tog" data-val="Exception">Exception</button>
             </div>
-            <div class="setting-lbl" style="margin-bottom:6px">Number of Questions</div>
-            <div class="tb-opt-row" id="tb-count">
-              <button class="tb-opt" data-val="10">10</button>
-              <button class="tb-opt on" data-val="20">20</button>
-              <button class="tb-opt" data-val="30">30</button>
+            <div class="setting-lbl" style="margin-bottom:8px;" id="tb-qtype-lbl">Question Type</div>
+            <div class="bgrp" id="tb-qtype" style="margin-bottom:16px;">
+              <button class="tog qt-Mixed active" data-val="Mixed">Mixed</button>
+              <button class="tog" data-val="Indexing">Indexing</button>
+              <button class="tog" data-val="Slicing">Slicing</button>
+              <button class="tog" data-val="SliceIdx">Slice+Index</button>
+              <button class="tog" data-val="Functions">Functions</button>
+              <button class="tog" data-val="Membership">Membership</button>
+              <button class="tog" data-val="Comparison">Comparison</button>
+              <button class="tog" data-val="Expressions">Expressions</button>
+              <button class="tog" data-val="BuiltinMath">Built-in</button>
+              <button class="tog" data-val="ExceptionHandling" style="display:none">Exception</button>
+            </div>
+            <div class="setting-lbl" style="margin-bottom:8px;">Number of Questions</div>
+            <div class="bgrp" id="tb-count" style="margin-bottom:20px;">
+              <button class="tog" data-val="10">10</button>
+              <button class="tog active" data-val="20">20</button>
+              <button class="tog" data-val="30">30</button>
+              <button class="tog" data-val="50">50</button>
             </div>
             <button class="btn-tb primary" id="btn-tb-generate">Generate Questions &#x26A1;</button>
           </div>
         </div>
-
         <div class="tb-panel" id="tb-panel-2">
-          <div class="review-progress">
-            <div class="rev-stat">Approved: <span id="rev-approved">0</span></div>
-            <div class="rev-stat">Rejected: <span id="rev-rejected">0</span></div>
-            <div class="rev-stat">Remaining: <span id="rev-remaining">0</span></div>
+          <div class="tb-review-stats">
+            <div class="tb-stat"><span id="rev-approved">0</span> Approved</div>
+            <div class="tb-stat"><span id="rev-rejected">0</span> Rejected</div>
+            <div class="tb-stat"><span id="rev-remaining">0</span> Remaining</div>
           </div>
           <div id="review-queue"></div>
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <button class="btn-tb outline" id="btn-tb-back-gen">&#x2190; Regenerate</button>
-            <button class="btn-tb primary" id="btn-tb-to-publish">Proceed to Publish &#x2192;</button>
+          <div style="display:flex;gap:10px;margin-top:14px;">
+            <button class="btn-tb" id="btn-tb-back-gen">&#x2190; Back</button>
+            <button class="btn-tb primary" id="btn-tb-to-publish">Proceed to Publish</button>
           </div>
         </div>
-
         <div class="tb-panel" id="tb-panel-3">
-          <div class="tb-publish-card">
-            <div class="setting-title" style="margin-bottom:4px">Publish Test</div>
-            <div class="setting-desc" style="margin-bottom:14px">Set details and publish. Students see it in their Tests tab.</div>
-            <div class="pub-row"><div class="pub-lbl">Test Title</div><input class="pub-inp" id="pub-title" placeholder="e.g. Mock Test 1 \u2014 Strings & Lists"></div>
+          <div class="pub-form">
+            <div class="pub-row"><div class="pub-lbl">Test Title</div><input class="form-inp" id="pub-title" placeholder="CBSE Mock Test - Python"></div>
             <div class="pub-row"><div class="pub-lbl">Access</div>
-              <select class="pub-sel" id="pub-access">
-                <option value="free">Free \u2014 all students</option>
-                <option value="paid">Paid \u2014 Pro only</option>
+              <select class="form-sel" id="pub-access">
+                <option value="free">Free (All Students)</option>
+                <option value="paid">Pro Only</option>
               </select>
             </div>
-            <div class="pub-row"><div class="pub-lbl">Duration (minutes)</div><input class="pub-inp" type="number" id="pub-duration" min="5" max="180" placeholder="30"></div>
-            <div class="pub-row"><div class="pub-lbl">Scheduled Date &amp; Time</div><input class="pub-inp" type="datetime-local" id="pub-schedule"></div>
-            <div class="pub-row"><div class="pub-lbl">Description (optional)</div><input class="pub-inp" id="pub-desc" placeholder="Brief description..."></div>
-            <div style="display:flex;gap:8px;margin-top:4px">
-     in-top:4px">
-              <button class="btn-tb outline" id="btn-tb-back-review">&#x2190; Back to Review</button>
-              <button class="btn-tb primary" id="btn-tb-publish">Publish Test &#x1F680;</button>
-            </div>
+            <div class="pub-row"><div class="pub-lbl">Duration (minutes)</div><input class="form-inp" id="pub-duration" type="number" min="5" placeholder="30"></div>
+            <div class="pub-row"><div class="pub-lbl">Schedule</div><input class="form-inp" id="pub-schedule" type="datetime-local"></div>
+            <div class="pub-row"><div class="pub-lbl">Description</div><input class="form-inp" id="pub-desc" placeholder="Optional description"></div>
           </div>
-          <div class="pub-tests-wrap">
-            <div style="padding:14px 16px;border-bottom:1px solid var(--bdr)"><strong style="font-size:11px;letter-spacing:1px;color:var(--muted)">PUBLISHED TESTS</strong></div>
+          <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+            <button class="btn-tb" id="btn-tb-back-review">&#x2190; Back to Review</button>
+            <button class="btn-tb primary" id="btn-tb-publish">Publish Test &#x1F680;</button>
+          </div>
+          <div class="pub-tests-wrap" style="margin-top:20px;">
+            <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:var(--muted);padding:14px 16px;border-bottom:1px solid var(--bdr)">PUBLISHED TESTS</div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Title</th><th>Access</th><th>Questions</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
               <tbody id="pub-tests-tbody"><tr><td colspan="6" class="tbl-empty"><div class="spinner" style="margin:0 auto"></div></td></tr></tbody>
@@ -611,21 +581,22 @@ tr:hover td{background:rgba(255,255,255,.02);}
         </div>
       </div>
 
-    </div><!-- end main-content -->
-  </div><!-- end shell -->
+    </div><!-- end pages-wrap -->
+  </div><!-- end main-content -->
+</div><!-- end shell -->
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+
 'use strict';
 
+// ═══ TEST BUILDER STATE ═══
 var TB = { step:1, dtype:"String", qtype:"Mixed", count:20, generated:[], approved:[], rejected:0 };
 
-
-'use strict';
-
-// CONFIG
+// ═══ CONFIG ═══
 firebase.initializeApp({
   apiKey:            "AIzaSyAYth1IHw3iIIs4-LWxJe4bbMdmkvyBKjE",
   authDomain:        "pyzap-297ad.firebaseapp.com",
@@ -637,226 +608,187 @@ firebase.initializeApp({
 var auth = firebase.auth();
 var db   = firebase.firestore();
 
-// STATE
-var allStudents = [], filteredStudents = [], currentPage = 1, PAGE_SIZE = 20;
-var currentSettings = {};
-var allUsersCache = [];
-
-// CF
+// ═══ CONSTANTS ═══
 var CF_BASE     = "https://asia-south1-pyzap-297ad.cloudfunctions.net";
 var CF_GENERATE = CF_BASE + "/generateQuestions";
+var ADMIN_UID   = "eLn2u2Cok3XlmIqqjgLBOwgUpOG3";
 
-// AUTH
-var _adminHandled = false;
-var isMobileAdmin = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// ═══ STATE ═══
+var allUsersCache = [];
+var filteredStudents = [];
+var currentPage = 1;
+var PAGE_SIZE = 25;
+var currentSettings = {};
 
-function showLoginScreen() {
-  document.getElementById("login-screen").classList.remove("hidden");
-  document.getElementById("shell").style.display = "none";
+// ═══ HELPERS ═══
+function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function fmtDate(ts){
+  if(!ts) return "—";
+  try{ var d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}); }catch(e){ return "—"; }
 }
 
-function handleAdminUser(user) {
-  if (_adminHandled) return;
-  _adminHandled = true;
-  console.log("[Admin] Checking admin access for:", user.email);
-  db.collection("admins").doc(user.uid).get().then(function(snap) {
-    if (snap.exists) {
-      console.log("[Admin] Access granted");
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("shell").style.display = "flex";
-      document.getElementById("sb-admin-email").textContent = user.email;
-      initAdmin();
-    } else {
-      console.warn("[Admin] Not an admin:", user.email);
-      var err = document.getElementById("login-err");
-      err.style.display = "block";
-      err.textContent = "Access denied. This Google account is not an admin.";
-      var btn = document.getElementById("btn-admin-login");
-      btn.disabled = false;
-      btn.textContent = "Sign in with Google";
-      _adminHandled = false;
-      auth.signOut();
-    }
-  }).catch(function(e) {
-    console.error("[Admin] Firestore error:", e);
-    var err = document.getElementById("login-err");
-    err.style.display = "block";
-    err.textContent = "Error: " + e.message + ". Check Firestore rules.";
-    _adminHandled = false;
-    auth.signOut();
-  });
+// ═══ TOAST ═══
+var _tt=null;
+function showToast(msg,type){
+  var t=document.getElementById("toast");
+  t.textContent=msg; t.className="toast "+(type||"success")+" show";
+  if(_tt)clearTimeout(_tt);
+  _tt=setTimeout(function(){t.classList.remove("show");},2800);
 }
 
-// Handle redirect result on page load (mobile)
-auth.getRedirectResult().then(function(result) {
-  if (result && result.user) {
-    console.log("[Admin] Redirect result:", result.user.email);
-    handleAdminUser(result.user);
-  }
-}).catch(function(e) {
-  console.warn("[Admin] getRedirectResult error:", e.code);
-});
-
-// Auth state listener
-auth.onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("[Admin] onAuthStateChanged: user=" + user.email);
-    handleAdminUser(user);
-  } else {
-    if (!_adminHandled) {
-      showLoginScreen();
-    }
-  }
-});
-
-// Login button
-document.getElementById("btn-admin-login").addEventListener("click", function() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
-  var btn = this;
-  btn.disabled = true;
-  document.getElementById("login-err").style.display = "none";
-
-  if (isMobileAdmin) {
-    console.log("[Admin] Mobile: signInWithRedirect");
-    btn.textContent = "Redirecting...";
-    auth.signInWithRedirect(provider).catch(function(e) {
-      btn.disabled = false;
-      btn.textContent = "Sign in with Google";
-      showToast("Sign in failed.", "error");
-    });
-  } else {
-    console.log("[Admin] Desktop: signInWithPopup");
-    btn.textContent = "Opening Google...";
-    auth.signInWithPopup(provider).then(function(result) {
-      console.log("[Admin] Popup success:", result.user.email);
-      handleAdminUser(result.user);
-    }).catch(function(e) {
-      btn.disabled = false;
-      btn.textContent = "Sign in with Google";
-      if (e.code !== "auth/popup-closed-by-user") {
-        document.getElementById("login-err").style.display = "block";
-        document.getElementById("login-err").textContent = "Login failed: " + e.message;
-      }
-    });
-  }
-});
-
-document.getElementById("btn-logout").addEventListener("click", function() {
-  _adminHandled = false;
-  auth.signOut().then(function() { showLoginScreen(); });
-});
-
-// INIT
-function initAdmin() {
-  loadDashboard();
-  loadStudents();
-  loadSettings();
-  loadPromos();
-  loadTestBuilder();
-}
-
-// NAVIGATION
-var pageMeta = {
-  dashboard:   { title: "Dashboard",     sub: "Platform overview and key metrics" },
-  students:    { title: "Students",      sub: "Manage students, filter and take action" },
-  email:       { title: "Email",         sub: "Send targeted campaigns to your students" },
-  settings:    { title: "Settings",      sub: "Control free plan limits and pricing" },
-  promos:      { title: "Promo Codes",   sub: "Create and manage discount codes" },
-  testbuilder: { title: "Test Builder",  sub: "Generate and publish mock tests" },
-};
-document.querySelectorAll(".nav-item").forEach(function(item) {
-  item.addEventListener("click", function() {
-    var page = item.dataset.page;
-    document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.remove("active"); });
-    document.querySelectorAll(".page").forEach(function(p) { p.classList.remove("active"); });
-    item.classList.add("active");
-    document.getElementById("page-" + page).classList.add("active");
-    var meta = pageMeta[page] || { title: page, sub: "" };
-    document.getElementById("page-title").textContent = meta.title;
-    document.getElementById("page-sub").textContent   = meta.sub;
-    if (page === "students")    loadStudents();
-    if (page === "email")       loadEmailPage();
-    if (page === "settings")    loadSettings();
-    if (page === "testbuilder") loadPublishedTests();
-  });
-});
-
-// TOAST
-var _tt = null;
-function showToast(msg, type) {
-  var t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast " + (type || "success") + " show";
-  if (_tt) clearTimeout(_tt);
-  _tt = setTimeout(function() { t.classList.remove("show"); }, 2500);
-}
-
-// MODAL
-var _modalFn = null;
-function showModal(title, body, confirmTxt, fn) {
-  document.getElementById("modal-title").textContent = title;
-  document.getElementById("modal-sub").textContent   = body;
-  document.getElementById("modal-confirm").textContent = confirmTxt || "Confirm";
-  _modalFn = fn;
+// ═══ MODAL ═══
+var _modalFn=null;
+function showModal(title,body,confirmText,onConfirm){
+  document.getElementById("modal-title").textContent=title;
+  document.getElementById("modal-body").textContent=body;
+  document.getElementById("modal-confirm").textContent=confirmText||"Confirm";
+  _modalFn=onConfirm;
   document.getElementById("modal").classList.remove("hidden");
 }
-document.getElementById("modal-close").addEventListener("click",  function() { document.getElementById("modal").classList.add("hidden"); });
-document.getElementById("modal-cancel").addEventListener("click", function() { document.getElementById("modal").classList.add("hidden"); });
-document.getElementById("modal-confirm").addEventListener("click", function() {
-  document.getElementById("modal").classList.add("hidden");
-  if (_modalFn) _modalFn();
+document.getElementById("modal-cancel").addEventListener("click",function(){document.getElementById("modal").classList.add("hidden");});
+document.getElementById("modal-confirm").addEventListener("click",function(){document.getElementById("modal").classList.add("hidden");if(_modalFn)_modalFn();});
+
+// ═══ AUTH ═══
+var _adminHandled = false;
+
+function showLoginScreen(){
+  document.getElementById("login-screen").classList.remove("hidden");
+  document.getElementById("shell").style.display="none";
+}
+
+function handleAdminUser(user){
+  if(_adminHandled) return;
+  _adminHandled=true;
+  console.log("[Admin] Checking access for:", user.email);
+  db.collection("admins").doc(user.uid).get().then(function(snap){
+    if(snap.exists){
+      document.getElementById("login-screen").classList.add("hidden");
+      document.getElementById("shell").style.display="";
+      var emailEl=document.getElementById("sb-admin-email");
+      if(emailEl) emailEl.textContent=user.email||"Admin";
+      initAdmin();
+    } else {
+      auth.signOut();
+      _adminHandled=false;
+      showLoginScreen();
+      document.getElementById("lb-err").textContent="Access denied. Not an admin account.";
+    }
+  }).catch(function(e){
+    console.error(e);
+    auth.signOut();
+    _adminHandled=false;
+    showLoginScreen();
+    document.getElementById("lb-err").textContent="Error verifying access.";
+  });
+}
+
+auth.onAuthStateChanged(function(user){
+  if(user) handleAdminUser(user);
+  else{ _adminHandled=false; showLoginScreen(); }
 });
 
-// HELPERS
-function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-function fmtDate(ts) {
-  if (!ts) return "\u2014";
-  try { var d = ts.toDate ? ts.toDate() : new Date(ts); return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}); } catch(e) { return "\u2014"; }
+document.getElementById("btn-admin-google").addEventListener("click",function(){
+  var btn=this; btn.disabled=true; btn.textContent="Opening Google...";
+  var provider=new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({prompt:"select_account"});
+  auth.signInWithPopup(provider).then(function(result){
+    handleAdminUser(result.user);
+  }).catch(function(e){
+    btn.disabled=false;
+    btn.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Sign in with Google';
+    if(e.code!=="auth/popup-closed-by-user") document.getElementById("lb-err").textContent="Sign in failed. Try again.";
+  });
+});
+
+document.getElementById("btn-logout").addEventListener("click",function(){
+  _adminHandled=false;
+  auth.signOut().then(function(){showLoginScreen();});
+});
+
+// ═══ INIT ═══
+function initAdmin(){
+  loadDashboard(); // loads allUsersCache → triggers filterStudents
+  loadSettings();
+  loadPromos();
 }
 
-// DASHBOARD
-function loadDashboard() {
-  db.collection("users").get().then(function(snap) {
+// ═══ NAVIGATION ═══
+var pageMeta = {
+  dashboard:   { title:"Dashboard",   sub:"Platform overview and key metrics" },
+  students:    { title:"Students",    sub:"Manage student accounts" },
+  email:       { title:"Email",       sub:"Send targeted campaigns to your students" },
+  settings:    { title:"Settings",    sub:"Control free plan limits and pricing" },
+  promos:      { title:"Promo Codes", sub:"Create and manage discount codes" },
+  boardqs:     { title:"Board Questions", sub:"Add and manage CBSE board questions" },
+  testbuilder: { title:"Test Builder",sub:"Generate, review and publish mock tests" },
+};
+
+document.querySelectorAll(".nav-item").forEach(function(item){
+  item.addEventListener("click",function(){
+    var page=item.dataset.page;
+    document.querySelectorAll(".nav-item").forEach(function(i){i.classList.remove("active");});
+    item.classList.add("active");
+    document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
+    var pageEl=document.getElementById("page-"+page);
+    if(pageEl) pageEl.classList.add("active");
+    var meta=pageMeta[page]||{title:page,sub:""};
+    document.getElementById("page-title").textContent=meta.title;
+    document.getElementById("page-sub").textContent=meta.sub;
+    if(page==="students")    loadStudents();
+    if(page==="email")       loadEmailPage();
+    if(page==="settings")    loadSettings();
+    if(page==="boardqs")     loadBoardQuestions();
+    if(page==="testbuilder") loadPublishedTests();
+  });
+});
+
+// ═══ DASHBOARD ═══
+function loadDashboard(){
+  db.collection("users").get().then(function(snap){
     allUsersCache=[];
-    snap.forEach(function(doc){allUsersCache.push(Object.assign({id:doc.id},doc.data()));});
+    snap.forEach(function(doc){ allUsersCache.push(Object.assign({id:doc.id},doc.data())); });
     recalcDashboard();
     filteredStudents=allUsersCache.slice();
-    filterStudents();
-  }).catch(function(e){console.error(e);});
+    renderStudentsPage(); // pre-render students
+  }).catch(function(e){ console.error("[Admin] loadDashboard:",e); });
 }
-function recalcDashboard() {
-  var now=new Date(),todayStr=now.toDateString();
-  var newDays=parseInt((document.getElementById("dash-new-days")||{}).value)||7;
-  var inactDays=parseInt((document.getElementById("dash-inactive-days")||{}).value)||7;
+
+function recalcDashboard(){
+  var now=new Date(), todayStr=now.toDateString();
+  var newDays   = parseInt((document.getElementById("dash-new-days")||{}).value)||7;
+  var inactDays = parseInt((document.getElementById("dash-inactive-days")||{}).value)||7;
   var total=0,pro=0,free=0,expired=0,banned=0,activeToday=0,newCount=0,inactive=0,hitToday=0;
   allUsersCache.forEach(function(d){
     total++;
     var exp=d.planExpiry?(d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry)):null;
-    var isP=d.plan==="paid"&&exp&&exp>=now,isX=d.plan==="paid"&&exp&&exp<now;
-    if(isP)pro++;else if(isX)expired++;else free++;
-    if(d.banned)banned++;
+    var isP=d.plan==="paid"&&exp&&exp>=now;
+    var isX=d.plan==="paid"&&exp&&exp<now;
+    if(isP) pro++; else if(isX) expired++; else free++;
+    if(d.banned) banned++;
     var ll=d.lastLogin?(d.lastLogin.toDate?d.lastLogin.toDate():new Date(d.lastLogin)):null;
-    if(ll&&ll.toDateString()===todayStr)activeToday++;
+    if(ll&&ll.toDateString()===todayStr) activeToday++;
     var cr=d.createdAt?(d.createdAt.toDate?d.createdAt.toDate():new Date(d.createdAt)):null;
-    if(cr&&(now-cr)/86400000<=newDays)newCount++;
-    if(ll&&(now-ll)/86400000>=inactDays)inactive++;
-    if(d.hitLimitCount>0&&ll&&ll.toDateString()===todayStr)hitToday++;
+    if(cr&&(now-cr)/86400000<=newDays) newCount++;
+    if(ll&&(now-ll)/86400000>=inactDays) inactive++;
+    if(d.hitLimitCount>0&&ll&&ll.toDateString()===todayStr) hitToday++;
   });
   var set=function(id,v){var el=document.getElementById(id);if(el)el.textContent=v;};
-  set("st-total",total);set("st-paid",pro);set("st-free",free);set("st-expired",expired);
-  set("st-banned",banned);set("st-today",activeToday);set("st-conv",Math.round(total>0?pro/total*100:0)+"%");
-  set("st-new",newCount);set("st-inactive",inactive);set("st-hitlimit",hitToday);
+  set("st-total",total); set("st-paid",pro); set("st-free",free);
+  set("st-expired",expired); set("st-banned",banned); set("st-today",activeToday);
+  set("st-conv",total>0?Math.round(pro/total*100)+"%":"0%");
+  set("st-new",newCount); set("st-inactive",inactive); set("st-hitlimit",hitToday);
 }
 
-// STUDENTS
+// ═══ STUDENTS ═══
 function loadStudents(){
-  if(allUsersCache.length>0){filteredStudents=allUsersCache.slice();filterStudents();return;}
+  if(allUsersCache.length>0){ filterStudents(); return; }
   db.collection("users").get().then(function(snap){
-    allUsersCache=[];snap.forEach(function(doc){allUsersCache.push(Object.assign({id:doc.id},doc.data()));});
-    filteredStudents=allUsersCache.slice();filterStudents();
-  }).catch(function(e){console.error(e);});
+    allUsersCache=[];
+    snap.forEach(function(doc){ allUsersCache.push(Object.assign({id:doc.id},doc.data())); });
+    filterStudents();
+  }).catch(function(e){ console.error(e); });
 }
+
 function filterStudents(){
   var search=((document.getElementById("student-search")||{}).value||"").toLowerCase();
   var plan=(document.getElementById("student-plan-filter")||{}).value||"all";
@@ -865,257 +797,332 @@ function filterStudents(){
   var now=new Date();
   filteredStudents=allUsersCache.filter(function(d){
     var exp=d.planExpiry?(d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry)):null;
-    var isP=d.plan==="paid"&&exp&&exp>=now,isX=d.plan==="paid"&&exp&&exp<now;
-    if(plan==="paid"&&!isP)return false;if(plan==="free"&&(isP||isX))return false;
-    if(plan==="expired"&&!isX)return false;if(plan==="banned"&&!d.banned)return false;
-    if((d.loginCount||0)<minLog)return false;
-    if(search){var n=(d.name||"").toLowerCase(),e=(d.email||d.id||"").toLowerCase();if(!n.includes(search)&&!e.includes(search))return false;}
+    var isP=d.plan==="paid"&&exp&&exp>=now;
+    var isX=d.plan==="paid"&&exp&&exp<now;
+    if(plan==="paid"    &&!isP) return false;
+    if(plan==="free"    &&(isP||isX)) return false;
+    if(plan==="expired" &&!isX) return false;
+    if(plan==="banned"  &&!d.banned) return false;
+    if((d.loginCount||0)<minLog) return false;
+    if(search){
+      var n=(d.name||"").toLowerCase(), e=(d.email||"").toLowerCase();
+      if(!n.includes(search)&&!e.includes(search)) return false;
+    }
     return true;
   });
   filteredStudents.sort(function(a,b){
-    if(sort==="logins")return(b.loginCount||0)-(a.loginCount||0);
-    if(sort==="recent"){var al=a.lastLogin?(a.lastLogin.toDate?a.lastLogin.toDate():new Date(a.lastLogin)):new Date(0),bl=b.lastLogin?(b.lastLogin.toDate?b.lastLogin.toDate():new Date(b.lastLogin)):new Date(0);return bl-al;}
-    if(sort==="joined"){var ac=a.createdAt?(a.createdAt.toDate?a.createdAt.toDate():new Date(a.createdAt)):new Date(0),bc=b.createdAt?(b.createdAt.toDate?b.createdAt.toDate():new Date(b.createdAt)):new Date(0);return bc-ac;}
+    if(sort==="logins") return(b.loginCount||0)-(a.loginCount||0);
+    if(sort==="recent"){
+      var al=a.lastLogin?(a.lastLogin.toDate?a.lastLogin.toDate():new Date(a.lastLogin)):new Date(0);
+      var bl=b.lastLogin?(b.lastLogin.toDate?b.lastLogin.toDate():new Date(b.lastLogin)):new Date(0);
+      return bl-al;
+    }
+    if(sort==="joined"){
+      var ac=a.createdAt?(a.createdAt.toDate?a.createdAt.toDate():new Date(a.createdAt)):new Date(0);
+      var bc=b.createdAt?(b.createdAt.toDate?b.createdAt.toDate():new Date(b.createdAt)):new Date(0);
+      return bc-ac;
+    }
     return(a.name||"").localeCompare(b.name||"");
   });
-  currentPage=1;renderStudentsPage();
+  currentPage=1;
+  renderStudentsPage();
 }
-function fmtDate(ts){if(!ts)return"—";try{var d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(e){return"—";}}
+
 function renderStudentsPage(){
-  var start=(currentPage-1)*PAGE_SIZE,end=start+PAGE_SIZE,page=filteredStudents.slice(start,end);
-  var tbody=document.getElementById("students-tbody"),ce=document.getElementById("student-count");
-  if(ce)ce.textContent=filteredStudents.length+" students found";
-  if(!tbody)return;
-  if(!page.length){tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">No students found.</td></tr>';return;}
+  var start=(currentPage-1)*PAGE_SIZE, end=start+PAGE_SIZE, page=filteredStudents.slice(start,end);
+  var tbody=document.getElementById("students-tbody");
+  var ce=document.getElementById("student-count");
+  if(ce) ce.textContent=filteredStudents.length+" students found";
+  if(!tbody) return;
+  if(!page.length){
+    tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">No students found.</td></tr>';
+    return;
+  }
   var now=new Date();
   tbody.innerHTML=page.map(function(d){
     var exp=d.planExpiry?(d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry)):null;
-    var isP=d.plan==="paid"&&exp&&exp>=now,isX=d.plan==="paid"&&exp&&exp<now;
-    var pb=isP?'<span class="badge paid">Pro</span>':isX?'<span class="badge" style="background:var(--rddim);color:var(--red)">Expired</span>':'<span class="badge free">Free</span>';
-    var bb=d.banned?'<span style="font-size:9px;color:var(--red);font-weight:700;margin-left:4px">BANNED</span>':'';
-    var planBtn=isP?'<button class="tbl-btn ban" data-uid="'+d.id+'" onclick="downgradeStudent(this.dataset.uid)">Downgrade</button>':'<button class="tbl-btn upgrade" data-uid="'+d.id+'" onclick="upgradeStudent(this.dataset.uid)">Upgrade</button>';
-    var banBtn=d.banned?'<button class="tbl-btn upgrade" data-uid="'+d.id+'" onclick="unbanStudent(this.dataset.uid)">Unblock</button>':'<button class="tbl-btn ban" data-uid="'+d.id+'" data-name="'+esc(d.name||'Student')+'" onclick="banStudent(this.dataset.uid,this.dataset.name)">Ban</button>';
+    var isP=d.plan==="paid"&&exp&&exp>=now;
+    var isX=d.plan==="paid"&&exp&&exp<now;
+    var pb=isP?'<span class="badge paid">Pro</span>':
+           isX?'<span class="badge" style="background:var(--rddim);color:var(--red)">Expired</span>':
+               '<span class="badge free">Free</span>';
+    var bb=d.banned?'<span style="font-size:9px;color:var(--red);font-weight:700;margin-left:4px">BANNED</span>':'';;
+    var planBtn=isP
+      ?'<button class="tbl-btn ban" data-uid="'+d.id+'" onclick="downgradeStudent(this.dataset.uid)">Downgrade</button>'
+      :'<button class="tbl-btn upgrade" data-uid="'+d.id+'" onclick="upgradeStudent(this.dataset.uid)">Upgrade</button>';
+    var banBtn=d.banned
+      ?'<button class="tbl-btn upgrade" data-uid="'+d.id+'" onclick="unbanStudent(this.dataset.uid)">Unblock</button>'
+      :'<button class="tbl-btn ban" data-uid="'+d.id+'" data-name="'+esc(d.name||"Student")+'" onclick="banStudent(this.dataset.uid,this.dataset.name)">Ban</button>';
     return '<tr'+(d.banned?' style="opacity:.55"':'')+'>'+
       '<td style="font-weight:600">'+esc(d.name||"—")+bb+'</td>'+
       '<td style="font-size:11px;color:var(--text2)">'+esc(d.email||"—")+'</td>'+
-      '<td>'+pb+'</td>'+'<td style="font-family:var(--mono)">'+(d.loginCount||0)+'</td>'+
+      '<td>'+pb+'</td>'+
+      '<td style="font-family:var(--mono)">'+(d.loginCount||0)+'</td>'+
       '<td style="font-size:11px">'+fmtDate(d.lastLogin)+'</td>'+
-      '<td style="display:flex;gap:5px;padding:8px 16px;flex-wrap:wrap">'+planBtn+banBtn+'</td></tr>';
+      '<td style="display:flex;gap:5px;padding:8px 16px;flex-wrap:wrap">'+planBtn+banBtn+'</td>'+
+    '</tr>';
   }).join("");
-  var tot=filteredStudents.length,pgs=Math.ceil(tot/PAGE_SIZE);
+  var tot=filteredStudents.length, pgs=Math.ceil(tot/PAGE_SIZE);
   var pg=document.getElementById("students-pagination");
-  if(pg)pg.innerHTML='Showing '+(start+1)+'-'+Math.min(end,tot)+' of '+tot+
+  if(pg) pg.innerHTML=
+    'Showing '+(start+1)+'-'+Math.min(end,tot)+' of '+tot+
     (currentPage>1?' <button onclick="goPage('+(currentPage-1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Prev</button>':'')+
     ' Page '+currentPage+'/'+pgs+' '+
-    (currentPage<pgs?'<button onclick="goPage('+(currentPage+1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Next</button>':'');
+    (currentPage<pgs?'<button onclick="goPage('+(currentPage+1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Next</button>':'')+
+    ' <span style="color:var(--muted)">|' + tot + ' total</span>';
 }
-function goPage(n){currentPage=n;renderStudentsPage();}
+
+function goPage(n){ currentPage=n; renderStudentsPage(); }
+
 function downgradeAllExpired(){
-  var now=new Date(),exp=allUsersCache.filter(function(d){if(d.plan!=="paid"||!d.planExpiry)return false;var e=d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry);return e<now;});
-  if(!exp.length){showToast("No expired Pro students","info");return;}
-  showModal("Downgrade "+exp.length+"?","Set all expired Pro to Free.","Downgrade All",function(){
-    Promise.all(exp.map(function(d){return db.collection("users").doc(d.id).update({plan:"free"});}))
-    .then(function(){showToast(exp.length+" downgraded","success");loadDashboard();}).catch(function(e){showToast("Error: "+e.message,"error");});
+  var now=new Date();
+  var expired=allUsersCache.filter(function(d){
+    if(d.plan!=="paid"||!d.planExpiry) return false;
+    var e=d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry);
+    return e<now;
+  });
+  if(!expired.length){ showToast("No expired Pro students","info"); return; }
+  showModal("Downgrade "+expired.length+" Expired?","Set all expired Pro students to Free plan.","Downgrade All",function(){
+    Promise.all(expired.map(function(d){return db.collection("users").doc(d.id).update({plan:"free"});}))
+    .then(function(){
+      showToast(expired.length+" students downgraded","success");
+      expired.forEach(function(d){ var s=allUsersCache.find(function(u){return u.id===d.id;}); if(s)s.plan="free"; });
+      recalcDashboard(); filterStudents();
+    }).catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+
 function upgradeStudent(uid){
-  showModal("Upgrade Student","Set to Pro (365 days)?","Upgrade",function(){
-    var e=new Date();e.setDate(e.getDate()+365);
-    db.collection("users").doc(uid).update({plan:"paid",planExpiry:firebase.firestore.Timestamp.fromDate(e)})
-    .then(function(){showToast("Upgraded","success");var s=allUsersCache.find(function(d){return d.id===uid;});if(s){s.plan="paid";s.planExpiry=e;}filterStudents();}).catch(function(e){showToast("Error: "+e.message,"error");});
+  showModal("Upgrade Student","Set this student to Pro plan for 365 days?","Upgrade",function(){
+    var exp=new Date(); exp.setDate(exp.getDate()+365);
+    db.collection("users").doc(uid).update({plan:"paid",planExpiry:firebase.firestore.Timestamp.fromDate(exp)})
+    .then(function(){
+      showToast("Upgraded to Pro","success");
+      var s=allUsersCache.find(function(d){return d.id===uid;});
+      if(s){s.plan="paid";s.planExpiry=exp;}
+      recalcDashboard(); filterStudents();
+    }).catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+
 function downgradeStudent(uid){
-  showModal("Downgrade?","Set to Free?","Downgrade",function(){
+  showModal("Downgrade Student","Set this student to Free plan?","Downgrade",function(){
     db.collection("users").doc(uid).update({plan:"free"})
-    .then(function(){showToast("Downgraded","success");var s=allUsersCache.find(function(d){return d.id===uid;});if(s)s.plan="free";filterStudents();}).catch(function(e){showToast("Error: "+e.message,"error");});
+    .then(function(){
+      showToast("Downgraded to Free","success");
+      var s=allUsersCache.find(function(d){return d.id===uid;});
+      if(s) s.plan="free";
+      recalcDashboard(); filterStudents();
+    }).catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+
 function banStudent(uid,name){
-  showModal("Ban "+name,"Cannot login.","Ban",function(){
+  showModal("Ban Student","Ban "+name+"? They will not be able to login.","Ban",function(){
     db.collection("users").doc(uid).update({banned:true})
-    .then(function(){showToast(name+" banned","success");var s=allUsersCache.find(function(d){return d.id===uid;});if(s)s.banned=true;filterStudents();}).catch(function(e){showToast("Error: "+e.message,"error");});
+    .then(function(){
+      showToast(name+" banned","success");
+      var s=allUsersCache.find(function(d){return d.id===uid;});
+      if(s) s.banned=true;
+      recalcDashboard(); filterStudents();
+    }).catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+
 function unbanStudent(uid){
-  showModal("Unblock","Allow login?","Unblock",function(){
+  showModal("Unblock Student","Allow this student to login again?","Unblock",function(){
     db.collection("users").doc(uid).update({banned:false})
-    .then(function(){showToast("Unblocked","success");var s=allUsersCache.find(function(d){return d.id===uid;});if(s)s.banned=false;filterStudents();}).catch(function(e){showToast("Error: "+e.message,"error");});
+    .then(function(){
+      showToast("Student unblocked","success");
+      var s=allUsersCache.find(function(d){return d.id===uid;});
+      if(s) s.banned=false;
+      recalcDashboard(); filterStudents();
+    }).catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
+
 document.getElementById("student-search").addEventListener("input",filterStudents);
 document.getElementById("student-plan-filter").addEventListener("change",filterStudents);
 document.getElementById("student-sort").addEventListener("change",filterStudents);
 
-// EMAIL
+// ═══ EMAIL ═══
 function loadEmailPage(){
-  // Populate targeted promo dropdown
-  var sel = document.getElementById("email-promo-select");
-  if(sel && sel.options.length <= 1){
-    db.collection("promoCodes").where("promoCategory","==","targeted").get().then(function(snap){
-      snap.forEach(function(doc){
-        var p=doc.data();
-        if(!p.active) return;
-        var opt=document.createElement("option");
-        opt.value=doc.id;
-        opt.textContent=doc.id+" ("+(p.type==="free"?"Free":p.discount+"%")+")";
-        if(sel) sel.appendChild(opt);
-      });
-    }).catch(function(){});
+  // Load allUsersCache if needed
+  if(allUsersCache.length===0){
+    db.collection("users").get().then(function(snap){
+      allUsersCache=[];
+      snap.forEach(function(doc){ allUsersCache.push(Object.assign({id:doc.id},doc.data())); });
+      populatePromoDropdown();
+      previewEmailRecipients();
+    });
+  } else {
+    populatePromoDropdown();
+    previewEmailRecipients();
   }
-  if(allUsersCache.length===0){db.collection("users").get().then(function(snap){allUsersCache=[];snap.forEach(function(doc){allUsersCache.push(Object.assign({id:doc.id},doc.data()));});previewEmailRecipients();});}
-  else{previewEmailRecipients();}
 }
+
+function populatePromoDropdown(){
+  var sel=document.getElementById("email-promo-select");
+  if(!sel||sel.options.length>1) return; // already loaded
+  db.collection("promoCodes").where("promoCategory","==","targeted").get()
+  .then(function(snap){
+    snap.forEach(function(doc){
+      var p=doc.data();
+      if(!p.active) return;
+      var opt=document.createElement("option");
+      opt.value=doc.id;
+      opt.textContent=doc.id+" ("+(p.type==="free"?"Free Upgrade":p.discount+"%")+")";
+      sel.appendChild(opt);
+    });
+  }).catch(function(){});
+}
+
 function getEmailRecipients(){
-  var plan=(document.getElementById("email-plan-filter")||{}).value||"all";
-  var act=(document.getElementById("email-activity-filter")||{}).value||"all";
-  var minLog=parseInt((document.getElementById("email-min-logins")||{}).value)||0;
-  var newD=parseInt((document.getElementById("email-new-days")||{}).value)||0;
-  var search=((document.getElementById("email-name-search")||{}).value||"").toLowerCase();
-  var now=new Date();
+  var plan    = (document.getElementById("email-plan-filter")||{}).value||"all";
+  var act     = (document.getElementById("email-activity-filter")||{}).value||"all";
+  var minLog  = parseInt((document.getElementById("email-min-logins")||{}).value)||0;
+  var newD    = parseInt((document.getElementById("email-new-days")||{}).value)||0;
+  var search  = ((document.getElementById("email-name-search")||{}).value||"").toLowerCase();
+  var now     = new Date();
   return allUsersCache.filter(function(d){
-    if(d.banned||!d.email)return false;
+    if(d.banned||!d.email) return false;
     var exp=d.planExpiry?(d.planExpiry.toDate?d.planExpiry.toDate():new Date(d.planExpiry)):null;
-    var isP=d.plan==="paid"&&exp&&exp>=now,isX=d.plan==="paid"&&exp&&exp<now;
-    if(plan==="paid"&&!isP)return false;if(plan==="free"&&(isP||isX))return false;if(plan==="expired"&&!isX)return false;
+    var isP=d.plan==="paid"&&exp&&exp>=now;
+    var isX=d.plan==="paid"&&exp&&exp<now;
+    if(plan==="paid"    &&!isP) return false;
+    if(plan==="free"    &&(isP||isX)) return false;
+    if(plan==="expired" &&!isX) return false;
     var ll=d.lastLogin?(d.lastLogin.toDate?d.lastLogin.toDate():new Date(d.lastLogin)):null;
     var days=ll?(now-ll)/86400000:999;
-    if(act==="active7"&&days>7)return false;if(act==="active30"&&days>30)return false;
-    if(act==="inactive7"&&days<7)return false;if(act==="inactive30"&&days<30)return false;
-    if(minLog>0&&(d.loginCount||0)<minLog)return false;
-    if(newD>0){var cr=d.createdAt?(d.createdAt.toDate?d.createdAt.toDate():new Date(d.createdAt)):null;if(!cr||(now-cr)/86400000>newD)return false;}
-    if(search&&!(d.name||"").toLowerCase().includes(search))return false;
+    if(act==="active7"   &&days>7)  return false;
+    if(act==="active30"  &&days>30) return false;
+    if(act==="inactive7" &&days<7)  return false;
+    if(act==="inactive30"&&days<30) return false;
+    if(minLog>0&&(d.loginCount||0)<minLog) return false;
+    if(newD>0){
+      var cr=d.createdAt?(d.createdAt.toDate?d.createdAt.toDate():new Date(d.createdAt)):null;
+      if(!cr||(now-cr)/86400000>newD) return false;
+    }
+    if(search&&!(d.name||"").toLowerCase().includes(search)) return false;
     return true;
   });
 }
-function previewEmailRecipients(){var r=getEmailRecipients();var c1=document.getElementById("email-matched-count");if(c1)c1.textContent=r.length;var c2=document.getElementById("email-count");if(c2)c2.textContent=r.length;}
+
+function previewEmailRecipients(){
+  var r=getEmailRecipients();
+  var c1=document.getElementById("email-matched-count"); if(c1) c1.textContent=r.length;
+  var c2=document.getElementById("email-count");         if(c2) c2.textContent=r.length;
+}
 
 function assignPromoToFiltered(){
-  var code = (document.getElementById("email-promo-select")||{}).value||"";
+  var code=(document.getElementById("email-promo-select")||{}).value||"";
   if(!code){ showToast("Select a targeted promo code first","error"); return; }
-  if(!filteredStudents.length){ showToast("No students in current filter","error"); return; }
-  var statusEl = document.getElementById("email-promo-status");
-  showModal("Assign Promo?","Assign code "+code+" to "+filteredStudents.length+" filtered students?","Assign",function(){
-    if(statusEl) statusEl.textContent="Assigning...";
-    var batch = db.batch();
-    var count = 0;
-    // Get promo expiry
-    db.collection("promoCodes").doc(code).get().then(function(snap){
-      var expiry = snap.exists ? (snap.data().expiry||null) : null;
-      filteredStudents.forEach(function(d){
-        if(!d.id) return;
-        var ref = db.collection("users").doc(d.id);
-        batch.update(ref, { promoOffer: { code: code, expiresAt: expiry } });
-        count++;
+  var students=getEmailRecipients();
+  if(!students.length){ showToast("No students in current filter","error"); return; }
+  var statusEl=document.getElementById("email-promo-status");
+  showModal(
+    "Assign Promo to "+students.length+"?",
+    "Assign code "+code+" to "+students.length+" filtered students. Only they can redeem it.",
+    "Assign",
+    function(){
+      if(statusEl) statusEl.textContent="Assigning...";
+      db.collection("promoCodes").doc(code).get().then(function(snap){
+        var expiry=snap.exists?(snap.data().expiry||null):null;
+        var batch=db.batch();
+        students.forEach(function(d){
+          if(!d.id) return;
+          batch.update(db.collection("users").doc(d.id),{
+            promoOffer:{ code:code, expiresAt:expiry }
+          });
+        });
+        return batch.commit();
+      }).then(function(){
+        if(statusEl) statusEl.textContent="✓ Assigned "+code+" to "+students.length+" students.";
+        showToast("Promo assigned to "+students.length+" students","success");
+      }).catch(function(e){
+        if(statusEl) statusEl.textContent="Error: "+e.message;
+        showToast("Error: "+e.message,"error");
       });
-      return batch.commit();
-    }).then(function(){
-      if(statusEl) statusEl.textContent="Assigned "+code+" to "+count+" students.";
-      showToast("Promo assigned to "+count+" students","success");
-    }).catch(function(e){
-      if(statusEl) statusEl.textContent="Error: "+e.message;
-      showToast("Error assigning promo: "+e.message,"error");
-    });
-  });
+    }
+  );
 }
+
 document.getElementById("btn-send-email").addEventListener("click",function(){
   var subj=((document.getElementById("email-subject")||{}).value||"").trim();
   var body=((document.getElementById("email-body")||{}).value||"").trim();
-  if(!subj){showToast("Enter subject","error");return;}if(!body){showToast("Enter message","error");return;}
+  if(!subj){ showToast("Enter a subject","error"); return; }
+  if(!body){ showToast("Enter a message","error"); return; }
   var recs=getEmailRecipients().map(function(d){return{email:d.email,name:d.name||"Student"};}).filter(function(r){return r.email;});
-  if(!recs.length){showToast("No students match filters","error");return;}
+  if(!recs.length){ showToast("No students match filters","error"); return; }
   showModal("Send to "+recs.length+"?","Subject: \""+subj+"\"","Send",function(){
-    var btn=document.getElementById("btn-send-email");btn.disabled=true;btn.textContent="Sending...";
+    var btn=document.getElementById("btn-send-email");
+    btn.disabled=true; btn.textContent="Sending...";
     auth.currentUser.getIdToken().then(function(tok){
-      return fetch(CF_BASE+"/sendEmail",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+tok},body:JSON.stringify({subject:subj,body:body,recipients:recs})});
+      return fetch(CF_BASE+"/sendEmail",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Authorization":"Bearer "+tok},
+        body:JSON.stringify({subject:subj,body:body,recipients:recs})
+      });
     }).then(function(res){return res.json().then(function(d){return{ok:res.ok,data:d};});})
-    .then(function(r){btn.disabled=false;btn.textContent="Send to "+recs.length+" students";if(!r.ok){showToast(r.data.message||"Error","error");return;}showToast("Sent to "+recs.length+"!","success");document.getElementById("email-subject").value="";document.getElementById("email-body").value="";})
-    .catch(function(){btn.disabled=false;btn.textContent="Send to "+recs.length+" students";showToast("Email needs Brevo API key in CF","error");});
+    .then(function(r){
+      btn.disabled=false; btn.textContent="Send to "+recs.length+" students";
+      if(!r.ok){ showToast(r.data.message||"Error","error"); return; }
+      showToast("Sent to "+recs.length+" students!","success");
+      document.getElementById("email-subject").value="";
+      document.getElementById("email-body").value="";
+    }).catch(function(){
+      btn.disabled=false; btn.textContent="Send to "+recs.length+" students";
+      showToast("Email requires Brevo API key in CF","error");
+    });
   });
 });
 
-// SETTINGS
-function loadSettings() {
-  db.collection("settings").doc("config").get().then(function(snap) {
-    if (!snap.exists) return;
-    var d = snap.data();
-    currentSettings = d;
-    if (d.freeConceptsAllowed) document.getElementById("s-free-concepts").value = d.freeConceptsAllowed.join(",");
-    if (d.freeQuestionsPerConcept) document.getElementById("s-free-q").value = d.freeQuestionsPerConcept;
-    if (d.paidPrice) document.getElementById("s-price").value = d.paidPrice;
-    if (d.qtypeWeights) {
-      var w = d.qtypeWeights;
-      if (w.Indexing)   document.getElementById("w-indexing").value   = w.Indexing;
-      if (w.Slicing)    document.getElementById("w-slicing").value    = w.Slicing;
-      if (w.Functions)  document.getElementById("w-functions").value  = w.Functions;
-      if (w.Membership) document.getElementById("w-membership").value = w.Membership;
-      if (w.Comparison) document.getElementById("w-comparison").value = w.Comparison;
-    }
+// ═══ SETTINGS ═══
+function loadSettings(){
+  db.collection("settings").doc("config").get().then(function(snap){
+    if(!snap.exists) return;
+    var d=snap.data();
+    currentSettings=d;
+    if(d.freeQuestionsPerQtype){ var el=document.getElementById("s-free-q"); if(el) el.value=d.freeQuestionsPerQtype; }
+    if(d.paidPrice){ var el2=document.getElementById("s-price"); if(el2) el2.value=d.paidPrice; }
   }).catch(function(e){ console.error(e); });
 }
-document.getElementById("btn-save-limits").addEventListener("click", function() {
-  var concepts = document.getElementById("s-free-concepts").value.split(",").map(function(s){ return s.trim(); }).filter(Boolean);
-  var qcount   = parseInt(document.getElementById("s-free-q").value);
-  if (!concepts.length) { showToast("Enter at least one concept","error"); return; }
-  if (!qcount || qcount < 1) { showToast("Enter a valid question count","error"); return; }
-  db.collection("settings").doc("config").set({ freeConceptsAllowed: concepts, freeQuestionsPerConcept: qcount }, { merge: true })
-  .then(function(){ showToast("Limits saved","success"); })
+
+document.getElementById("btn-save-limits").addEventListener("click",function(){
+  var qcount=parseInt((document.getElementById("s-free-q")||{}).value);
+  if(!qcount||qcount<1){ showToast("Enter a valid question count","error"); return; }
+  db.collection("settings").doc("config").set({freeQuestionsPerQtype:qcount},{merge:true})
+  .then(function(){ showToast("Saved","success"); })
   .catch(function(e){ showToast("Error: "+e.message,"error"); });
 });
-document.getElementById("btn-save-price").addEventListener("click", function() {
-  var price = parseInt(document.getElementById("s-price").value);
-  if (!price || price < 1) { showToast("Enter a valid price","error"); return; }
-  db.collection("settings").doc("config").set({ paidPrice: price }, { merge: true })
+
+document.getElementById("btn-save-price").addEventListener("click",function(){
+  var price=parseInt((document.getElementById("s-price")||{}).value);
+  if(!price||price<1){ showToast("Enter a valid price","error"); return; }
+  db.collection("settings").doc("config").set({paidPrice:price},{merge:true})
   .then(function(){ showToast("Price saved","success"); })
   .catch(function(e){ showToast("Error: "+e.message,"error"); });
 });
-document.getElementById("btn-save-weights").addEventListener("click", function() {
-  var w = {
-    Indexing:   parseInt(document.getElementById("w-indexing").value)  ||0,
-    Slicing:    parseInt(document.getElementById("w-slicing").value)   ||0,
-    Functions:  parseInt(document.getElementById("w-functions").value) ||0,
-    Membership: parseInt(document.getElementById("w-membership").value)||0,
-    Comparison: parseInt(document.getElementById("w-comparison").value)||0,
-  };
-  db.collection("settings").doc("config").set({ qtypeWeights: w }, { merge: true })
-  .then(function(){ showToast("Weights saved","success"); })
-  .catch(function(e){ showToast("Error: "+e.message,"error"); });
-});
 
-// EMAIL
-document.getElementById("btn-preview-email").addEventListener("click", function() {
-  var plan     = document.getElementById("email-plan-filter").value;
-  var activity = document.getElementById("email-activity-filter").value;
-  var now = Date.now();
-  var filtered = allStudents.filter(function(s) {
-    if (plan==="free" && s.plan!=="free") return false;
-    if (plan==="paid" && s.plan!=="paid") return false;
-    if (activity==="frequent" && (s.loginCount||0)<10) return false;
-    if (activity==="active") {
-      var ll = s.lastLogin ? (s.lastLogin.toDate ? s.lastLogin.toDate() : new Date(s.lastLogin)) : null;
-      if (!ll || (now - ll.getTime()) > 7*86400000) return false;
+// ═══ PROMOS ═══
+function loadPromos(){
+  var list=document.getElementById("promos-list");
+  if(!list) return;
+  list.innerHTML='<div class="loading-row"><div class="spinner"></div></div>';
+  db.collection("promoCodes").get().then(function(snap){
+    if(snap.empty){
+      list.innerHTML='<div style="color:var(--muted);font-size:13px;padding:10px 0">No promo codes yet.</div>';
+      return;
     }
-    return true;
-  });
-  document.getElementById("email-preview-result").textContent = filtered.length + " students would receive this email.";
-});
-document.getElementById("btn-send-email").addEventListener("click", function() {
-  showToast("Email campaigns require Brevo API key to be configured in Cloud Functions","info");
-});
-
-// PROMOS
-function loadPromos() {
-  db.collection("promoCodes").get().then(function(snap) {
-    var list = document.getElementById("promos-list");
-    if (snap.empty) { list.innerHTML='<div style="color:var(--muted);font-size:13px;padding:8px 0">No promo codes yet.</div>'; return; }
-    var html = '<div class="promo-grid">';
-    snap.forEach(function(doc) {
+    var html='<div class="promo-grid">';
+    snap.forEach(function(doc){
       var p=doc.data(), id=doc.id;
       html+='<div class="promo-card">'+
         '<div class="promo-code">'+esc(id)+'</div>'+
         '<div class="promo-meta">'+
-          'Type: '+(p.type||"discount")+' &nbsp;|&nbsp; Reach: '+(p.promoCategory||'general')+' &nbsp;|&nbsp; '+
-          (p.discount?'Discount: '+p.discount+'% &nbsp;|&nbsp;':'')+
+          'Type: '+(p.type||"discount")+' &nbsp;|&nbsp; '+
+          'Reach: '+(p.promoCategory||"general")+' &nbsp;|&nbsp; '+
+          (p.discount?'Discount: '+p.discount+'% &nbsp;|&nbsp; ':'')+
           'Used: '+(p.usedCount||0)+(p.limit?'/'+p.limit:'')+' &nbsp;|&nbsp; '+
           'Expires: '+(p.expiry||"Never")+
         '</div>'+
@@ -1125,212 +1132,194 @@ function loadPromos() {
       '</div>';
     });
     html+='</div>';
-    list.innerHTML = html;
+    list.innerHTML=html;
   }).catch(function(e){ console.error(e); });
 }
-document.getElementById("btn-create-promo").addEventListener("click", function() {
-  var code = document.getElementById("promo-code").value.trim().toUpperCase();
-  var type = document.getElementById("promo-type").value;
-  var disc = parseInt(document.getElementById("promo-discount").value)||0;
-  var limit= parseInt(document.getElementById("promo-limit").value)||0;
-  var exp  = document.getElementById("promo-expiry").value;
-  if (!code) { showToast("Enter a code","error"); return; }
-  var cat = (document.getElementById('promo-category')||{}).value||'general';
-  var data = { type:type, promoCategory:cat, active:true, usedCount:0, usedBy:[], createdAt:firebase.firestore.FieldValue.serverTimestamp() };
-  if (type==="discount") { if (!disc) { showToast("Enter discount %","error"); return; } data.discount=disc; }
-  if (limit) data.limit = limit;
-  if (exp)   data.expiry = exp;
+
+document.getElementById("btn-create-promo").addEventListener("click",function(){
+  var code=document.getElementById("promo-code").value.trim().toUpperCase();
+  var type=document.getElementById("promo-type").value;
+  var cat =(document.getElementById("promo-category")||{}).value||"general";
+  var disc=parseInt(document.getElementById("promo-discount").value)||0;
+  var limit=parseInt(document.getElementById("promo-limit").value)||0;
+  var exp  =document.getElementById("promo-expiry").value;
+  if(!code){ showToast("Enter a code","error"); return; }
+  if(type==="discount"&&!disc){ showToast("Enter discount %","error"); return; }
+  var data={type:type, promoCategory:cat, active:true, usedCount:0, usedBy:[],
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+  if(type==="discount") data.discount=disc;
+  if(limit) data.limit=limit;
+  if(exp)   data.expiry=exp;
   db.collection("promoCodes").doc(code).set(data)
-  .then(function(){ showToast("Promo code created","success"); loadPromos();
+  .then(function(){
+    showToast("Promo code created","success");
+    loadPromos();
+    // Refresh dropdown if on email page
+    var sel=document.getElementById("email-promo-select");
+    if(sel){ while(sel.options.length>1) sel.remove(sel.options.length-1); }
     document.getElementById("promo-code").value="";
     document.getElementById("promo-discount").value="";
     document.getElementById("promo-limit").value="";
     document.getElementById("promo-expiry").value="";
   }).catch(function(e){ showToast("Error: "+e.message,"error"); });
 });
-function deletePromo(id) {
-  showModal("Delete Promo","Delete promo code "+id+"?","Delete",function(){
+
+function deletePromo(id){
+  showModal("Delete Promo","Delete promo code "+id+"? This cannot be undone.","Delete",function(){
     db.collection("promoCodes").doc(id).delete()
-    .then(function(){ showToast("Promo deleted","info"); loadPromos(); })
+    .then(function(){
+      showToast("Promo deleted","info");
+      loadPromos();
+      // Refresh dropdown
+      var sel=document.getElementById("email-promo-select");
+      if(sel){ while(sel.options.length>1) sel.remove(sel.options.length-1); }
+    })
     .catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
 
-// ANNOUNCEMENTS
-function loadAnnouncements() {
-  db.collection("announcements").where("active","==",true).orderBy("createdAt","desc").get()
-  .then(function(snap) {
-    var el = document.getElementById("active-anns");
-    if (snap.empty) { el.innerHTML='<div style="color:var(--muted);font-size:13px">No active announcements.</div>'; return; }
-    var html="";
-    snap.forEach(function(doc) {
-      var a=doc.data();
-      var expired = a.expiresAt && (a.expiresAt.toDate ? a.expiresAt.toDate() : new Date(a.expiresAt)) < new Date();
-      html+='<div class="ann-banner '+(a.type||"info")+'">'+
-        '<span style="flex:1">'+esc(a.message||"")+'</span>'+
-        (expired?'<span style="font-size:10px;color:var(--red)">Expired</span>':'')+
-        '<button class="tbl-btn ban" onclick="deleteAnn(\''+doc.id+'\')" style="font-size:10px;padding:3px 8px;margin-left:8px">Delete</button>'+
-      '</div>';
-    });
-    el.innerHTML = html;
-  }).catch(function(e){ showToast("Error loading announcements: "+e.message,"error"); });
-}
-// Preview
-document.getElementById("ann-type").addEventListener("change", function() {
-  document.getElementById("ann-preview").className = "ann-banner " + this.value;
-});
-document.getElementById("ann-msg").addEventListener("input", function() {
-  document.getElementById("ann-preview").textContent = this.value || "Your announcement will appear here.";
-});
-document.getElementById("btn-send-ann").addEventListener("click", function() {
-  var type   = document.getElementById("ann-type").value;
-  var msg    = document.getElementById("ann-msg").value.trim();
-  var expiry = parseInt(document.getElementById("ann-expiry").value);
-  if (!msg) { showToast("Enter a message","error"); return; }
-  var data = { type:type, message:msg, active:true, createdAt:firebase.firestore.FieldValue.serverTimestamp() };
-  if (expiry > 0) { var exp=new Date(); exp.setDate(exp.getDate()+expiry); data.expiresAt=firebase.firestore.Timestamp.fromDate(exp); }
-  db.collection("announcements").add(data)
-  .then(function(){ showToast("Announcement published","success"); document.getElementById("ann-msg").value=""; loadAnnouncements(); })
-  .catch(function(e){ showToast("Error: "+e.message,"error"); });
-});
-function deleteAnn(id) {
-  db.collection("announcements").doc(id).delete()
-  .then(function(){ showToast("Announcement deleted","info"); loadAnnouncements(); })
-  .catch(function(e){ showToast("Error: "+e.message,"error"); });
-}
+// ═══ TEST BUILDER ═══
+function loadTestBuilder(){ loadPublishedTests(); }
 
-// TEST BUILDER
-var CF_BASE_TB = "https://asia-south1-pyzap-297ad.cloudfunctions.net";
-var CF_GENERATE = CF_BASE_TB + "/generateQuestions";
-var TB = { step:1, dtype:"String", count:20, generated:[], approved:[], rejected:0 };
-
-function loadTestBuilder() { loadPublishedTests(); }
-
-function tbGoStep(n) {
-  TB.step = n;
-  [1,2,3].forEach(function(i) {
-    var step  = document.getElementById("tb-step-"  + i);
-    var panel = document.getElementById("tb-panel-" + i);
-    if (!step || !panel) return;
-    step.className  = "tb-step"  + (i < n ? " done" : i === n ? " active" : "");
-    panel.className = "tb-panel" + (i === n ? " active" : "");
+function tbGoStep(n){
+  TB.step=n;
+  [1,2,3].forEach(function(i){
+    var step=document.getElementById("tb-step-"+i);
+    var panel=document.getElementById("tb-panel-"+i);
+    if(!step||!panel) return;
+    step.className="tb-step"+(i<n?" done":i===n?" active":"");
+    panel.className="tb-panel"+(i===n?" active":"");
   });
-  if (n === 3) loadPublishedTests();
+  if(n===3) loadPublishedTests();
 }
 
-document.querySelectorAll("#tb-dtype .tog, #tb-qtype .tog, #tb-count .tog").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    var grp=btn.closest(".bgrp");if(!grp)return;
-    grp.querySelectorAll(".tog").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");
+document.querySelectorAll("#tb-dtype .tog, #tb-qtype .tog, #tb-count .tog").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var grp=btn.closest(".bgrp"); if(!grp) return;
+    grp.querySelectorAll(".tog").forEach(function(b){b.classList.remove("active");});
+    btn.classList.add("active");
     if(grp.id==="tb-dtype"){
       TB.dtype=btn.dataset.val;
       var isPy=TB.dtype==="Functions"||TB.dtype==="Modules"||TB.dtype==="Exception";
-      var ql=document.getElementById("tb-qtype-lbl"),qg=document.getElementById("tb-qtype");
-      if(ql)ql.style.display=isPy?"none":"";if(qg)qg.style.display=isPy?"none":"";
-      if(!isPy){document.querySelectorAll("#tb-qtype .tog").forEach(function(b){b.style.display=b.dataset.val==="ExceptionHandling"?"none":"";});document.querySelectorAll("#tb-qtype .tog").forEach(function(b){b.classList.remove("active");});var mx=document.querySelector("#tb-qtype .tog[data-val='Mixed']");if(mx){mx.classList.add("active");TB.qtype="Mixed";}}
-      else{TB.qtype="Mixed";}
-    }else if(grp.id==="tb-qtype"){TB.qtype=btn.dataset.val;}else if(grp.id==="tb-count"){TB.count=parseInt(btn.dataset.val);}
+      var ql=document.getElementById("tb-qtype-lbl"), qg=document.getElementById("tb-qtype");
+      if(ql) ql.style.display=isPy?"none":"";
+      if(qg) qg.style.display=isPy?"none":"";
+      if(!isPy){
+        document.querySelectorAll("#tb-qtype .tog").forEach(function(b){
+          b.style.display=b.dataset.val==="ExceptionHandling"?"none":"";
+        });
+        document.querySelectorAll("#tb-qtype .tog").forEach(function(b){b.classList.remove("active");});
+        var mx=document.querySelector("#tb-qtype .tog[data-val='Mixed']");
+        if(mx){mx.classList.add("active"); TB.qtype="Mixed";}
+      } else { TB.qtype="Mixed"; }
+    } else if(grp.id==="tb-qtype"){ TB.qtype=btn.dataset.val; }
+    else if(grp.id==="tb-count"){ TB.count=parseInt(btn.dataset.val); }
   });
 });
 
-document.getElementById("btn-tb-generate").addEventListener("click", function() {
-  var btn = this;
-  btn.disabled = true; btn.textContent = "Generating...";
-  auth.currentUser.getIdToken().then(function(token) {
-    return fetch(CF_GENERATE, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-      body: JSON.stringify({ dtype: TB.dtype, plan: "paid" }),
+document.getElementById("btn-tb-generate").addEventListener("click",function(){
+  var btn=this; btn.disabled=true; btn.textContent="Generating...";
+  auth.currentUser.getIdToken().then(function(token){
+    return fetch(CF_GENERATE,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
+      body:JSON.stringify({dtypes:[TB.dtype],plan:"paid",qtype:TB.qtype})
     });
-  }).then(function(res) { return res.json().then(function(d) { return { ok:res.ok, data:d }; }); })
-  .then(function(r) {
-    btn.disabled = false; btn.textContent = "Generate Questions";
-    if (!r.ok) { showToast("Error: " + (r.data.message||"Server error"), "error"); return; }
-    TB.generated = (r.data.questions||[]).slice(0, TB.count);
-    TB.approved = []; TB.rejected = 0;
+  }).then(function(res){return res.json().then(function(d){return{ok:res.ok,data:d};});})
+  .then(function(r){
+    btn.disabled=false; btn.textContent="Generate Questions ⚡";
+    if(!r.ok){ showToast("Error: "+(r.data.message||"Server error"),"error"); return; }
+    var qs = r.data.allQuestions ? (r.data.allQuestions[TB.dtype]||[]) : (r.data.questions||[]);
+    // Flatten if nested
+    if(qs && !Array.isArray(qs)){
+      var flat=[]; Object.values(qs).forEach(function(arr){if(Array.isArray(arr))flat=flat.concat(arr);});
+      qs=flat;
+    }
+    TB.generated=qs.slice(0,TB.count);
+    TB.approved=[]; TB.rejected=0;
+    if(!TB.generated.length){ showToast("No questions returned — try a different topic","error"); return; }
     renderReviewQueue();
     tbGoStep(2);
-  }).catch(function(e) {
-    btn.disabled = false; btn.textContent = "Generate Questions";
-    showToast("Error generating questions", "error");
+  }).catch(function(e){
+    btn.disabled=false; btn.textContent="Generate Questions ⚡";
+    showToast("Error generating questions","error");
+    console.error(e);
   });
 });
 
-function renderReviewQueue() {
-  document.getElementById("rev-approved").textContent  = TB.approved.length;
-  document.getElementById("rev-rejected").textContent  = TB.rejected;
-  document.getElementById("rev-remaining").textContent = TB.generated.length;
-  var container = document.getElementById("review-queue");
-  if (TB.generated.length === 0) {
-    container.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:20px 0">All reviewed. Proceed to publish.</div>';
-    document.getElementById("btn-tb-to-publish").textContent = "Proceed to Publish (" + TB.approved.length + " approved)";
+function renderReviewQueue(){
+  document.getElementById("rev-approved").textContent =TB.approved.length;
+  document.getElementById("rev-rejected").textContent =TB.rejected;
+  document.getElementById("rev-remaining").textContent=TB.generated.length;
+  var container=document.getElementById("review-queue");
+  if(TB.generated.length===0){
+    container.innerHTML='<div style="color:var(--muted);font-size:13px;padding:20px 0">All reviewed. Proceed to publish.</div>';
+    document.getElementById("btn-tb-to-publish").textContent="Proceed to Publish ("+TB.approved.length+" approved)";
     return;
   }
-  var q = TB.generated[0];
-  var idx = TB.approved.length + TB.rejected + 1;
-  var total = TB.approved.length + TB.rejected + TB.generated.length;
-  var optsHtml = (q.options||[]).map(function(opt) {
-    return '<span class="q-opt-pill' + (opt===q.answer?" correct":"") + '">' + esc(opt) + '</span>';
+  var q=TB.generated[0];
+  var idx=TB.approved.length+TB.rejected+1;
+  var total=TB.approved.length+TB.rejected+TB.generated.length;
+  var optsHtml=(q.options||[]).map(function(opt){
+    return '<span class="q-opt-pill'+(opt===q.answer?" correct":"")+'">'+esc(opt)+'</span>';
   }).join("");
-  container.innerHTML =
-    '<div class="q-review-card">' +
-      '<div class="q-review-hdr"><div class="q-review-num">Question ' + idx + ' of ' + total + '</div><div class="q-review-qtype">' + esc(q.qtype||"Mixed") + '</div></div>' +
-      '<div class="q-code-block">' + (q.lines||[]).join("\
-").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + '</div>' +
-      '<div class="q-opts-row">' + optsHtml + '</div>' +
-      '<div class="q-ans-row"><span class="q-ans-lbl">Answer:</span><span class="q-ans-val">' + esc(q.answer) + '</span></div>' +
-      (q.explanation?'<div class="q-expl-txt"><strong style="color:var(--blue)">Why?</strong> ' + esc(q.explanation) + '</div>':'') +
-      '<div class="q-action-row">' +
-        '<button class="q-action-btn approve" id="btn-rev-approve">Approve</button>' +
-        '<button class="q-action-btn reject" id="btn-rev-reject">Reject</button>' +
-        '<button class="q-action-btn skip" id="btn-rev-skip">Skip</button>' +
-      '</div>' +
+  container.innerHTML=
+    '<div class="q-review-card">'+
+      '<div class="q-review-hdr"><div class="q-review-num">Question '+idx+' of '+total+'</div><div class="q-review-qtype">'+esc(q.qtype||"Mixed")+'</div></div>'+
+      '<div class="q-code-block">'+(q.lines||[]).join("\n").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</div>'+
+      '<div class="q-opts-row">'+optsHtml+'</div>'+
+      '<div class="q-ans-row"><span class="q-ans-lbl">Answer:</span><span class="q-ans-val">'+esc(q.answer)+'</span></div>'+
+      (q.explanation?'<div class="q-expl-txt"><strong style="color:var(--blue)">Why?</strong> '+esc(q.explanation)+'</div>':'')+
+      '<div class="q-action-row">'+
+        '<button class="q-action-btn approve" id="btn-rev-approve">Approve</button>'+
+        '<button class="q-action-btn reject" id="btn-rev-reject">Reject</button>'+
+        '<button class="q-action-btn skip" id="btn-rev-skip">Skip</button>'+
+      '</div>'+
     '</div>';
-  document.getElementById("btn-rev-approve").addEventListener("click", function() { TB.approved.push(TB.generated.shift()); renderReviewQueue(); });
-  document.getElementById("btn-rev-reject").addEventListener("click",  function() { TB.generated.shift(); TB.rejected++; renderReviewQueue(); });
-  document.getElementById("btn-rev-skip").addEventListener("click",    function() { TB.generated.push(TB.generated.shift()); renderReviewQueue(); });
-  document.getElementById("btn-tb-to-publish").textContent = "Proceed to Publish (" + TB.approved.length + " approved)";
+  document.getElementById("btn-rev-approve").addEventListener("click",function(){TB.approved.push(TB.generated.shift());renderReviewQueue();});
+  document.getElementById("btn-rev-reject").addEventListener("click",function(){TB.generated.shift();TB.rejected++;renderReviewQueue();});
+  document.getElementById("btn-rev-skip").addEventListener("click",function(){TB.generated.push(TB.generated.shift());renderReviewQueue();});
+  document.getElementById("btn-tb-to-publish").textContent="Proceed to Publish ("+TB.approved.length+" approved)";
 }
 
-document.getElementById("btn-tb-back-gen").addEventListener("click", function() {
-  TB.approved=[]; TB.rejected=0; TB.generated=[]; tbGoStep(1);
-});
-document.getElementById("btn-tb-to-publish").addEventListener("click", function() {
-  if (TB.approved.length === 0) { showToast("Approve at least one question first","error"); return; }
+document.getElementById("btn-tb-back-gen").addEventListener("click",function(){TB.approved=[];TB.rejected=0;TB.generated=[];tbGoStep(1);});
+document.getElementById("btn-tb-to-publish").addEventListener("click",function(){
+  if(!TB.approved.length){showToast("Approve at least one question first","error");return;}
   tbGoStep(3); loadPublishedTests();
 });
-document.getElementById("btn-tb-back-review").addEventListener("click", function() { tbGoStep(2); });
+document.getElementById("btn-tb-back-review").addEventListener("click",function(){tbGoStep(2);});
 
-document.getElementById("btn-tb-publish").addEventListener("click", function() {
-  var title    = document.getElementById("pub-title").value.trim();
-  var access   = document.getElementById("pub-access").value;
-  var duration = parseInt(document.getElementById("pub-duration").value);
-  var schedule = document.getElementById("pub-schedule").value;
-  var desc     = document.getElementById("pub-desc").value.trim();
-  if (!title)               { showToast("Enter a test title","error"); return; }
-  if (!duration||duration<5){ showToast("Enter a valid duration (min 5 mins)","error"); return; }
-  if (!schedule)            { showToast("Select a scheduled date and time","error"); return; }
-  if (TB.approved.length===0){ showToast("No approved questions","error"); return; }
+document.getElementById("btn-tb-publish").addEventListener("click",function(){
+  var title    =document.getElementById("pub-title").value.trim();
+  var access   =document.getElementById("pub-access").value;
+  var duration =parseInt(document.getElementById("pub-duration").value);
+  var schedule =document.getElementById("pub-schedule").value;
+  var desc     =document.getElementById("pub-desc").value.trim();
+  if(!title)               {showToast("Enter a test title","error");return;}
+  if(!duration||duration<5){showToast("Enter duration (min 5 mins)","error");return;}
+  if(!schedule)            {showToast("Select a scheduled date and time","error");return;}
+  if(!TB.approved.length)  {showToast("No approved questions","error");return;}
   var btn=this; btn.disabled=true; btn.textContent="Publishing...";
-  var scheduledAt=new Date(schedule), status=scheduledAt<=new Date()?"active":"upcoming";
+  var scheduledAt=new Date(schedule);
+  var status=scheduledAt<=new Date()?"active":"upcoming";
   db.collection("adminTests").add({
     title:title, accessType:access, duration:duration, description:desc||"",
     dtype:TB.dtype, totalQuestions:TB.approved.length, status:status,
     scheduledAt:firebase.firestore.Timestamp.fromDate(scheduledAt),
-    createdAt:firebase.firestore.FieldValue.serverTimestamp(), leaderboard:true,
-  }).then(function(testRef) {
+    createdAt:firebase.firestore.FieldValue.serverTimestamp(), leaderboard:true
+  }).then(function(testRef){
     var batch=db.batch();
-    TB.approved.forEach(function(q,i) {
+    TB.approved.forEach(function(q,i){
       var qKey="q"+(i+1);
       batch.set(db.collection("adminTests").doc(testRef.id).collection("questions").doc(qKey),
-        { questionNumber:i+1, lines:q.lines||[], options:q.options||[], qtype:q.qtype||"Mixed" });
+        {questionNumber:i+1,lines:q.lines||[],options:q.options||[],qtype:q.qtype||"Mixed"});
       batch.set(db.collection("adminTests").doc(testRef.id).collection("answers").doc(qKey),
-        { answer:q.answer||"", explanation:q.explanation||"", qtype:q.qtype||"Mixed" });
+        {answer:q.answer||"",explanation:q.explanation||"",qtype:q.qtype||"Mixed"});
     });
     return batch.commit();
-  }).then(function() {
+  }).then(function(){
     btn.disabled=false; btn.textContent="Publish Test";
-    showToast("Test published successfully!","success");
+    showToast("Test published!","success");
     TB.approved=[]; TB.rejected=0; TB.generated=[];
     document.getElementById("pub-title").value="";
     document.getElementById("pub-duration").value="";
@@ -1343,47 +1332,520 @@ document.getElementById("btn-tb-publish").addEventListener("click", function() {
   });
 });
 
-function loadPublishedTests() {
+function loadPublishedTests(){
   var tbody=document.getElementById("pub-tests-tbody");
-  if (!tbody) return;
+  if(!tbody) return;
   tbody.innerHTML='<tr><td colspan="6" class="loading-row"><div class="spinner"></div></td></tr>';
-  db.collection("adminTests").orderBy("createdAt","desc").limit(20).get()
-  .then(function(snap) {
-    if (snap.empty) { tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">No tests published yet.</td></tr>'; return; }
-    var rows=[];
-    snap.forEach(function(doc) {
-      var t=doc.data(), id=doc.id;
+  db.collection("adminTests").get()
+  .then(function(snap){
+    if(snap.empty){ tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">No tests published yet.</td></tr>'; return; }
+    var docs=[];
+    snap.forEach(function(doc){docs.push({id:doc.id,data:doc.data()});});
+    docs.sort(function(a,b){
+      var at=a.data.createdAt, bt=b.data.createdAt;
+      if(!at||!bt) return 0;
+      return(bt.seconds||0)-(at.seconds||0);
+    });
+    var rows=docs.map(function(d){
+      var t=d.data, id=d.id;
       var sc=t.status==="active"?"var(--acc)":t.status==="upcoming"?"var(--amber)":"var(--muted)";
       var dateStr="";
-      if(t.scheduledAt){try{var d=t.scheduledAt.toDate?t.scheduledAt.toDate():new Date(t.scheduledAt);dateStr=d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(e){}}
-      rows.push('<tr>'+
+      if(t.scheduledAt){try{var dt=t.scheduledAt.toDate?t.scheduledAt.toDate():new Date(t.scheduledAt);dateStr=dt.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}catch(e){}}
+      return '<tr>'+
         '<td style="font-weight:600">'+esc(t.title||"")+'</td>'+
-        '<td><span class="badge '+(t.accessType==="paid"?"paid":"free")+'">'+(t.accessType||"free")+'</span></td>'+
-        '<td style="font-family:var(--mono)">'+(t.totalQuestions||"\u2014")+'</td>'+
-        '<td style="font-weight:700;color:'+sc+'">'+(t.status||"\u2014")+'</td>'+
+        '<td><span class="badge '+(t.accessType==="paid"?"paid":"free")+'">'+esc(t.accessType||"free")+'</span></td>'+
+        '<td style="font-family:var(--mono)">'+(t.totalQuestions||"—")+'</td>'+
+        '<td style="font-weight:700;color:'+sc+'">'+(t.status||"—")+'</td>'+
         '<td style="font-size:11px;color:var(--muted)">'+dateStr+'</td>'+
         '<td style="display:flex;gap:6px;padding:11px 16px">'+
-          (t.status!=="completed"?'<button class="tbl-btn ban" onclick="deleteTest(\''+id+'\',\''+esc(t.title||"Test")+'\')" style="font-size:10px;padding:3px 8px">Delete</button>':'')+
+          (t.status!=="completed"?'<button class="tbl-btn ban" onclick="deleteTest(\''+id+'\')" style="font-size:10px;padding:3px 8px">Delete</button>':'')+
           (t.status==="upcoming"?'<button class="tbl-btn upgrade" onclick="activateTest(\''+id+'\')" style="font-size:10px;padding:3px 8px;margin-left:4px">Activate</button>':'')+
         '</td>'+
-      '</tr>');
+      '</tr>';
     });
     tbody.innerHTML=rows.join("");
-  }).catch(function(e){tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">Error loading.</td></tr>';});
+  }).catch(function(e){ tbody.innerHTML='<tr><td colspan="6" class="tbl-empty">Error loading tests.</td></tr>'; console.warn(e.message); });
 }
 
-function deleteTest(id, title) {
-  showModal("Delete Test", 'Delete "'+title+'"? Cannot be undone.', "Delete", function() {
+function deleteTest(id){
+  showModal("Delete Test","Delete this test? Students who attempted it will still see their results.","Delete",function(){
     db.collection("adminTests").doc(id).update({status:"deleted"})
-    .then(function(){ showToast("Test deleted","info"); loadPublishedTests(); })
+    .then(function(){showToast("Test deleted","info");loadPublishedTests();})
+    .catch(function(e){showToast("Error: "+e.message,"error");});
+  });
+}
+
+function activateTest(id){
+  db.collection("adminTests").doc(id).update({status:"active"})
+  .then(function(){showToast("Test activated!","success");loadPublishedTests();})
+  .catch(function(e){showToast("Error: "+e.message,"error");});
+}
+
+
+
+// ═══ BOARD QUESTIONS ═══
+var BQ_TOPICS   = ["String","List","Tuple","Dictionary","Functions","Modules","ExceptionHandling","FileHandling","SQL"];
+var BQ_QTYPES   = ["predict_output","mcq","write_function","write_query","assertion_reason","fill_blank"];
+var BQ_PAGE     = 1;
+var BQ_PAGE_SIZE= 20;
+var bqCache     = [];   // all loaded board questions
+var bqEditing   = null; // doc id when editing
+
+function filterBoardQuestions(){
+  var topic = (document.getElementById("bq-filter-topic")||{}).value||"";
+  var qtype = (document.getElementById("bq-filter-qtype")||{}).value||"";
+}
+function loadBoardQuestions(){
+  var topic = (document.getElementById("bq-filter-topic")||{}).value||"";
+  var qtype = (document.getElementById("bq-filter-qtype")||{}).value||"";
+  var tbody = document.getElementById("bq-tbody");
+  var cntEl = document.getElementById("bq-count");
+  if(tbody) tbody.innerHTML='<tr><td colspan="7" class="tbl-empty"><div class="spinner" style="margin:0 auto"></div></td></tr>';
+
+  var ref = db.collection("boardQuestions");
+  ref.get().then(function(snap){
+    bqCache = [];
+    snap.forEach(function(doc){ bqCache.push(Object.assign({id:doc.id}, doc.data())); });
+    // client-side filter
+    var filtered = bqCache.filter(function(q){
+      if(topic && q.topic !== topic) return false;
+      if(qtype && q.qtype !== qtype) return false;
+      return true;
+    });
+    if(cntEl) cntEl.textContent = filtered.length + " questions";
+    renderBqTable(filtered);
+  }).catch(function(e){ console.error(e); });
+}
+
+function renderBqTable(rows){
+  var tbody = document.getElementById("bq-tbody");
+  var pg    = document.getElementById("bq-pagination");
+  if(!tbody) return;
+  if(!rows.length){
+    tbody.innerHTML='<tr><td colspan="7" class="tbl-empty">No questions found.</td></tr>';
+    if(pg) pg.innerHTML="";
+    return;
+  }
+  var start=(BQ_PAGE-1)*BQ_PAGE_SIZE, end=start+BQ_PAGE_SIZE, page=rows.slice(start,end);
+  tbody.innerHTML = page.map(function(q){
+    var preview = (q.lines||[]).slice(0,2).join(" ↵ ");
+    if(preview.length>60) preview=preview.slice(0,57)+"...";
+    var qtLabel = {predict_output:"Predict",mcq:"MCQ",write_function:"Write Fn",
+                   write_query:"Write SQL",assertion_reason:"A&R",fill_blank:"Fill"}[q.qtype]||q.qtype;
+    return '<tr>'+
+      '<td><span class="badge free" style="font-size:9px">'+esc(q.topic||"")+'</span></td>'+
+      '<td style="font-size:11px;color:var(--text2)">'+qtLabel+'</td>'+
+      '<td style="font-size:11px;color:var(--muted)">'+esc(q.year||"—")+'</td>'+
+      '<td style="font-size:11px;font-family:var(--mono);color:var(--text2)">'+esc(preview||"—")+'</td>'+
+      '<td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis">'+esc((q.answer||"").slice(0,40))+'</td>'+
+      '<td style="font-family:var(--mono);text-align:center">'+esc(String(q.marks||1))+'</td>'+
+      '<td style="display:flex;gap:5px;padding:8px 16px">'+
+        '<button class="tbl-btn upgrade" onclick="editBoardQuestion(\''+q.id+'\')" style="font-size:10px;padding:3px 8px">Edit</button>'+
+        '<button class="tbl-btn ban" onclick="deleteBoardQuestion(\''+q.id+'\')" style="font-size:10px;padding:3px 8px">Delete</button>'+
+      '</td>'+
+    '</tr>';
+  }).join("");
+  var tot=rows.length, pgs=Math.ceil(tot/BQ_PAGE_SIZE);
+  if(pg) pg.innerHTML='Showing '+(start+1)+'-'+Math.min(end,tot)+' of '+tot+
+    (BQ_PAGE>1?' <button onclick="bqGoPage('+(BQ_PAGE-1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Prev</button>':'')+
+    ' Page '+BQ_PAGE+'/'+pgs+' '+
+    (BQ_PAGE<pgs?'<button onclick="bqGoPage('+(BQ_PAGE+1)+')" style="padding:4px 10px;border-radius:5px;border:1px solid var(--bdr2);background:var(--s2);color:var(--text2);cursor:pointer;font-size:11px">Next</button>':'')+
+    ' <span style="color:var(--muted)">| '+tot+' total</span>';
+}
+
+function bqGoPage(n){ BQ_PAGE=n; loadBoardQuestions(); }
+
+function onBqQtypeChange(){
+  var qt = document.getElementById("bq-qtype").value;
+  document.getElementById("bq-options-fields").style.display = (qt==="mcq")?"":"none";
+  document.getElementById("bq-ar-fields").style.display      = (qt==="assertion_reason")?"":"none";
+  var lbl = document.getElementById("bq-answer-lbl");
+  if(qt==="write_function"||qt==="write_query"){
+    lbl.textContent="Model Answer (shown to student after submission)";
+  } else if(qt==="assertion_reason"){
+    lbl.textContent="Correct Option (a/b/c/d)";
+  } else {
+    lbl.textContent="Answer / Expected Output";
+  }
+}
+
+function showBoardForm(data, docId){
+  bqEditing = docId||null;
+  document.getElementById("bq-form-title").textContent = docId?"Edit Question":"Add Board Question";
+  // Reset
+  ["bq-topic","bq-qtype","bq-year","bq-marks","bq-caseid"].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && data) el.value=data[id.replace("bq-","")]||"";
+    else if(el) el.value=(id==="bq-marks"?"1":"");
+  });
+  document.getElementById("bq-lines").value   = data?(data.lines||[]).join("\n"):"";
+  document.getElementById("bq-answer").value  = data?data.answer||"":"";
+  document.getElementById("bq-casetext").value= data?(data.case_text||[]).join("\n"):"";
+  document.getElementById("bq-assertion").value=data?data.assertion||"":"";
+  document.getElementById("bq-reason").value  = data?data.reason||"":"";
+  if(data && data.options && data.options.length>=4){
+    document.getElementById("bq-opt-a").value=data.options[0]||"";
+    document.getElementById("bq-opt-b").value=data.options[1]||"";
+    document.getElementById("bq-opt-c").value=data.options[2]||"";
+    document.getElementById("bq-opt-d").value=data.options[3]||"";
+  } else {
+    ["bq-opt-a","bq-opt-b","bq-opt-c","bq-opt-d"].forEach(function(id){document.getElementById(id).value="";});
+  }
+  // Show/hide fields
+  onBqQtypeChange();
+  var caseId = document.getElementById("bq-caseid").value.trim();
+  document.getElementById("bq-casetext-row").style.display = caseId?"":"none";
+  document.getElementById("bq-form-modal").classList.remove("hidden");
+}
+
+document.getElementById("bq-caseid").addEventListener("input",function(){
+  document.getElementById("bq-casetext-row").style.display=this.value.trim()?"":"none";
+});
+
+function saveBoardQuestion(){
+  var topic   = document.getElementById("bq-topic").value;
+  var qtype   = document.getElementById("bq-qtype").value;
+  var year    = document.getElementById("bq-year").value.trim();
+  var marks   = parseInt(document.getElementById("bq-marks").value)||1;
+  var linesRaw= document.getElementById("bq-lines").value;
+  var answer  = document.getElementById("bq-answer").value.trim();
+  var caseId  = document.getElementById("bq-caseid").value.trim();
+  var caseText= document.getElementById("bq-casetext").value;
+
+  if(!linesRaw.trim() && qtype!=="assertion_reason"){ showToast("Enter question lines","error"); return; }
+  if(!answer){ showToast("Enter an answer","error"); return; }
+
+  var lines = linesRaw.split("\n").map(function(l){return l;});
+  var data = {
+    topic:topic, qtype:qtype, year:year, marks:marks,
+    lines:lines, answer:answer,
+    source:"board",
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if(caseId){ data.case_id=caseId; data.case_text=caseText.split("\n"); }
+  if(qtype==="mcq"){
+    var opts=[
+      document.getElementById("bq-opt-a").value.trim(),
+      document.getElementById("bq-opt-b").value.trim(),
+      document.getElementById("bq-opt-c").value.trim(),
+      document.getElementById("bq-opt-d").value.trim()
+    ].filter(Boolean);
+    if(opts.length<2){ showToast("Enter at least 2 options for MCQ","error"); return; }
+    data.options=opts;
+  }
+  if(qtype==="assertion_reason"){
+    var a=document.getElementById("bq-assertion").value.trim();
+    var r=document.getElementById("bq-reason").value.trim();
+    if(!a||!r){ showToast("Enter both Assertion and Reason","error"); return; }
+    data.assertion=a; data.reason=r;
+    data.options=[
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true"
+    ];
+    data.lines=["Assertion (A): "+a,"Reason (R): "+r];
+  }
+
+  var btn=document.getElementById("bq-form-save");
+  btn.disabled=true; btn.textContent="Saving...";
+  var ref = bqEditing
+    ? db.collection("boardQuestions").doc(bqEditing).set(data,{merge:true})
+    : db.collection("boardQuestions").add(data);
+  ref.then(function(){
+    btn.disabled=false; btn.textContent="Save Question";
+    document.getElementById("bq-form-modal").classList.add("hidden");
+    showToast(bqEditing?"Question updated":"Question saved","success");
+    bqEditing=null;
+    loadBoardQuestions();
+  }).catch(function(e){
+    btn.disabled=false; btn.textContent="Save Question";
+    showToast("Error: "+e.message,"error");
+  });
+}
+
+function editBoardQuestion(id){
+  var q=bqCache.find(function(d){return d.id===id;});
+  if(!q){ showToast("Question not found","error"); return; }
+  // Map fields for showBoardForm
+  var mapped={
+    topic:q.topic, qtype:q.qtype, year:q.year||"", marks:String(q.marks||1),
+    caseid:q.case_id||"", lines:q.lines, answer:q.answer||"",
+    case_text:q.case_text, options:q.options,
+    assertion:q.assertion||"", reason:q.reason||""
+  };
+  showBoardForm(mapped, id);
+}
+
+function deleteBoardQuestion(id){
+  showModal("Delete Question","Delete this board question? Cannot be undone.","Delete",function(){
+    db.collection("boardQuestions").doc(id).delete()
+    .then(function(){ showToast("Deleted","info"); loadBoardQuestions(); })
     .catch(function(e){ showToast("Error: "+e.message,"error"); });
   });
 }
-function activateTest(id) {
-  db.collection("adminTests").doc(id).update({status:"active"})
-  .then(function(){ showToast("Test activated!","success"); loadPublishedTests(); })
-  .catch(function(e){ showToast("Error: "+e.message,"error"); });
+
+// ── Excel Template Download ──
+function downloadBoardTemplate(){
+  var wb = XLSX.utils.book_new();
+  var headers = ["topic","qtype","year","marks","lines","answer","options","case_id","case_text","assertion","reason"];
+  var example = [
+    "String","predict_output","CBSE Board 2024-25","2",
+    "x = [1,2,3]|print(x[0])","1","","","","",""
+  ];
+  var example2 = [
+    "SQL","mcq","CBSE Board 2023-24","1",
+    "SELECT * FROM Students WHERE Marks>90","Arjun",
+    "Arjun|Priya|Both|None","","","",""
+  ];
+  var example3 = [
+    "Functions","assertion_reason","CBSE Board 2024-25","1",
+    "","b","","","",
+    "A function can return multiple values",
+    "Python supports tuples which allow multiple return values"
+  ];
+  var ws = XLSX.utils.aoa_to_sheet([headers, example, example2, example3]);
+  ws["!cols"] = headers.map(function(){ return {wch:20}; });
+  XLSX.utils.book_append_sheet(wb, ws, "BoardQuestions");
+  XLSX.writeFile(wb, "pyzap_board_questions_template.xlsx");
+  showToast("Template downloaded","success");
 }
+
+// ── Excel Upload ──
+function uploadBoardExcel(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var wb  = XLSX.read(e.target.result, {type:"binary"});
+      var ws  = wb.Sheets[wb.SheetNames[0]];
+      var rows= XLSX.utils.sheet_to_json(ws, {defval:""});
+      if(!rows.length){ showToast("No data found in Excel","error"); return; }
+      showModal(
+        "Upload "+rows.length+" Questions?",
+        "Import "+rows.length+" board questions from Excel?",
+        "Upload",
+        function(){
+          var batch=db.batch();
+          var count=0;
+          rows.forEach(function(row){
+            if(!row.topic||!row.qtype||!row.answer) return;
+            var lines = row.lines ? String(row.lines).split("|") : [];
+            var opts  = row.options ? String(row.options).split("|").filter(Boolean) : [];
+            var caseText = row.case_text ? String(row.case_text).split("|") : [];
+            var data={
+              topic:   String(row.topic).trim(),
+              qtype:   String(row.qtype).trim(),
+              year:    String(row.year||"").trim(),
+              marks:   parseInt(row.marks)||1,
+              lines:   lines,
+              answer:  String(row.answer).trim(),
+              source:  "board",
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            if(opts.length)  data.options=opts;
+            if(row.case_id)  { data.case_id=String(row.case_id).trim(); data.case_text=caseText; }
+            if(row.assertion){ data.assertion=String(row.assertion).trim(); }
+            if(row.reason)   { data.reason=String(row.reason).trim(); }
+            if(data.qtype==="assertion_reason"&&data.assertion&&data.reason){
+              data.options=[
+                "Both A and R are true and R is the correct explanation of A",
+                "Both A and R are true but R is not the correct explanation of A",
+                "A is true but R is false",
+                "A is false but R is true"
+              ];
+              data.lines=["Assertion (A): "+data.assertion,"Reason (R): "+data.reason];
+            }
+            batch.set(db.collection("boardQuestions").doc(), data);
+            count++;
+          });
+          batch.commit().then(function(){
+            showToast(count+" questions uploaded!","success");
+            loadBoardQuestions();
+            input.value="";
+          }).catch(function(e){ showToast("Error: "+e.message,"error"); });
+        }
+      );
+    }catch(e){ showToast("Error reading Excel: "+e.message,"error"); }
+  };
+  reader.readAsBinaryString(file);
+}
+
+document.getElementById("bq-caseid").addEventListener("input",function(){
+  document.getElementById("bq-casetext-row").style.display=this.value.trim()?"":"none";
+});
+
+function saveBoardQuestion(){
+  var topic   = document.getElementById("bq-topic").value;
+  var qtype   = document.getElementById("bq-qtype").value;
+  var year    = document.getElementById("bq-year").value.trim();
+  var marks   = parseInt(document.getElementById("bq-marks").value)||1;
+  var linesRaw= document.getElementById("bq-lines").value;
+  var answer  = document.getElementById("bq-answer").value.trim();
+  var caseId  = document.getElementById("bq-caseid").value.trim();
+  var caseText= document.getElementById("bq-casetext").value;
+
+  if(!linesRaw.trim() && qtype!=="assertion_reason"){ showToast("Enter question lines","error"); return; }
+  if(!answer){ showToast("Enter an answer","error"); return; }
+
+  var lines = linesRaw.split("\n").map(function(l){return l;});
+  var data = {
+    topic:topic, qtype:qtype, year:year, marks:marks,
+    lines:lines, answer:answer,
+    source:"board",
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if(caseId){ data.case_id=caseId; data.case_text=caseText.split("\n"); }
+  if(qtype==="mcq"){
+    var opts=[
+      document.getElementById("bq-opt-a").value.trim(),
+      document.getElementById("bq-opt-b").value.trim(),
+      document.getElementById("bq-opt-c").value.trim(),
+      document.getElementById("bq-opt-d").value.trim()
+    ].filter(Boolean);
+    if(opts.length<2){ showToast("Enter at least 2 options for MCQ","error"); return; }
+    data.options=opts;
+  }
+  if(qtype==="assertion_reason"){
+    var a=document.getElementById("bq-assertion").value.trim();
+    var r=document.getElementById("bq-reason").value.trim();
+    if(!a||!r){ showToast("Enter both Assertion and Reason","error"); return; }
+    data.assertion=a; data.reason=r;
+    data.options=[
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true"
+    ];
+    data.lines=["Assertion (A): "+a,"Reason (R): "+r];
+  }
+
+  var btn=document.getElementById("bq-form-save");
+  btn.disabled=true; btn.textContent="Saving...";
+  var ref = bqEditing
+    ? db.collection("boardQuestions").doc(bqEditing).set(data,{merge:true})
+    : db.collection("boardQuestions").add(data);
+  ref.then(function(){
+    btn.disabled=false; btn.textContent="Save Question";
+    document.getElementById("bq-form-modal").classList.add("hidden");
+    showToast(bqEditing?"Question updated":"Question saved","success");
+    bqEditing=null;
+    loadBoardQuestions();
+  }).catch(function(e){
+    btn.disabled=false; btn.textContent="Save Question";
+    showToast("Error: "+e.message,"error");
+  });
+}
+
+function editBoardQuestion(id){
+  var q=bqCache.find(function(d){return d.id===id;});
+  if(!q){ showToast("Question not found","error"); return; }
+  // Map fields for showBoardForm
+  var mapped={
+    topic:q.topic, qtype:q.qtype, year:q.year||"", marks:String(q.marks||1),
+    caseid:q.case_id||"", lines:q.lines, answer:q.answer||"",
+    case_text:q.case_text, options:q.options,
+    assertion:q.assertion||"", reason:q.reason||""
+  };
+  showBoardForm(mapped, id);
+}
+
+function deleteBoardQuestion(id){
+  showModal("Delete Question","Delete this board question? Cannot be undone.","Delete",function(){
+    db.collection("boardQuestions").doc(id).delete()
+    .then(function(){ showToast("Deleted","info"); loadBoardQuestions(); })
+    .catch(function(e){ showToast("Error: "+e.message,"error"); });
+  });
+}
+
+// ── Excel Template Download ──
+function downloadBoardTemplate(){
+  var wb = XLSX.utils.book_new();
+  var headers = ["topic","qtype","year","marks","lines","answer","options","case_id","case_text","assertion","reason"];
+  var example = [
+    "String","predict_output","CBSE Board 2024-25","2",
+    "x = [1,2,3]|print(x[0])","1","","","","",""
+  ];
+  var example2 = [
+    "SQL","mcq","CBSE Board 2023-24","1",
+    "SELECT * FROM Students WHERE Marks>90","Arjun",
+    "Arjun|Priya|Both|None","","","",""
+  ];
+  var example3 = [
+    "Functions","assertion_reason","CBSE Board 2024-25","1",
+    "","b","","","",
+    "A function can return multiple values",
+    "Python supports tuples which allow multiple return values"
+  ];
+  var ws = XLSX.utils.aoa_to_sheet([headers, example, example2, example3]);
+  ws["!cols"] = headers.map(function(){ return {wch:20}; });
+  XLSX.utils.book_append_sheet(wb, ws, "BoardQuestions");
+  XLSX.writeFile(wb, "pyzap_board_questions_template.xlsx");
+  showToast("Template downloaded","success");
+}
+
+// ── Excel Upload ──
+function uploadBoardExcel(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var wb  = XLSX.read(e.target.result, {type:"binary"});
+      var ws  = wb.Sheets[wb.SheetNames[0]];
+      var rows= XLSX.utils.sheet_to_json(ws, {defval:""});
+      if(!rows.length){ showToast("No data found in Excel","error"); return; }
+      showModal(
+        "Upload "+rows.length+" Questions?",
+        "Import "+rows.length+" board questions from Excel?",
+        "Upload",
+        function(){
+          var batch=db.batch();
+          var count=0;
+          rows.forEach(function(row){
+            if(!row.topic||!row.qtype||!row.answer) return;
+            var lines = row.lines ? String(row.lines).split("|") : [];
+            var opts  = row.options ? String(row.options).split("|").filter(Boolean) : [];
+            var caseText = row.case_text ? String(row.case_text).split("|") : [];
+            var data={
+              topic:   String(row.topic).trim(),
+              qtype:   String(row.qtype).trim(),
+              year:    String(row.year||"").trim(),
+              marks:   parseInt(row.marks)||1,
+              lines:   lines,
+              answer:  String(row.answer).trim(),
+              source:  "board",
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            if(opts.length)  data.options=opts;
+            if(row.case_id)  { data.case_id=String(row.case_id).trim(); data.case_text=caseText; }
+            if(row.assertion){ data.assertion=String(row.assertion).trim(); }
+            if(row.reason)   { data.reason=String(row.reason).trim(); }
+            if(data.qtype==="assertion_reason"&&data.assertion&&data.reason){
+              data.options=[
+                "Both A and R are true and R is the correct explanation of A",
+                "Both A and R are true but R is not the correct explanation of A",
+                "A is true but R is false",
+                "A is false but R is true"
+              ];
+              data.lines=["Assertion (A): "+data.assertion,"Reason (R): "+data.reason];
+            }
+            batch.set(db.collection("boardQuestions").doc(), data);
+            count++;
+          });
+          batch.commit().then(function(){
+            showToast(count+" questions uploaded!","success");
+            loadBoardQuestions();
+            input.value="";
+          }).catch(function(e){ showToast("Error: "+e.message,"error"); });
+        }
+      );
+    }catch(e){ showToast("Error reading Excel: "+e.message,"error"); }
+  };
+  reader.readAsBinaryString(file);
+}
+
 </script>
 </body>
 </html>

@@ -775,6 +775,12 @@ body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Outfit'
       </div>
     </div>
 
+    <!-- Case-based: shared context shown above question -->
+    <div id="case-text-block" style="display:none;background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px;margin-bottom:8px;flex-shrink:0;">
+      <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">CASE / CONTEXT</div>
+      <div class="code-wrap" style="margin:0;"><div class="gutter" id="case-gutter"></div><div class="code-lines" id="case-code"></div></div>
+    </div>
+
     <div class="qcard">
       <div class="q-loading" id="q-loading"><div class="spinner"></div><div class="q-loading-txt" id="q-loading-txt">Loading...</div></div>
       <div id="q-content" style="display:none">
@@ -793,6 +799,20 @@ body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Outfit'
         <div class="code-wrap"><div class="gutter" id="gutter"></div><div class="code-lines" id="code"></div></div>
         <div class="mcq-grid" id="mcq-grid"></div>
         <div class="type-area" id="type-area"><input class="type-inp" id="type-inp" placeholder="Type the exact output..." autocomplete="off" spellcheck="false"></div>
+        <!-- Write function/query area -->
+        <div id="write-area" style="display:none;">
+          <textarea id="write-inp" style="width:100%;min-height:120px;background:var(--cbg);border:1.5px solid var(--bdr2);border-radius:8px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px 12px;outline:none;resize:vertical;box-sizing:border-box;" placeholder="Write your answer here..."></textarea>
+          <!-- Model answer block (hidden until Show Answer) -->
+          <div id="write-answer-block" style="display:none;margin-top:10px;background:rgba(34,211,160,.08);border:1.5px solid rgba(34,211,160,.3);border-radius:8px;padding:10px 12px;">
+            <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#22D3A0;margin-bottom:6px;">MODEL ANSWER</div>
+            <pre id="write-answer-text" style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);white-space:pre-wrap;word-break:break-word;"></pre>
+          </div>
+          <!-- Self-mark row -->
+          <div id="self-mark-row" style="display:none;gap:10px;margin-top:10px;">
+            <button class="btn" style="flex:1;background:rgba(34,211,160,.15);border:1.5px solid rgba(34,211,160,.4);color:#22D3A0;font-weight:700;" onclick="selfMark(true)">&#x2713; Got it</button>
+            <button class="btn" style="flex:1;background:rgba(255,77,109,.12);border:1.5px solid rgba(255,77,109,.3);color:var(--red);font-weight:700;" onclick="selfMark(false)">&#x2717; Missed it</button>
+          </div>
+        </div>
         <div class="feedback empty" id="feedback"></div>
         <div class="expl" id="expl"></div>
         <div class="btn-row">
@@ -864,7 +884,7 @@ body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Outfit'
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>'use strict';
+<script>'use strict';'use strict';
 
 // ═══ FIREBASE ═══
 firebase.initializeApp({
@@ -910,6 +930,7 @@ var S = {
   freeQuestionsPerQtype: 10,
   // Per-concept resume tracking (paid)
   conceptIdx: {},
+  boardQuestions: {},   // topic → [board questions]
   // Current practice state
   dtype: "String", qtype: "Mixed",
   currentQuestions: [],   // filtered list for current dtype+qtype
@@ -1370,7 +1391,7 @@ function launchApp(){
   S.total=st.total||0; S.score=st.correct||0; S.wrong=st.wrong||0; S.best=st.best||0;
   updHdr();
   applyPlanUI();
-  fetchAllQuestions();
+  fetchBoardQuestions(function(){ fetchAllQuestions(); });
 }
 
 // ═══════════════════════════════════════════
@@ -1478,7 +1499,8 @@ function fetchAllQuestions(){
       }
       dtypes.forEach(function(d){
         if(!S.allQuestions[d]||!S.allQuestions[d].length){
-          S.allQuestions[d]=allQs[d]||[];
+          var aiQs = allQs[d]||[];
+          S.allQuestions[d] = mixBoardQuestions(d, aiQs);
           S.conceptIdx[d]=0;
           saveConcept(d);
         }
@@ -1552,12 +1574,57 @@ function fetchFreeFromServer(){
       if(!S.progress[dtype]) S.progress[dtype] = {};
       FREE_QTYPES_TRACKED.forEach(function(qt){
         if(!S.progress[dtype][qt]) S.progress[dtype][qt] = {seen:0, done:false};
+        // Mix board questions into this qtype pool
+        if(S.allQuestions[dtype] && S.allQuestions[dtype][qt]){
+          S.allQuestions[dtype][qt] = mixBoardQuestions(dtype, S.allQuestions[dtype][qt]);
+        }
       });
       saveFreeConcept(dtype);
     });
     applyPlanUI();
     startPractice();
   }).catch(function(e){console.error(e);setCardLoading("Error loading. Please refresh.");});
+}
+
+// ─── Fetch board questions from Firestore ───
+var _boardQsFetched = false;
+function fetchBoardQuestions(onDone){
+  if(_boardQsFetched){ if(onDone)onDone(); return; }
+  db.collection("boardQuestions").get().then(function(snap){
+    _boardQsFetched = true;
+    S.boardQuestions = {};
+    snap.forEach(function(doc){
+      var q = Object.assign({id:doc.id, source:"board"}, doc.data());
+      var topic = q.topic || "String";
+      if(!S.boardQuestions[topic]) S.boardQuestions[topic] = [];
+      S.boardQuestions[topic].push(q);
+    });
+    console.log("[PyZap] Board questions loaded:", Object.keys(S.boardQuestions).length, "topics");
+    if(onDone) onDone();
+  }).catch(function(e){
+    console.warn("[PyZap] Board questions fetch failed:", e.message);
+    if(onDone) onDone(); // non-fatal
+  });
+}
+
+// ─── Mix board questions into a question pool ───
+// topicKey: e.g. "String", "Functions", "SQL"
+// aiQuestions: array of AI-generated questions
+// Returns mixed array
+function mixBoardQuestions(topicKey, aiQuestions){
+  var board = S.boardQuestions[topicKey] || [];
+  if(!board.length) return aiQuestions;
+  // Interleave: every 3 AI questions, insert 1 board question
+  var mixed = [], bi = 0;
+  aiQuestions.forEach(function(q, i){
+    mixed.push(q);
+    if((i+1) % 3 === 0 && bi < board.length){
+      mixed.push(board[bi++]);
+    }
+  });
+  // Append remaining board questions at end
+  while(bi < board.length) mixed.push(board[bi++]);
+  return mixed;
 }
 
 // ─── Save progress to Firestore (batch, not per question) ───
@@ -1823,27 +1890,81 @@ function renderCode(lines,gEl,cEl){
 }
 
 function renderPracticeQuestion(q){
+  // Case-based: show shared context above question
+  var caseEl=document.getElementById("case-text-block");
+  if(q.case_text&&q.case_text.length&&caseEl){
+    caseEl.style.display="";
+    renderCode(q.case_text,document.getElementById("case-gutter"),document.getElementById("case-code"));
+  }else if(caseEl){ caseEl.style.display="none"; }
+
   renderCode(q.lines||[],document.getElementById("gutter"),document.getElementById("code"));
+
   if(S.plan!=="paid"){
     document.getElementById("qnum").textContent="Q "+(getQtypeSeen(S.dtype,S.qtype)+1)+"/"+S.freeQuestionsPerQtype;
-  } else {
+  }else{
     document.getElementById("qnum").textContent="Question "+S.qcount;
   }
-  document.getElementById("qbadge").textContent=q.qtype||"Predict Output";
-  document.getElementById("qprompt").textContent=S.mode==="mcq"?"What does this print?":"Type the exact output:";
-  var grid=document.getElementById("mcq-grid");grid.innerHTML="";
-  var opts=q.options||[],ltrs=["A","B","C","D"];
-  opts.forEach(function(opt,i){
-    var btn=document.createElement("button");btn.className="mcq-opt";btn.dataset.value=opt;
-    btn.innerHTML='<span class="opt-ltr">'+ltrs[i]+"</span>"+String(opt).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    btn.addEventListener("click",function(){if(S.checked)return;S.sel=opt;document.querySelectorAll(".mcq-opt").forEach(function(b){b.classList.remove("sel");});btn.classList.add("sel");});
-    grid.appendChild(btn);
-  });
-  var ti=document.getElementById("type-inp");ti.value="";ti.className="type-inp";
-  var mg=document.getElementById("mcq-grid"),ta=document.getElementById("type-area");
-  if(S.mode==="mcq"){mg.style.display="grid";ta.classList.remove("show");}
-  else{mg.style.display="none";ta.classList.add("show");}
-  setFB("","empty");document.getElementById("expl").className="expl";document.getElementById("btn-check").disabled=false;
+
+  var qtLabel={
+    predict_output:"Predict Output",mcq:"MCQ",
+    write_function:"Write Function",write_query:"Write Query",
+    assertion_reason:"Assertion & Reason",fill_blank:"Fill in the Blank"
+  }[q.qtype]||q.qtype||"Predict Output";
+  document.getElementById("qbadge").textContent=qtLabel+(q.source==="board"?" 📚":"");
+
+  var qtype=q.qtype||"predict_output";
+  var isWrite=qtype==="write_function"||qtype==="write_query";
+  S._isWriteQ=isWrite;
+  var isMCQ=qtype==="mcq"||qtype==="assertion_reason"||(q.options&&q.options.length>0&&!isWrite);
+
+  var prompts={
+    predict_output:"What does this print?",
+    mcq:"Select the correct option:",
+    write_function:"Write the function:",
+    write_query:"Write the SQL query:",
+    assertion_reason:"Select the correct option:",
+    fill_blank:"Fill in the blank:"
+  };
+  document.getElementById("qprompt").textContent=prompts[qtype]||"What does this print?";
+
+  var grid=document.getElementById("mcq-grid"); grid.innerHTML="";
+  var mg=document.getElementById("mcq-grid");
+  var ta=document.getElementById("type-area");
+  var wa=document.getElementById("write-area");
+
+  if(isMCQ){
+    var opts=q.options||[],ltrs=["A","B","C","D"];
+    opts.forEach(function(opt,i){
+      var btn=document.createElement("button");btn.className="mcq-opt";btn.dataset.value=opt;
+      btn.innerHTML='<span class="opt-ltr">'+ltrs[i]+"</span>"+String(opt).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      btn.addEventListener("click",function(){if(S.checked)return;S.sel=opt;document.querySelectorAll(".mcq-opt").forEach(function(b){b.classList.remove("sel");});btn.classList.add("sel");});
+      grid.appendChild(btn);
+    });
+    mg.style.display="grid";
+    if(ta)ta.classList.remove("show");
+    if(wa)wa.style.display="none";
+    document.getElementById("btn-check").textContent="Check Answer";
+  }else if(isWrite){
+    mg.style.display="none";
+    if(ta)ta.classList.remove("show");
+    if(wa){
+      wa.style.display="";
+      var wi=document.getElementById("write-inp"); if(wi)wi.value="";
+      var ab=document.getElementById("write-answer-block"); if(ab)ab.style.display="none";
+      var sm=document.getElementById("self-mark-row"); if(sm)sm.style.display="none";
+    }
+    document.getElementById("btn-check").textContent="Show Answer";
+  }else{
+    mg.style.display="none";
+    if(ta)ta.classList.add("show");
+    if(wa)wa.style.display="none";
+    var ti=document.getElementById("type-inp"); if(ti){ti.value="";ti.className="type-inp";}
+    document.getElementById("btn-check").textContent="Check Answer";
+  }
+
+  setFB("","empty");
+  document.getElementById("expl").className="expl";
+  document.getElementById("btn-check").disabled=false;
   document.getElementById("btn-next").disabled=false;
 }
 
@@ -1875,6 +1996,38 @@ function updHdr(){
   saveStats();
 }
 
+
+// ─── Self-mark for write_function / write_query ───
+function selfMark(correct){
+  var q = S.currentQuestions[S.currentIdx];
+  S.total++; S.checked = true;
+  if(correct){
+    S.score++; S.streak++; S.best=Math.max(S.best,S.streak);
+    setFB("✓  Marked as correct!","correct");
+    if(S.streak>=3) toast(S.streak+" in a row! ⚡");
+  } else {
+    S.streak=0; S.wrong++;
+    setFB("✗  Marked as missed — review the model answer","wrong");
+  }
+  // Hide self-mark buttons
+  var smEl=document.getElementById("self-mark-row");
+  if(smEl) smEl.style.display="none";
+  document.getElementById("btn-next").disabled=false;
+  updHdr();
+  // Track progress same as normal answer
+  if(S.plan!=="paid"){
+    if(!S.progress[S.dtype]) S.progress[S.dtype]={};
+    if(!S.progress[S.dtype][S.qtype]) S.progress[S.dtype][S.qtype]={seen:0,done:false};
+    S.progress[S.dtype][S.qtype].seen++;
+    if(S.progress[S.dtype][S.qtype].seen>=S.freeQuestionsPerQtype){
+      S.progress[S.dtype][S.qtype].done=true;
+    }
+    saveFreeConcept(S.dtype);
+    scheduleProgressSave();
+    updateFreeBanner();
+    applyQtypeLocks();
+  }
+}
 function checkAns(){
   if(S.checked)return;
   var q=S.currentQuestions[S.currentIdx];if(!q)return;
