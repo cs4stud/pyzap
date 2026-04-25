@@ -1568,8 +1568,8 @@ function showScreen(name){
   else if(name==="login")   document.getElementById("login-screen").classList.remove("hidden");
   else if(name==="profile") document.getElementById("profile-screen").classList.remove("hidden");
   else if(name==="app")     document.getElementById("app").style.display="";
-  else if(name==="attempt") document.getElementById("test-attempt-screen").style.display="";
-  else if(name==="result")  document.getElementById("result-screen").style.display="";
+  else if(name==="attempt") document.getElementById("test-attempt-screen").style.display="flex";
+  else if(name==="result")  document.getElementById("result-screen").style.display="flex";
 }
 function setCardLoading(txt){
   document.getElementById("q-loading").style.display="flex";
