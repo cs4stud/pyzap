@@ -2580,7 +2580,7 @@ var TOPIC_QTYPES = {
   List:       [{id:"Indexing",label:"Indexing"},{id:"Slicing",label:"Slicing"},{id:"SliceIdx",label:"Slice+Index"},{id:"Functions",label:"Functions"},{id:"Membership",label:"Membership"},{id:"Comparison",label:"Comparison"},{id:"PredictOutput",label:"Predict Output"}],
   Tuple:      [{id:"Indexing",label:"Indexing"},{id:"Slicing",label:"Slicing"},{id:"SliceIdx",label:"Slice+Index"},{id:"Functions",label:"Functions"},{id:"Membership",label:"Membership"},{id:"Comparison",label:"Comparison"},{id:"PredictOutput",label:"Predict Output"}],
   Dictionary: [{id:"Operations",label:"Operations"},{id:"Functions",label:"Functions"},{id:"PredictOutput",label:"Predict Output"}],
-  Expressions:[{id:"Mixed",label:"Mixed"}],
+  Expressions:[{id:"Basic",label:"Basic"},{id:"Advanced",label:"Advanced"},{id:"Board",label:"Board"}],
   Builtin:    [{id:"Mixed",label:"Mixed"}],
   Functions:  [{id:"Practice",label:"Practice"},{id:"Board",label:"Board"}],
   Modules:    [{id:"Practice",label:"Practice"},{id:"Board",label:"Board"}],
@@ -2651,7 +2651,8 @@ function renderPopover(){
       '</button>';
   }).join("");
   tg.querySelectorAll(".topic-pill").forEach(function(p){
-    p.addEventListener("click", function(){
+    p.addEventListener("click", function(e){
+      e.stopPropagation();  // prevent document handler from firing after renderPopover() rebuilds DOM
       var topic = p.dataset.topic;
       if(p.classList.contains("locked")){
         showUpgrade("'"+topic+"' is for Pro students. Upgrade to unlock.");
@@ -2734,6 +2735,7 @@ function renderPopoverQtypes(){
     host.querySelectorAll(".sp-qt-cb").forEach(function(cb){
       cb.addEventListener("click", function(e){
         e.preventDefault();
+        e.stopPropagation();
         var qt = cb.dataset.qt;
         var m = getChecked(dt);
         m[qt] = !m[qt];
